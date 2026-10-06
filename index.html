@@ -48,7 +48,7 @@ section{padding-block:84px}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:12px}
 .logo{display:block;line-height:0}
-.logo img{height:46px;width:auto;display:block}
+.logo img{height:56px;width:auto;display:block}
 .top nav{display:flex;gap:22px;font:600 14px var(--body)}
 .top nav a{text-decoration:none}
 .top nav a:hover{color:var(--orange)}
@@ -283,6 +283,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media (max-width:520px){
   .steps,.feat,.why{grid-template-columns:minmax(0,1fr)}
   .phone{display:none}
+  .logo img{height:46px}
   .wms-stats b{font-size:18px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -295,7 +296,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#" aria-label="Фулфилмент IZIPACK, на главную"><img src="logo-izipack.png" alt="Фулфилмент IZIPACK" width="462" height="258"></a>
+    <a class="logo" href="#" aria-label="Фулфилмент IZIPACK, на главную"><img src="logo-izipack.png" alt="Фулфилмент IZIPACK" width="490" height="220"></a>
     <nav aria-label="Разделы">
       <a href="#how">Как работаем</a><a href="#wms">WMS</a><a href="#network">Склады</a><a href="#calc">Калькулятор</a><a href="#price">Цены</a><a href="#faq">Вопросы</a>
     </nav>
