@@ -47,9 +47,8 @@ section{padding-block:84px}
 /* шапка */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:12px}
-.logo{display:inline-grid;text-decoration:none;line-height:1}
-.logo b{font:700 15px var(--display);letter-spacing:.06em;color:var(--ink)}
-.logo .tape{font-size:22px;margin-top:2px;padding:.02em .3em .06em;transform:rotate(-3deg)}
+.logo{display:block;line-height:0}
+.logo img{height:46px;width:auto;display:block}
 .top nav{display:flex;gap:22px;font:600 14px var(--body)}
 .top nav a{text-decoration:none}
 .top nav a:hover{color:var(--orange)}
@@ -93,11 +92,44 @@ section{padding-block:84px}
 .wms-note{margin-top:12px;font-size:11px;color:#7D7D7D}
 
 /* шаги */
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;counter-reset:s}
-.steps li{counter-increment:s;background:var(--card);border-radius:18px;padding:22px 18px;display:grid;gap:10px;align-content:start;position:relative}
-.steps li::before{content:counter(s);font:700 44px/1 var(--display);color:var(--orange)}
+.rail{position:relative;height:6px;background:var(--line);border-radius:99px;margin:0 0 22px;overflow:hidden}
+.rail i{position:absolute;inset:0 auto 0 0;width:20%;background:var(--orange);border-radius:99px;transition:width .6s ease}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.steps li{background:var(--card);border-radius:18px;padding:20px 18px 22px;display:grid;gap:10px;align-content:start;position:relative;cursor:pointer;transition:background .4s,transform .4s,box-shadow .4s}
+.steps li.on{background:#fff;transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(255,90,0,.55),inset 0 0 0 2px var(--orange)}
+.steps .num{font:700 15px var(--display);color:var(--muted);letter-spacing:.08em}
+.steps li.on .num{color:var(--orange)}
+.steps .art{height:92px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
+.steps li.on .art{background:var(--soft)}
+.steps .art svg{width:100%;height:100%}
 .steps h3{font-size:18px}
 .steps p{font-size:14px;color:var(--muted)}
+.steps .a{animation-play-state:paused}
+.steps li.on .a,.steps li:hover .a{animation-play-state:running}
+/* 1: связь WB и WMS */
+.a-link{stroke-dasharray:60;animation:link 1.6s ease-in-out infinite}
+@keyframes link{0%{stroke-dashoffset:60}60%,100%{stroke-dashoffset:0}}
+.a-ping{transform-origin:center;transform-box:fill-box;animation:ping 1.6s ease-out infinite}
+@keyframes ping{0%,55%{transform:scale(0);opacity:0}70%{transform:scale(1.3);opacity:1}100%{transform:scale(1);opacity:1}}
+/* 2: грузовик заезжает на склад */
+.a-truck{animation:truck 2.4s ease-in-out infinite}
+@keyframes truck{0%{transform:translateX(-90px)}55%,80%{transform:translateX(0)}100%{transform:translateX(0);opacity:0}}
+/* 3: скотч и этикетка */
+.a-tape{stroke-dasharray:56;animation:tape 2s ease-in-out infinite}
+@keyframes tape{0%{stroke-dashoffset:56}45%,100%{stroke-dashoffset:0}}
+.a-label{transform-origin:center;transform-box:fill-box;animation:label 2s ease-out infinite}
+@keyframes label{0%,50%{transform:scale(0) rotate(-20deg)}70%{transform:scale(1.15) rotate(4deg)}85%,100%{transform:scale(1) rotate(0)}}
+/* 4: разлёт по регионам */
+.a-fly1,.a-fly2{opacity:0}.a-fly1{animation:fly1 2s ease-in-out infinite both}.a-fly2{animation:fly2 2s ease-in-out infinite .25s both}
+@keyframes fly1{0%{transform:translate(0,0);opacity:0}15%{opacity:1}80%,100%{transform:translate(46px,-16px);opacity:1}}
+@keyframes fly2{0%{transform:translate(0,0);opacity:0}15%{opacity:1}80%,100%{transform:translate(-40px,22px);opacity:1}}
+/* 5: собранный заказ уезжает */
+.a-check{stroke-dasharray:30;animation:check 2.2s ease infinite}
+@keyframes check{0%,10%{stroke-dashoffset:30}40%,100%{stroke-dashoffset:0}}
+.a-go{animation:go 2.2s ease-in infinite}
+@keyframes go{0%,50%{transform:translateX(0);opacity:1}100%{transform:translateX(110px);opacity:0}}
+.a-speed{animation:speed 2.2s linear infinite}
+@keyframes speed{0%,50%{opacity:0}60%,90%{opacity:1}100%{opacity:0}}
 .need{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--soft);border-radius:16px;padding:18px 22px}
 .need b{font:700 18px var(--display);text-transform:uppercase;color:var(--ink)}
 .need span{background:#fff;border-radius:99px;padding:6px 14px;font-weight:600;font-size:14px}
@@ -111,6 +143,26 @@ section{padding-block:84px}
 .feat svg{width:44px;height:44px}
 .feat h3{color:#fff;font-size:20px}
 .feat p{color:#B5B5B5;font-size:15px}
+
+/* WMS: пошаговая схема */
+.flow{background:#161616;border:1px solid #262626;border-radius:24px;padding:22px;margin-bottom:22px}
+.flow-svg{overflow-x:auto}
+.flow-svg svg{display:block;width:100%;min-width:620px;height:auto}
+.st-c{fill:#1F1F1F;stroke:#333;stroke-width:2;transition:fill .4s,stroke .4s}
+.stn.on .st-c{fill:#FF5A00;stroke:#FF5A00}
+.stn.done .st-c{stroke:#FF5A00}
+.stn text.lbl{fill:#8F8F8F;font:600 14px Montserrat,sans-serif;transition:fill .4s}
+.stn.on text.lbl{fill:#fff}
+.stn .ink{stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#flowLine{transition:stroke-dashoffset .8s ease}
+#token{transition:transform .8s cubic-bezier(.5,0,.2,1)}
+#ret{transition:stroke .4s,opacity .4s}
+.flow-steps{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.flow-steps li{border-top:3px solid #333;padding-top:10px;font-size:13px;color:#8F8F8F;cursor:pointer;transition:color .3s,border-color .3s}
+.flow-steps li b{display:block;font:700 15px var(--display);letter-spacing:.06em;color:#BDBDBD;margin-bottom:4px}
+.flow-steps li.on{border-color:#FF5A00;color:#fff}
+.flow-steps li.on b{color:#FF5A00}
+@media (max-width:820px){.flow-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* сеть складов */
 .net{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:center}
@@ -243,7 +295,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#" aria-label="Фулфилмент IZIPACK"><b>ФУЛФИЛМЕНТ</b><span class="tape">IZIPACK</span></a>
+    <a class="logo" href="#" aria-label="Фулфилмент IZIPACK, на главную"><img src="logo-izipack.png" alt="Фулфилмент IZIPACK" width="462" height="258"></a>
     <nav aria-label="Разделы">
       <a href="#how">Как работаем</a><a href="#wms">WMS</a><a href="#network">Склады</a><a href="#calc">Калькулятор</a><a href="#price">Цены</a><a href="#faq">Вопросы</a>
     </nav>
@@ -258,7 +310,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>FBS-фулфилмент<br>для Wildberries<br><span class="tape">от 5 ₽ за заказ</span></h1>
+      <h1>Фулфилмент<br>для Wildberries<br><span class="tape">от 5 ₽ за заказ</span></h1>
       <p class="hero-sub">Храним ваш товар у себя и собираем каждый заказ WB под покупателя. <b>Собственная WMS с полной интеграцией с Wildberries</b>: все заказы FBS и остатки видим онлайн.</p>
       <ul class="badges">
         <li>Склады в Москве, Казани, Краснодаре</li>
@@ -295,12 +347,58 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>Товар у нас, заказы <span class="tape">собираем мы</span></h2>
       <p class="lead">Вы продаёте, мы храним, собираем и отгружаем. От вас нужно быть на связи и заполнить техническое задание.</p>
     </div>
-    <ol class="steps">
-      <li><h3>Подключаемся к WB</h3><p>Вы даёте доступ к личному кабинету Wildberries и API-токен.</p></li>
-      <li><h3>Принимаем груз</h3><p>Привозите товар в Москву или мы забираем его с ТК, Садовода, Южных ворот.</p></li>
-      <li><h3>Готовим к продаже</h3><p>Пересчёт, проверка, маркировка, упаковка. Остатки заводим в WMS.</p></li>
-      <li><h3>Распределяем по регионам</h3><p>Часть остатков отправляем в Казань и Краснодар, чтобы товар выше ранжировался в регионах.</p></li>
-      <li><h3>Собираем и отгружаем</h3><p>Каждый новый заказ видим сразу, собираем, клеим стикер и везём на СЦ или ПВЗ.</p></li>
+    <div class="rail" aria-hidden="true"><i id="railFill"></i></div>
+    <ol class="steps" id="steps">
+      <li class="on">
+        <span class="num">ШАГ 1</span>
+        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
+          <rect x="22" y="24" width="48" height="44" rx="10" fill="#CB11AB"/><text x="46" y="52" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="#fff">WB</text>
+          <path class="a a-link" d="M74 46 H126" stroke="#FF5A00" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <rect x="130" y="24" width="48" height="44" rx="10" fill="#111"/><text x="154" y="52" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#FF5A00">IZI</text>
+          <circle class="a a-ping" cx="178" cy="24" r="8" fill="#3DDC84"/>
+        </svg></div>
+        <h3>Подключаемся к WB</h3><p>Вы даёте доступ к личному кабинету Wildberries и API-токен.</p>
+      </li>
+      <li>
+        <span class="num">ШАГ 2</span>
+        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
+          <path d="M120 70 V34 L150 18 L180 34 V70 Z" fill="#111"/><rect x="138" y="44" width="24" height="26" fill="#FF5A00"/>
+          <line x1="10" y1="72" x2="190" y2="72" stroke="#DDD" stroke-width="2"/>
+          <g class="a a-truck"><rect x="52" y="38" width="38" height="24" rx="3" fill="#FF5A00"/><path d="M90 46 h12 l8 8 v8 h-20 z" fill="#111"/><circle cx="62" cy="66" r="6" fill="#111"/><circle cx="100" cy="66" r="6" fill="#111"/></g>
+        </svg></div>
+        <h3>Принимаем груз</h3><p>Привозите товар в Москву или мы забираем его с ТК, Садовода, Южных ворот.</p>
+      </li>
+      <li>
+        <span class="num">ШАГ 3</span>
+        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
+          <path d="M70 34 L100 22 L130 34 V70 L100 82 L70 70 Z" fill="#E9A777"/><path d="M70 34 L100 46 L130 34" fill="none" stroke="#C97F4C" stroke-width="2"/><path d="M100 46 V82" stroke="#C97F4C" stroke-width="2"/>
+          <path class="a a-tape" d="M72 35 L100 47 L128 35" fill="none" stroke="#FF5A00" stroke-width="6" stroke-linejoin="round"/>
+          <g class="a a-label"><rect x="106" y="54" width="20" height="14" rx="2" fill="#fff" stroke="#111" stroke-width="1.5"/><path d="M110 58v6M113 58v6M117 58v6M121 58v6" stroke="#111" stroke-width="1.5"/></g>
+        </svg></div>
+        <h3>Готовим к продаже</h3><p>Пересчёт, проверка, маркировка, упаковка. Остатки заводим в WMS.</p>
+      </li>
+      <li>
+        <span class="num">ШАГ 4</span>
+        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
+          <path d="M100 46 L150 30 M100 46 L56 70" stroke="#DDD" stroke-width="3" stroke-dasharray="5 5"/>
+          <circle cx="100" cy="46" r="14" fill="#FF5A00"/><text x="100" y="51" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="12" fill="#fff">МСК</text>
+          <circle cx="152" cy="30" r="9" fill="#111"/><circle cx="54" cy="70" r="9" fill="#111"/>
+          <g class="a a-fly1"><rect x="96" y="42" width="9" height="9" rx="1.5" fill="#E9A777" stroke="#111" stroke-width="1"/></g>
+          <g class="a a-fly2"><rect x="96" y="42" width="9" height="9" rx="1.5" fill="#E9A777" stroke="#111" stroke-width="1"/></g>
+          <text x="152" y="14" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="10" fill="#111">Казань</text>
+          <text x="20" y="90" font-family="Arial,sans-serif" font-weight="700" font-size="10" fill="#111">Краснодар</text>
+        </svg></div>
+        <h3>Распределяем по регионам</h3><p>Часть остатков отправляем в Казань и Краснодар, чтобы товар выше ранжировался в регионах.</p>
+      </li>
+      <li>
+        <span class="num">ШАГ 5</span>
+        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
+          <g class="a a-speed"><path d="M30 38h22M22 50h26M32 62h18" stroke="#DDD" stroke-width="3" stroke-linecap="round"/></g>
+          <g class="a a-go"><rect x="62" y="26" width="46" height="46" rx="6" fill="#E9A777"/><rect x="62" y="26" width="46" height="10" fill="#C97F4C"/><circle cx="85" cy="54" r="12" fill="#fff"/><path class="a a-check" d="M79 54 l5 5 l9 -10" fill="none" stroke="#1E9E5A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <text x="150" y="44" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="#111">СЦ</text><text x="150" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="#111">ПВЗ</text>
+        </svg></div>
+        <h3>Собираем и отгружаем</h3><p>Каждый новый заказ видим сразу, собираем, клеим стикер и везём на СЦ или ПВЗ.</p>
+      </li>
     </ol>
     <div class="need"><b>Что нужно от вас:</b><span>Доступ к ЛК Wildberries</span><span>API-токен</span><span>Техническое задание</span></div>
   </div>
@@ -312,6 +410,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <span class="eyebrow">Собственная разработка</span>
       <h2>Своя WMS с полной <span class="tape">интеграцией с WB</span></h2>
       <p class="lead">Через API-токен наша система получает заказы FBS из Wildberries в момент покупки. Без таблиц, ручного переноса и задержек.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-svg"><svg viewBox="0 0 860 280" role="img" aria-label="Как заказ проходит через WMS: покупатель, API Wildberries, WMS IZIPACK, сборка, отгрузка, обновление остатков">
+        <path d="M90 100 H770" stroke="#2C2C2C" stroke-width="4"/>
+        <path id="flowLine" d="M90 100 H770" stroke="#FF5A00" stroke-width="4" stroke-dasharray="680" stroke-dashoffset="680"/>
+        <path id="ret" d="M770 190 C 770 262, 90 262, 90 190" fill="none" stroke="#2C2C2C" stroke-width="3" stroke-dasharray="7 7"/>
+        <text id="retTxt" x="430" y="272" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="600" font-size="13" fill="#6B6B6B">остаток в кабинете WB обновляется автоматически</text>
+        <g class="stn" id="stn0"><circle class="st-c" cx="90" cy="100" r="44"/><g transform="translate(90 100)"><rect x="-14" y="-24" width="28" height="48" rx="6" class="ink"/><rect x="-9" y="-8" width="18" height="12" rx="3" fill="#CB11AB"/></g><text class="lbl" x="90" y="172" text-anchor="middle">Покупатель</text></g><g class="stn" id="stn1"><circle class="st-c" cx="260" cy="100" r="44"/><g transform="translate(260 100)"><text x="0" y="8" text-anchor="middle" font-family="Oswald,Arial Narrow,sans-serif" font-weight="700" font-size="22" fill="#fff">API</text><path d="M-26 -14 l-8 14 l8 14 M26 -14 l8 14 l-8 14" class="ink"/></g><text class="lbl" x="260" y="172" text-anchor="middle">API WB</text></g><g class="stn" id="stn2"><circle class="st-c" cx="430" cy="100" r="44"/><g transform="translate(430 100)"><rect x="-24" y="-20" width="48" height="32" rx="4" class="ink"/><path d="M-8 22h16M0 12v10M-14 -8h18M-14 0h28" class="ink"/></g><text class="lbl" x="430" y="172" text-anchor="middle">IZIPACK WMS</text></g><g class="stn" id="stn3"><circle class="st-c" cx="600" cy="100" r="44"/><g transform="translate(600 100)"><path d="M-24 -22v44M24 -22v44M-24 0h48M-24 20h48" class="ink"/><rect x="-14" y="-14" width="14" height="12" rx="2" fill="#E9A777"/><rect x="4" y="6" width="14" height="12" rx="2" fill="#E9A777"/></g><text class="lbl" x="600" y="172" text-anchor="middle">Сборка</text></g><g class="stn" id="stn4"><circle class="st-c" cx="770" cy="100" r="44"/><g transform="translate(770 100)"><rect x="-26" y="-12" width="30" height="20" rx="2" class="ink"/><path d="M4 -4h10l8 8v4H4z" class="ink"/><circle cx="-16" cy="14" r="4" fill="#fff"/><circle cx="12" cy="14" r="4" fill="#fff"/></g><text class="lbl" x="770" y="172" text-anchor="middle">Отгрузка</text></g>
+        <g id="token" style="transform:translate(90px,38px)"><rect x="-34" y="-14" width="68" height="26" rx="13" fill="#fff"/><text x="0" y="4" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="12" fill="#111">заказ</text></g>
+      </svg></div>
+      <ol class="flow-steps" id="flowSteps">
+        <li class="on"><b>1. ЗАКАЗ</b>Покупатель оформляет заказ на Wildberries.</li>
+        <li><b>2. API</b>Заказ сразу приходит к нам через API-токен.</li>
+        <li><b>3. WMS</b>Система создаёт задание на сборку и резервирует остаток.</li>
+        <li><b>4. СБОРКА</b>Сборщик берёт товар с ячейки и клеит стикер WB.</li>
+        <li><b>5. ОТГРУЗКА</b>Заказ уезжает на сортировочный центр или ПВЗ.</li>
+        <li><b>6. ОСТАТКИ</b>Остаток в кабинете WB обновляется сам, без расхождений.</li>
+      </ol>
     </div>
     <div class="feat">
       <div>
@@ -694,6 +810,39 @@ perDay.addEventListener("input", () => { perDayR.value = Math.min(150, perDay.va
 perDayR.addEventListener("input", () => { perDay.value = perDayR.value; calc(); });
 document.getElementById("calcForm").addEventListener("change", calc);
 calc();
+
+
+// ===== Анимация шагов «Как работает» =====
+(function(){
+  const items=[...document.querySelectorAll("#steps li")], fill=document.getElementById("railFill");
+  let i=0, timer;
+  const show=n=>{i=n;items.forEach((li,k)=>li.classList.toggle("on",k===n));fill.style.width=((n+1)/items.length*100)+"%";};
+  const run=()=>{clearInterval(timer);timer=setInterval(()=>show((i+1)%items.length),2600);};
+  items.forEach((li,k)=>li.addEventListener("click",()=>{show(k);run();}));
+  show(0);run();
+})();
+
+// ===== Анимация схемы WMS =====
+(function(){
+  const X=[90,260,430,600,770], line=document.getElementById("flowLine"), tok=document.getElementById("token");
+  const ret=document.getElementById("ret"), retTxt=document.getElementById("retTxt");
+  const caps=[...document.querySelectorAll("#flowSteps li")];
+  let s=0, timer;
+  function show(n){
+    s=n;
+    const pos=Math.min(n,4);
+    for(let k=0;k<5;k++){const st=document.getElementById("stn"+k);st.classList.toggle("on",n<5?k===n:k===0);st.classList.toggle("done",k<pos||n===5);}
+    line.style.strokeDashoffset=680-(X[pos]-90);
+    tok.style.transform=n<5?`translate(${X[pos]}px,38px)`:"translate(90px,38px)";
+    tok.style.opacity=n===5?0:1;
+    ret.style.stroke=n===5?"#FF5A00":"#2C2C2C";
+    retTxt.style.fill=n===5?"#FFFFFF":"#6B6B6B";
+    caps.forEach((c,k)=>c.classList.toggle("on",k===n));
+  }
+  const run=()=>{clearInterval(timer);timer=setInterval(()=>show((s+1)%6),2400);};
+  caps.forEach((c,k)=>c.addEventListener("click",()=>{show(k);run();}));
+  show(0);run();
+})();
 
 // ===== Демо-лента заказов в макете WMS =====
 const goods = ["Блендер погружной", "Футболка оверсайз, M", "Крем для рук 50 мл", "Чехол для iPhone", "Набор кистей", "Термокружка 450 мл", "Лампа настольная", "Носки, 5 пар", "Органайзер для косметики", "Зарядка USB-C"];
