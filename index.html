@@ -99,18 +99,46 @@ section{padding-block:84px}
 .steps li.on{background:#fff;transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(255,90,0,.55),inset 0 0 0 2px var(--orange)}
 .steps .num{font:700 15px var(--display);color:var(--muted);letter-spacing:.08em}
 .steps li.on .num{color:var(--orange)}
-.steps .art{height:92px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
+.steps .art{height:120px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
 .steps li.on .art{background:var(--soft)}
 .steps .art svg{width:100%;height:100%}
 .steps h3{font-size:18px}
 .steps p{font-size:14px;color:var(--muted)}
 .steps .a{animation-play-state:paused}
 .steps li.on .a,.steps li:hover .a{animation-play-state:running}
-/* 1: связь WB и WMS */
-.a-link{stroke-dasharray:60;animation:link 1.6s ease-in-out infinite}
-@keyframes link{0%{stroke-dashoffset:60}60%,100%{stroke-dashoffset:0}}
-.a-ping{transform-origin:center;transform-box:fill-box;animation:ping 1.6s ease-out infinite}
-@keyframes ping{0%,55%{transform:scale(0);opacity:0}70%{transform:scale(1.3);opacity:1}100%{transform:scale(1);opacity:1}}
+/* 1: мини-экран подключения к WB. Без .on показан итог; с .on проигрывается заново */
+.steps .art-ui{height:120px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:7px;padding:8px;place-items:initial}
+.mini{position:relative;background:#fff;border-radius:10px;padding:8px 9px;display:grid;gap:6px;box-shadow:0 6px 18px -10px rgba(0,0,0,.35),0 0 0 1px var(--line)}
+.mini-head{display:flex;align-items:center;gap:6px;font:600 10px var(--body);color:var(--ink);white-space:nowrap;overflow:hidden}
+.mini-head .wb{background:linear-gradient(135deg,#CB11AB,#7B2FF2);color:#fff;font:800 9px var(--body);border-radius:5px;padding:2px 5px;letter-spacing:.02em}
+.mini-field{position:relative;height:20px;border:1px solid #D9D9D9;border-radius:6px;padding:0 7px;display:flex;align-items:center;font:600 10px var(--body);overflow:hidden}
+.mini-field .ph{position:absolute;left:7px;color:#A0A0A0;opacity:0}
+.mini-field .tok{display:inline-block;overflow:hidden;white-space:nowrap;letter-spacing:1px;color:#333;max-width:100%}
+.mini-field .caret{width:1px;height:12px;background:var(--orange);margin-left:1px;opacity:0}
+.mini-btn{position:relative;height:20px;border-radius:6px;background:#2DBE60;color:#fff;font:700 10px var(--body);display:grid;place-items:center;overflow:hidden}
+.mini-btn span{grid-area:1/1}.mini-btn .b1{opacity:0}
+.steps .art .mini .cursor{position:absolute;width:11px;height:15px;left:50%;top:62px;opacity:0;pointer-events:none}
+.mini-toast{display:flex;align-items:center;gap:6px;background:var(--ink);color:#BDBDBD;border-radius:8px;padding:5px 9px;font:500 10px var(--body);white-space:nowrap;overflow:hidden}
+.mini-toast b{color:#fff;font-weight:700}
+.mini-toast i{width:7px;height:7px;border-radius:50%;background:#3DDC84;flex:none;box-shadow:0 0 0 0 rgba(61,220,132,.6)}
+.steps li.on .mini-field .ph{animation:uiPh 5.2s linear both}
+@keyframes uiPh{0%,8%{opacity:1}10%,100%{opacity:0}}
+.steps li.on .mini-field .tok{animation:uiTok 1.3s steps(18,end) .5s both}
+@keyframes uiTok{from{width:0}to{width:100%}}
+.steps li.on .mini-field .caret{animation:uiCaret 5.2s linear both}
+@keyframes uiCaret{0%,9%{opacity:0}10%,14%{opacity:1}16%,19%{opacity:0}21%,26%{opacity:1}28%,31%{opacity:0}33%,100%{opacity:0}}
+.steps li.on .art .mini .cursor{animation:uiCur 5.2s ease-in-out both}
+@keyframes uiCur{0%,30%{left:88%;top:31px;opacity:0;transform:scale(1)}34%{opacity:1}44%{left:50%;top:62px;transform:scale(1)}47%{transform:scale(.8)}50%{transform:scale(1)}60%{opacity:1;left:50%;top:62px}66%,100%{opacity:0;left:50%;top:62px}}
+.steps li.on .mini-btn{animation:uiBtn 5.2s linear both}
+@keyframes uiBtn{0%,47%{background:var(--orange);transform:scale(1)}48%{transform:scale(.96)}50%{background:#2DBE60;transform:scale(1)}100%{background:#2DBE60}}
+.steps li.on .mini-btn .b1{animation:uiB1 5.2s linear both}
+@keyframes uiB1{0%,48%{opacity:1}51%,100%{opacity:0}}
+.steps li.on .mini-btn .b2{animation:uiB2 5.2s linear both}
+@keyframes uiB2{0%,48%{opacity:0;transform:translateY(6px)}53%,100%{opacity:1;transform:none}}
+.steps li.on .mini-toast{animation:uiToast 5.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes uiToast{0%,56%{opacity:0;transform:translateY(10px)}64%,100%{opacity:1;transform:none}}
+.steps li.on .mini-toast i{animation:uiDot 1.4s ease-out 3.4s 3}
+@keyframes uiDot{0%{box-shadow:0 0 0 0 rgba(61,220,132,.6)}100%{box-shadow:0 0 0 8px rgba(61,220,132,0)}}
 /* 2: грузовик заезжает на склад */
 .a-truck{animation:truck 2.4s ease-in-out infinite}
 @keyframes truck{0%{transform:translateX(-90px)}55%,80%{transform:translateX(0)}100%{transform:translateX(0);opacity:0}}
@@ -352,12 +380,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <ol class="steps" id="steps">
       <li class="on">
         <span class="num">ШАГ 1</span>
-        <div class="art"><svg viewBox="0 0 200 92" aria-hidden="true">
-          <rect x="22" y="24" width="48" height="44" rx="10" fill="#CB11AB"/><text x="46" y="52" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="#fff">WB</text>
-          <path class="a a-link" d="M74 46 H126" stroke="#FF5A00" stroke-width="4" stroke-linecap="round" fill="none"/>
-          <rect x="130" y="24" width="48" height="44" rx="10" fill="#111"/><text x="154" y="52" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#FF5A00">IZI</text>
-          <circle class="a a-ping" cx="178" cy="24" r="8" fill="#3DDC84"/>
-        </svg></div>
+        <div class="art art-ui" aria-hidden="true">
+          <div class="mini">
+            <div class="mini-head"><span class="wb">WB</span>Личный кабинет</div>
+            <div class="mini-field"><span class="ph">API-токен</span><span class="tok">••••••••••••••••••</span><i class="caret"></i></div>
+            <div class="mini-btn"><span class="b1">Подключить</span><span class="b2">✓ Подключено</span></div>
+            <svg class="cursor" viewBox="0 0 12 16"><path d="M1 1V13L4 10L6.5 15L8.5 14L6 9H10.5Z" fill="#111" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="mini-toast"><i></i><b>WMS</b>&nbsp;заказы онлайн</div>
+        </div>
         <h3>Подключаемся к WB</h3><p>Вы даёте доступ к личному кабинету Wildberries и API-токен.</p>
       </li>
       <li>
@@ -817,10 +848,11 @@ calc();
 (function(){
   const items=[...document.querySelectorAll("#steps li")], fill=document.getElementById("railFill");
   let i=0, timer;
-  const show=n=>{i=n;items.forEach((li,k)=>li.classList.toggle("on",k===n));fill.style.width=((n+1)/items.length*100)+"%";};
-  const run=()=>{clearInterval(timer);timer=setInterval(()=>show((i+1)%items.length),2600);};
-  items.forEach((li,k)=>li.addEventListener("click",()=>{show(k);run();}));
-  show(0);run();
+  // первый шаг (мини-экран) идёт дольше остальных
+  const dur=n=>n===0?5600:2600;
+  const show=n=>{i=n;items.forEach((li,k)=>li.classList.toggle("on",k===n));fill.style.width=((n+1)/items.length*100)+"%";clearTimeout(timer);timer=setTimeout(()=>show((i+1)%items.length),dur(n));};
+  items.forEach((li,k)=>li.addEventListener("click",()=>show(k)));
+  show(0);
 })();
 
 // ===== Анимация схемы WMS =====
