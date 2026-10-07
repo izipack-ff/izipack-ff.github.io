@@ -59,7 +59,17 @@ section{padding-block:84px}
 .hero{padding-block:56px 72px;background:radial-gradient(1200px 500px at 85% 10%,var(--soft),transparent 60%)}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}
 .hero h1{font-size:clamp(40px,6.4vw,78px);letter-spacing:-.005em}
-.hero h1 .tape{font-size:.92em;margin-top:6px}
+/* Цена в заголовке: фирменный ценник, слегка покачивается на нитке */
+.hero h1>span{display:block}
+.h1-row{display:flex!important;align-items:center;gap:.3em}
+.ptag{position:relative;display:inline-block;font-size:.68em;margin-block:-.12em -.06em;padding:.2em .42em .24em 1.02em;color:#fff;text-decoration:none;line-height:1;transform-origin:.42em 50%;transform:rotate(-7deg);animation:tagSwing 3.6s ease-in-out infinite alternate;filter:drop-shadow(0 .16em .22em rgba(0,0,0,.28))}
+.ptag-bg{position:absolute;inset:0;background:var(--orange);clip-path:polygon(.62em 0,100% 0,100% 100%,.62em 100%,0 50%);border-radius:.08em}
+.ptag-hole{position:absolute;left:.34em;top:50%;width:.2em;height:.2em;margin-top:-.1em;border-radius:50%;background:#fff;box-shadow:inset 0 .02em .04em rgba(0,0,0,.35)}
+.ptag-t{position:relative;display:grid;justify-items:center;font-family:var(--display);text-transform:uppercase}
+.ptag-t b{font-size:.92em;font-weight:700;letter-spacing:.01em;line-height:.95}
+.ptag-t small{font-size:.24em;font-weight:700;letter-spacing:.12em;line-height:1.2;opacity:.95}
+.ptag:hover{animation-play-state:paused}
+@keyframes tagSwing{from{transform:rotate(-9deg)}to{transform:rotate(-3deg)}}
 .hero-sub{font-size:19px;margin-top:22px;max-width:560px}
 .hero-sub b{color:var(--ink)}
 /* Выбор схемы на первом экране: FBS / FBO */
@@ -521,7 +531,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>Фулфилмент<br>для Wildberries<br><span class="tape">от 25 ₽ за заказ</span></h1>
+      <h1 aria-label="Фулфилмент для Wildberries от 25 ₽ за заказ"><span>Фулфилмент</span><span class="h1-row">для <a class="ptag" href="#calc" aria-hidden="true" tabindex="-1"><span class="ptag-bg"></span><i class="ptag-hole"></i><span class="ptag-t"><small>от</small><b>25 ₽</b><small>за заказ</small></span></a></span><span>Wildberries</span></h1>
       <div class="modes" role="group" aria-label="Схема работы">
         <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><i class="mode-go" aria-hidden="true">→</i></a>
         <a class="mode m-fbo" href="#fbo" data-open-fbo><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><i class="mode-go" aria-hidden="true">→</i></a>
