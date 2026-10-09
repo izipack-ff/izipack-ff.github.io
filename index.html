@@ -450,15 +450,14 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .seg span small{font-size:10.5px;font-weight:600;color:var(--muted)}
 .seg input:checked+span{background:var(--orange);color:#fff}
 .seg input:checked+span small{color:#FFE3D4}
-.seg input:focus-visible+span,.mchip input:focus-visible+span{outline:3px solid var(--orange);outline-offset:-3px}
-.mchips{display:flex;flex-wrap:wrap;gap:6px}
-.mchip{position:relative}
-.mchip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.mchip span{display:block;padding:6px 10px;border-radius:99px;border:1.5px solid var(--line);font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
-.mchip span i{font-style:normal;color:#A0A0A0;font-weight:500;margin-left:4px}
-.mchip input:checked+span{border-color:var(--orange);background:var(--soft);color:var(--ink)}
-.mchip input:checked+span i{color:var(--orange-dark)}
-.mchip input:checked+span::before{content:"✓ ";color:var(--orange)}
+.seg input:focus-visible+span{outline:3px solid var(--orange);outline-offset:-3px}
+.seg.seg2{grid-template-columns:1fr 1fr}
+.seg.seg2 span{padding:8px 6px;font-size:14px;text-align:center}
+.seg.seg2 span small{font-size:11.5px;text-wrap:balance}
+.pc-fbo{display:none;margin:0;padding:9px 12px;border-radius:10px;background:var(--soft);font-size:13px;line-height:1.4;color:var(--ink)}
+.pc-fbo a{color:var(--orange-dark);font-weight:700;white-space:nowrap}
+.pc.raw .pc-fbo{display:block}
+.pc-sum em{font-style:normal;font-size:12px;color:var(--orange-dark);font-weight:600}
 .pc-sum{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px;font-size:14px;color:var(--muted)}
 .pc-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
 .pc-add{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;border:2px dashed #D3D3D3;border-radius:16px;background:transparent;font:700 16px var(--body);color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
@@ -472,7 +471,7 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
   .tb-track em{font-size:11px}.tb-track b{font-size:15px}
   .panel{padding:16px}
   .pc{padding:12px}
-  .mchip span{padding:5px 9px;font-size:12px}
+  .seg.seg2 span{font-size:13px}
 }
 /* На телефоне итог виден внизу экрана, пока листаешь карточки товаров */
 .calc-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;border-radius:16px;padding:10px 12px 10px 16px;box-shadow:0 16px 40px -12px rgba(0,0,0,.6);text-decoration:none;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -863,7 +862,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div><small>В месяц (30 дней)</small><div class="month" id="perMonth">—</div></div>
         <ul class="bd" id="bd"></ul>
         <a class="btn btn-orange" href="#order" id="calcSend">Получить точный расчёт</a>
-        <p class="note">Цены со знаком «от» зависят от габаритов. Хранение считается отдельно: 10 ₽ за короб в сутки.</p>
+        <p class="note" id="calcNote">Хранение считается отдельно: 10 ₽ за короб в сутки.</p>
       </aside>
     </div>
   </div>
@@ -1118,23 +1117,17 @@ const tier = n => n > 50 ? 5 : n > 30 ? 10 : n > 10 ? 15 : 20;
 const rub = n => n.toLocaleString("ru-RU") + " ₽";
 
 const SIZES = [["до 30 см", 20], ["до 60 см", 30], ["до 90 см", 50], ["до 120 см", 100]];
-const PREP = [
-  {n: "Приём и пересчёт", p: 2, from: 1, on: 1},
-  {n: "Проверка на брак", p: 2, from: 1},
-  {n: "Маркировка", p: 6, on: 1},
-  {n: "БОПП / ZIP / курьер-пакет", p: 3, from: 1},
-  {n: "Запайка в ПВД / ВПП / ПОФ", p: 5, from: 1},
-  {n: "Честный знак", p: 8}
-];
+// Упакованный товар: приём и пересчёт 5 ₽. Неупакованный: подготовка по прайсу FBO, считается отдельно.
+const PACKED = 5;
 const MAX_GOODS = 12;
 const pcs = document.getElementById("pcs"), pcAdd = document.getElementById("pcAdd");
 const esc = t => t.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const word = n => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? "заказ" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "заказа" : "заказов"; };
 let uid = 0;
 
-// Карточка товара. Новый товар копирует размер и услуги предыдущего, чтобы не нажимать заново.
+// Карточка товара. Новый товар копирует размер и вид поступления предыдущего, чтобы не нажимать заново.
 function addGood(copy){
-  const k = ++uid, prev = copy || {size: 1, prep: PREP.map(x => !!x.on), n: 25};
+  const k = ++uid, prev = copy || {size: 1, raw: false, n: 25};
   const el = document.createElement("div");
   el.className = "pc"; el.dataset.k = k;
   el.innerHTML = `
@@ -1143,7 +1136,8 @@ function addGood(copy){
       <div class="pc-f"><span class="pc-l">Заказов в день</span><div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><input type="number" class="pc-n" min="0" max="5000" inputmode="numeric" value="${prev.n}" aria-label="Заказов в день"><button type="button" data-d="1" aria-label="Больше">+</button></div></div>
       <div class="pc-f"><span class="pc-l">Размер в упаковке (сумма трёх сторон)</span><div class="seg">${SIZES.map((z, i) => `<label><input type="radio" name="sz${k}" value="${i}"${i === prev.size ? " checked" : ""}><span>${z[0].replace("до ", "≤")}<small>${z[1]} ₽</small></span></label>`).join("")}</div></div>
     </div>
-    <div class="pc-f"><span class="pc-l">Подготовка, за единицу</span><div class="mchips">${PREP.map((x, i) => `<label class="mchip"><input type="checkbox" value="${i}"${prev.prep[i] ? " checked" : ""}><span>${x.n}<i>${x.from ? "от " : ""}${x.p} ₽</i></span></label>`).join("")}</div></div>
+    <div class="pc-f"><span class="pc-l">Товар приходит к нам</span><div class="seg seg2"><label><input type="radio" name="pk${k}" value="0"${prev.raw ? "" : " checked"}><span>Упакованным<small>приём и пересчёт&nbsp;${PACKED}&nbsp;₽</small></span></label><label><input type="radio" name="pk${k}" value="1"${prev.raw ? " checked" : ""}><span>Без упаковки<small>подготовка по&nbsp;прайсу FBO</small></span></label></div></div>
+    <p class="pc-fbo">Приёмку, маркировку и упаковку такого товара считаем по <a href="#fbo" data-open-fbo>прайсу FBO →</a> Ниже только сборка и доставка заказа.</p>
     <div class="pc-sum"><span>За заказ <b class="pc-one"></b></span><span>В месяц <b class="pc-month"></b></span></div>`;
   pcs.appendChild(el);
   renumber(); calc();
@@ -1153,8 +1147,8 @@ function readGood(el){
   return {
     el, name: el.querySelector(".pc-name").value.trim() || el.querySelector(".pc-name").placeholder,
     n: Math.max(0, Math.min(5000, parseInt(el.querySelector(".pc-n").value, 10) || 0)),
-    size: +el.querySelector("input[type=radio]:checked").value,
-    prep: [...el.querySelectorAll(".mchip input")].map(i => i.checked)
+    size: +el.querySelector("input[name^=sz]:checked").value,
+    raw: el.querySelector("input[name^=pk]:checked").value === "1"
   };
 }
 function renumber(){
@@ -1167,16 +1161,17 @@ function calc(){
   const goods = [...pcs.children].map(readGood);
   const total = goods.reduce((s, g) => s + g.n, 0);
   const proc = tier(Math.max(1, total));
-  let dayCost = 0, hasFrom = false;
+  let dayCost = 0, hasRaw = false;
   goods.forEach(g => {
-    const prep = PREP.filter((x, i) => g.prep[i]);
-    g.from = prep.some(x => x.from);
-    g.one = proc + SIZES[g.size][1] + prep.reduce((s, x) => s + x.p, 0);
-    dayCost += g.one * g.n; hasFrom = hasFrom || g.from;
-    g.el.querySelector(".pc-one").textContent = (g.from ? "от " : "") + rub(g.one);
-    g.el.querySelector(".pc-month").textContent = (g.from ? "от " : "") + rub(g.one * g.n * 30);
+    g.one = proc + SIZES[g.size][1] + (g.raw ? 0 : PACKED);
+    dayCost += g.one * g.n; hasRaw = hasRaw || (g.raw && g.n > 0);
+    g.el.classList.toggle("raw", g.raw);
+    const plus = g.raw ? " <em>+ FBO</em>" : "";
+    g.el.querySelector(".pc-one").innerHTML = rub(g.one) + plus;
+    g.el.querySelector(".pc-month").innerHTML = rub(g.one * g.n * 30) + plus;
   });
-  const pre = hasFrom ? "от " : "";
+  const pre = hasRaw ? "от " : "";
+  document.getElementById("calcNote").textContent = (hasRaw ? "«От»: для товара без упаковки к сумме добавится подготовка по прайсу FBO. " : "") + "Хранение считается отдельно: 10 ₽ за короб в сутки.";
   document.getElementById("perOrder").textContent = total ? pre + rub(Math.round(dayCost / total)) : "—";
   document.getElementById("perMonth").textContent = total ? pre + rub(dayCost * 30) : "—";
   document.getElementById("cbOne").textContent = total ? pre + rub(Math.round(dayCost / total)) : "—";
@@ -1189,8 +1184,8 @@ function calc(){
   document.getElementById("tbHint").textContent = next ? `Ещё ${next - total} в день, и сборка будет ${tier(next)} ₽` : "Самая низкая цена сборки";
   document.getElementById("bd").innerHTML =
     `<li class="bd-h"><span>Сборка заказа</span><span>${proc} ₽</span></li>` +
-    goods.map(g => `<li><span>${esc(g.name)} · ${g.n} в день</span><span>${g.from ? "от " : ""}${rub(g.one)}</span></li>`).join("");
-  calcSummary = goods.map(g => `${g.name}: ${g.n} ${word(g.n)} в день, ${SIZES[g.size][0]}` + (PREP.filter((x, i) => g.prep[i]).length ? ", " + PREP.filter((x, i) => g.prep[i]).map(x => x.n.toLowerCase()).join(", ") : "")).join("\n") +
+    goods.map(g => `<li><span>${esc(g.name)} · ${g.n} в день</span><span>${rub(g.one)}${g.raw ? " + FBO" : ""}</span></li>`).join("");
+  calcSummary = goods.map(g => `${g.name}: ${g.n} ${word(g.n)} в день, ${SIZES[g.size][0]}, ` + (g.raw ? "без упаковки (подготовка по FBO)" : "упакован")).join("\n") +
     `\nИтого: ${total} ${word(total)} в день, ${pre}${rub(dayCost * 30)} в месяц`;
 }
 pcs.addEventListener("input", calc);
@@ -1206,7 +1201,7 @@ pcs.addEventListener("click", e => {
 });
 pcAdd.addEventListener("click", () => {
   const last = pcs.lastElementChild ? readGood(pcs.lastElementChild) : null;
-  const el = addGood(last && {size: last.size, prep: last.prep, n: 10});
+  const el = addGood(last && {size: last.size, raw: last.raw, n: 10});
   el.querySelector(".pc-name").focus({preventScroll: true});
   el.scrollIntoView({behavior: "smooth", block: "nearest"});
 });
@@ -1228,10 +1223,11 @@ if ("IntersectionObserver" in window){
 
 
 // ===== Переход в FBO из первого экрана: раскрываем главные блоки прайса =====
-document.querySelectorAll("[data-open-fbo], a[href='#fbo']").forEach(a=>a.addEventListener("click",()=>{
+document.addEventListener("click",e=>{
+  if(!e.target.closest("[data-open-fbo], a[href='#fbo']")) return;
   const d=[...document.querySelectorAll("#fbo details")];
   [0,3].forEach(k=>d[k]&&(d[k].open=true));
-}));
+});
 
 // ===== Анимация шагов «Как работает» =====
 (function(){
