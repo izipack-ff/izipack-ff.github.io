@@ -553,6 +553,7 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .contacts small{display:block;font:600 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:#FFD1B8}
 .order form{background:#fff;color:var(--text);border-radius:20px;padding:24px;display:grid;gap:16px}
 .order form h3{font-size:22px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .consent{display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:flex-start}
 .consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--orange);flex:none}
 .sent{background:var(--soft);color:var(--ink);padding:12px 14px;border-radius:10px;font-weight:600;font-size:14px}
@@ -1091,6 +1092,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="field"><label for="contact">Телефон или Telegram</label><input type="tel" id="contact" placeholder="+7… или @ник"></div>
         <div class="field"><label for="goods">Что продаёте</label><input type="text" id="goods" placeholder="Например, косметика, одежда"></div>
         <label class="consent"><input type="checkbox" id="agree"><span>Согласен на обработку персональных данных по <a href="privacy.html" target="_blank">политике конфиденциальности</a></span></label>
+        <input type="text" name="website" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn btn-dark" type="submit">Получить расчёт</button>
         <p class="sent" id="sent" hidden></p>
       </form>
@@ -1110,7 +1112,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 // ===== НАСТРОЙКИ САЙТА =====
 const SITE = {
   telegram: "izipack",  // ник в Telegram без @
-  formEndpoint: ""      // адрес функции, которая пересылает заявки в Telegram-бота (этап 2)
+  formEndpoint: ""      // адрес Google Apps Script (…/exec), который пересылает заявки в Telegram-бота
 };
 
 // ===== Тарифы FBS (из прайса IZIPACK) =====
@@ -1295,12 +1297,18 @@ document.getElementById("leadForm").addEventListener("submit", async e => {
   if (!c) return say("Укажите телефон или Telegram, чтобы мы могли ответить.");
   if (!document.getElementById("agree").checked) return say("Отметьте согласие на обработку данных.");
   const text = "Заявка с сайта IZIPACK\nИмя: " + (name || "—") + "\nКонтакт: " + c + "\nТовар: " + (goodsTxt || "—") + "\nЗаказов в день: " + vol + (calcSummary ? "\n\nРасчёт с калькулятора:\n" + calcSummary : "");
+  // Сначала отправляем заявку боту. Если не вышло (нет связи, сервис недоступен), открываем чат в Telegram с готовым текстом.
   if (SITE.formEndpoint) {
+    const btn = e.target.querySelector("button[type=submit]"); btn.disabled = true; say("Отправляем…");
     try {
-      const r = await fetch(SITE.formEndpoint, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({name, contact: c, goods: goodsTxt, volume: vol, text})});
-      if (!r.ok) throw 0;
-      e.target.reset(); return say("Спасибо! Заявка отправлена, скоро свяжемся.");
-    } catch (_) { return say("Не получилось отправить. Напишите нам в Telegram @izipack или позвоните."); }
+      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 10000);
+      const r = await fetch(SITE.formEndpoint, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, signal: ctl.signal,
+        body: JSON.stringify({name, contact: c, goods: goodsTxt, volume: vol, text, website: document.getElementById("website").value})});
+      clearTimeout(t);
+      if (!r.ok || !(await r.json()).ok) throw 0;
+      btn.disabled = false; e.target.reset();
+      return say("Спасибо! Заявка отправлена, менеджер скоро свяжется с вами.");
+    } catch (_) { btn.disabled = false; }
   }
   if (SITE.telegram) { location.href = "https://t.me/" + SITE.telegram + "?text=" + encodeURIComponent(text); return; }
   say("Напишите нам в Telegram или позвоните.");
