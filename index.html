@@ -403,6 +403,13 @@ section[id]{scroll-margin-top:76px}
 .wh div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .wh h3{font-size:22px}
 .wh p{grid-column:1/-1;font-size:14px;color:var(--muted)}
+.wh-media{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;background:var(--ink);color:#fff;text-decoration:none;transition:transform .2s}
+.wh-media:hover{transform:translateY(-2px)}
+.wh-play{flex:none;width:40px;height:40px;border-radius:50%;background:var(--orange);position:relative}
+.wh-play::after{content:"";position:absolute;left:16px;top:12px;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.wh-media b{display:block;font-size:16px}
+.wh-media small{display:block;font-size:13px;color:#A8A8A8}
+.wh-media i{margin-left:auto;font-style:normal;font-size:20px;color:var(--orange)}
 .ok{font-size:12px;font-weight:700;color:#1E9E5A;background:#E6F6ED;border-radius:99px;padding:4px 10px}
 .ok.hub{color:#fff;background:var(--orange)}
 
@@ -846,6 +853,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div><h3>Москва</h3><span class="ok hub">основной хаб</span><p>Приёмка, все упаковочные услуги, заведение остатков в WMS и отгрузка заказов.</p></div>
         <div><h3>Казань</h3><span class="ok">работает</span><p>Хранение и отгрузка заказов FBS на сортировочные центры и ПВЗ региона.</p></div>
         <div><h3>Краснодар</h3><span class="ok">работает</span><p>Хранение и отгрузка заказов FBS на сортировочные центры и ПВЗ юга.</p></div>
+        <a class="wh-media" href="https://t.me/izipack" target="_blank" rel="noopener"><span class="wh-play" aria-hidden="true"></span><span><b>Фото и видео складов</b><small>смотреть в нашем Telegram</small></span><i aria-hidden="true">→</i></a>
       </div>
     </div>
   </div>
