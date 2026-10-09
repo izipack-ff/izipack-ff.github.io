@@ -411,7 +411,78 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .chip input:checked+span{border-color:var(--orange);background:var(--soft);color:var(--ink)}
 .chip input:checked+span small{color:var(--orange-dark)}
 .chip input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
-.tier{font-size:13px;color:var(--muted)}
+/* Калькулятор на несколько товаров */
+.tierbar{background:#fff;border-radius:16px;padding:16px 18px;display:grid;gap:10px}
+.tb-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;color:var(--ink)}
+.tb-head b{font:700 20px var(--display);text-transform:uppercase;letter-spacing:.02em}
+.tb-head #totN{color:var(--orange)}
+.tb-hint{font-size:13px;font-weight:600;color:var(--orange-dark)}
+.tb-track{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tb-track span{display:grid;gap:2px;justify-items:center;padding:8px 4px;border-radius:10px;background:var(--card);color:var(--muted);transition:background .3s,color .3s,transform .3s}
+.tb-track em{font-style:normal;font-size:12px;font-weight:600}
+.tb-track b{font:700 17px var(--display);color:var(--ink)}
+.tb-track span.on{background:var(--orange);color:#fff;transform:translateY(-2px)}
+.tb-track span.on b{color:#fff}
+.tb-cap{margin:0;font-size:12px;color:var(--muted)}
+.pcs{display:grid;gap:12px}
+.pc{background:#fff;border-radius:16px;padding:14px 16px 12px;display:grid;gap:12px;animation:pcIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pcIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pc-top{display:flex;align-items:center;gap:10px}
+.pc-num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:700 14px var(--display)}
+.pc input.pc-name{flex:1;min-width:0;border:0;border-bottom:1.5px dashed var(--line);border-radius:0;padding:4px 2px;font:700 16px var(--body);background:transparent}
+.pc input.pc-name:focus{outline:0;border-bottom-color:var(--orange)}
+.pc-del{flex:none;width:30px;height:30px;border-radius:50%;border:0;background:var(--card);color:var(--muted);font-size:18px;line-height:1;cursor:pointer}
+.pc-del:hover{background:#FFE3D4;color:var(--orange-dark)}
+.pcs.single .pc-del{display:none}
+.pc-grid{display:grid;grid-template-columns:auto 1fr;gap:12px 18px;align-items:end}
+.pc-f{display:grid;gap:6px;min-width:0}
+.pc-l{font-size:12px;font-weight:600;color:var(--muted)}
+.step{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;width:max-content}
+.step button{width:38px;height:40px;border:0;background:var(--card);font:700 20px var(--body);color:var(--ink);cursor:pointer}
+.step button:hover{background:#FFE3D4;color:var(--orange-dark)}
+.pc .step input{width:64px;border:0;border-radius:0;padding:8px 4px;text-align:center;font:700 17px var(--body);-moz-appearance:textfield}
+.step input::-webkit-outer-spin-button,.step input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg span{display:grid;justify-items:center;padding:5px 2px;font-size:13px;font-weight:700;color:var(--ink);border-left:1px solid var(--line);transition:background .2s}
+.seg label:first-child span{border-left:0}
+.seg span small{font-size:10.5px;font-weight:600;color:var(--muted)}
+.seg input:checked+span{background:var(--orange);color:#fff}
+.seg input:checked+span small{color:#FFE3D4}
+.seg input:focus-visible+span,.mchip input:focus-visible+span{outline:3px solid var(--orange);outline-offset:-3px}
+.mchips{display:flex;flex-wrap:wrap;gap:6px}
+.mchip{position:relative}
+.mchip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.mchip span{display:block;padding:6px 10px;border-radius:99px;border:1.5px solid var(--line);font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
+.mchip span i{font-style:normal;color:#A0A0A0;font-weight:500;margin-left:4px}
+.mchip input:checked+span{border-color:var(--orange);background:var(--soft);color:var(--ink)}
+.mchip input:checked+span i{color:var(--orange-dark)}
+.mchip input:checked+span::before{content:"✓ ";color:var(--orange)}
+.pc-sum{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px;font-size:14px;color:var(--muted)}
+.pc-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
+.pc-add{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;border:2px dashed #D3D3D3;border-radius:16px;background:transparent;font:700 16px var(--body);color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
+.pc-add span{width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-size:20px;line-height:1}
+.pc-add:hover{border-color:var(--orange);background:#fff}
+.pc-add[hidden]{display:none}
+.bd li.bd-h{color:#fff;font-weight:600;border-bottom-style:solid}
+.bd li span:last-child{white-space:nowrap}
+@media (max-width:520px){
+  .pc-grid{grid-template-columns:1fr}
+  .tb-track em{font-size:11px}.tb-track b{font-size:15px}
+  .panel{padding:16px}
+  .pc{padding:12px}
+  .mchip span{padding:5px 9px;font-size:12px}
+}
+/* На телефоне итог виден внизу экрана, пока листаешь карточки товаров */
+.calc-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--ink);color:#fff;border-radius:16px;padding:10px 12px 10px 16px;box-shadow:0 16px 40px -12px rgba(0,0,0,.6);text-decoration:none;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.calc-bar.show{transform:none}
+.calc-bar small{display:block;font-size:11px;color:#9A9A9A;font-weight:600}
+.calc-bar b{font:700 22px var(--display);color:var(--orange);font-variant-numeric:tabular-nums}
+.calc-bar span.cb-m{font-size:13px;color:#DADADA}
+.calc-bar i{font-style:normal;background:var(--orange);color:#fff;border-radius:10px;padding:8px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+@media (max-width:820px){.calc-bar{display:flex}}
+
 .result{background:var(--ink);color:#fff;border-radius:22px;padding:28px;display:grid;gap:16px;position:sticky;top:96px}
 .result small{font:600 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:#9A9A9A}
 .big{font:700 clamp(46px,6vw,64px)/1 var(--display);color:var(--orange);font-variant-numeric:tabular-nums}
@@ -771,45 +842,27 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="sec-head">
       <span class="eyebrow">Калькулятор FBS</span>
       <h2>Сколько стоит <span class="tape">один заказ</span></h2>
-      <p class="lead">Чем больше заказов в день, тем дешевле сборка. Расчёт по нашему прайсу, точную сумму подтвердит менеджер по ТЗ.</p>
+      <p class="lead">Добавьте все товары, которые хотите передать нам. Чем больше заказов в день в сумме, тем дешевле сборка каждого. Точную сумму подтвердит менеджер по ТЗ.</p>
     </div>
     <div class="calc">
       <form class="panel" id="calcForm" onsubmit="return false">
-        <div class="field">
-          <label for="perDay">Заказов в день</label>
-          <div class="row">
-            <input type="range" id="perDayRange" min="1" max="150" value="25" aria-label="Заказов в день, ползунок">
-            <input type="number" id="perDay" min="1" max="5000" value="25">
+        <div class="tierbar">
+          <div class="tb-head"><b>Всего <span id="totN">0</span> <span id="totW">заказов</span> в день</b><span class="tb-hint" id="tbHint"></span></div>
+          <div class="tb-track" id="tbTrack">
+            <span><em>до 10</em><b>20 ₽</b></span><span><em>11–30</em><b>15 ₽</b></span><span><em>31–50</em><b>10 ₽</b></span><span><em>51+</em><b>5 ₽</b></span>
           </div>
-          <span class="tier" id="tierNote"></span>
+          <p class="tb-cap">Цена сборки считается по сумме заказов всех ваших товаров.</p>
         </div>
-        <fieldset>
-          <legend>Размер товара в упаковке (сумма трёх сторон)</legend>
-          <div class="chips">
-            <label class="chip"><input type="radio" name="size" id="sz30" value="20"><span>до 30 см<small>доставка 20 ₽</small></span></label>
-            <label class="chip"><input type="radio" name="size" id="sz60" value="30" checked><span>до 60 см<small>доставка 30 ₽</small></span></label>
-            <label class="chip"><input type="radio" name="size" id="sz90" value="50"><span>до 90 см<small>доставка 50 ₽</small></span></label>
-            <label class="chip"><input type="radio" name="size" id="sz120" value="100"><span>до 120 см<small>доставка 100 ₽</small></span></label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Подготовка товара (по прайсу FBO, за единицу)</legend>
-          <div class="chips" id="prep">
-            <label class="chip"><input type="checkbox" id="pRecv" data-name="Приём и пересчёт" data-p="2" data-from checked><span>Приём и пересчёт<small>от 2 ₽</small></span></label>
-            <label class="chip"><input type="checkbox" id="pDef" data-name="Проверка на брак" data-p="2" data-from><span>Проверка на брак<small>от 2 ₽</small></span></label>
-            <label class="chip"><input type="checkbox" id="pLbl" data-name="Маркировка" data-p="6" checked><span>Маркировка<small>6 ₽</small></span></label>
-            <label class="chip"><input type="checkbox" id="pBopp" data-name="Упаковка в БОПП / ZIP / курьер-пакет" data-p="3" data-from><span>БОПП / ZIP / курьер-пакет<small>от 3 ₽</small></span></label>
-            <label class="chip"><input type="checkbox" id="pPvd" data-name="Запайка в ПВД / ВПП / ПОФ" data-p="5" data-from><span>Запайка в ПВД / ВПП / ПОФ<small>от 5 ₽</small></span></label>
-            <label class="chip"><input type="checkbox" id="pCz" data-name="Честный знак" data-p="8"><span>Честный знак<small>8 ₽</small></span></label>
-          </div>
-        </fieldset>
+        <div class="pcs" id="pcs"></div>
+        <button type="button" class="pc-add" id="pcAdd"><span>+</span> Добавить товар</button>
       </form>
-      <aside class="result" aria-live="polite">
-        <small>Один заказ под ключ</small>
+      <a class="calc-bar" id="calcBar" href="#calcResult" aria-hidden="true" tabindex="-1"><span><small>Средняя цена заказа</small><b id="cbOne">—</b> <span class="cb-m" id="cbMonth"></span></span><i>Итог ↓</i></a>
+      <aside class="result" id="calcResult" aria-live="polite">
+        <small>Средняя цена заказа под ключ</small>
         <div class="big" id="perOrder">—</div>
         <div><small>В месяц (30 дней)</small><div class="month" id="perMonth">—</div></div>
         <ul class="bd" id="bd"></ul>
-        <a class="btn btn-orange" href="#order">Получить точный расчёт</a>
+        <a class="btn btn-orange" href="#order" id="calcSend">Получить точный расчёт</a>
         <p class="note">Цены со знаком «от» зависят от габаритов. Хранение считается отдельно: 10 ₽ за короб в сутки.</p>
       </aside>
     </div>
@@ -1062,29 +1115,116 @@ const SITE = {
 
 // ===== Тарифы FBS (из прайса IZIPACK) =====
 const tier = n => n > 50 ? 5 : n > 30 ? 10 : n > 10 ? 15 : 20;
-const tierText = n => n > 50 ? "свыше 50 заказов в день" : n > 30 ? "от 31 до 50 заказов в день" : n > 10 ? "от 11 до 30 заказов в день" : "до 10 заказов в день";
 const rub = n => n.toLocaleString("ru-RU") + " ₽";
 
-const perDay = document.getElementById("perDay"), perDayR = document.getElementById("perDayRange");
-function calc(){
-  const n = Math.max(1, parseInt(perDay.value, 10) || 1);
-  const proc = tier(n);
-  const deliv = +document.querySelector('input[name="size"]:checked').value;
-  const prep = [...document.querySelectorAll("#prep input:checked")];
-  let hasFrom = false;
-  const prepSum = prep.reduce((s, i) => { if (i.hasAttribute("data-from")) hasFrom = true; return s + +i.dataset.p; }, 0);
-  const one = proc + deliv + prepSum;
-  const pre = hasFrom ? "от " : "";
-  document.getElementById("perOrder").textContent = pre + rub(one);
-  document.getElementById("perMonth").textContent = pre + rub(one * n * 30);
-  document.getElementById("tierNote").textContent = "Сборка заказа: " + proc + " ₽ (" + tierText(n) + ")";
-  const rows = [["Сборка заказа", proc], ["Доставка до склада", deliv], ...prep.map(i => [i.dataset.name, i.dataset.p, i.hasAttribute("data-from")])];
-  document.getElementById("bd").innerHTML = rows.map(r => `<li><span>${r[0]}</span><span>${r[2] ? "от " : ""}${r[1]} ₽</span></li>`).join("");
+const SIZES = [["до 30 см", 20], ["до 60 см", 30], ["до 90 см", 50], ["до 120 см", 100]];
+const PREP = [
+  {n: "Приём и пересчёт", p: 2, from: 1, on: 1},
+  {n: "Проверка на брак", p: 2, from: 1},
+  {n: "Маркировка", p: 6, on: 1},
+  {n: "БОПП / ZIP / курьер-пакет", p: 3, from: 1},
+  {n: "Запайка в ПВД / ВПП / ПОФ", p: 5, from: 1},
+  {n: "Честный знак", p: 8}
+];
+const MAX_GOODS = 12;
+const pcs = document.getElementById("pcs"), pcAdd = document.getElementById("pcAdd");
+const esc = t => t.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const word = n => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? "заказ" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "заказа" : "заказов"; };
+let uid = 0;
+
+// Карточка товара. Новый товар копирует размер и услуги предыдущего, чтобы не нажимать заново.
+function addGood(copy){
+  const k = ++uid, prev = copy || {size: 1, prep: PREP.map(x => !!x.on), n: 25};
+  const el = document.createElement("div");
+  el.className = "pc"; el.dataset.k = k;
+  el.innerHTML = `
+    <div class="pc-top"><span class="pc-num"></span><input class="pc-name" type="text" maxlength="40" aria-label="Название товара"><button type="button" class="pc-del" aria-label="Удалить товар">×</button></div>
+    <div class="pc-grid">
+      <div class="pc-f"><span class="pc-l">Заказов в день</span><div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><input type="number" class="pc-n" min="0" max="5000" inputmode="numeric" value="${prev.n}" aria-label="Заказов в день"><button type="button" data-d="1" aria-label="Больше">+</button></div></div>
+      <div class="pc-f"><span class="pc-l">Размер в упаковке (сумма трёх сторон)</span><div class="seg">${SIZES.map((z, i) => `<label><input type="radio" name="sz${k}" value="${i}"${i === prev.size ? " checked" : ""}><span>${z[0].replace("до ", "≤")}<small>${z[1]} ₽</small></span></label>`).join("")}</div></div>
+    </div>
+    <div class="pc-f"><span class="pc-l">Подготовка, за единицу</span><div class="mchips">${PREP.map((x, i) => `<label class="mchip"><input type="checkbox" value="${i}"${prev.prep[i] ? " checked" : ""}><span>${x.n}<i>${x.from ? "от " : ""}${x.p} ₽</i></span></label>`).join("")}</div></div>
+    <div class="pc-sum"><span>За заказ <b class="pc-one"></b></span><span>В месяц <b class="pc-month"></b></span></div>`;
+  pcs.appendChild(el);
+  renumber(); calc();
+  return el;
 }
-perDay.addEventListener("input", () => { perDayR.value = Math.min(150, perDay.value); calc(); });
-perDayR.addEventListener("input", () => { perDay.value = perDayR.value; calc(); });
-document.getElementById("calcForm").addEventListener("change", calc);
-calc();
+function readGood(el){
+  return {
+    el, name: el.querySelector(".pc-name").value.trim() || el.querySelector(".pc-name").placeholder,
+    n: Math.max(0, Math.min(5000, parseInt(el.querySelector(".pc-n").value, 10) || 0)),
+    size: +el.querySelector("input[type=radio]:checked").value,
+    prep: [...el.querySelectorAll(".mchip input")].map(i => i.checked)
+  };
+}
+function renumber(){
+  [...pcs.children].forEach((el, i) => { el.querySelector(".pc-num").textContent = i + 1; el.querySelector(".pc-name").placeholder = "Товар " + (i + 1); });
+  pcs.classList.toggle("single", pcs.children.length === 1);
+  pcAdd.hidden = pcs.children.length >= MAX_GOODS;
+}
+let calcSummary = "";
+function calc(){
+  const goods = [...pcs.children].map(readGood);
+  const total = goods.reduce((s, g) => s + g.n, 0);
+  const proc = tier(Math.max(1, total));
+  let dayCost = 0, hasFrom = false;
+  goods.forEach(g => {
+    const prep = PREP.filter((x, i) => g.prep[i]);
+    g.from = prep.some(x => x.from);
+    g.one = proc + SIZES[g.size][1] + prep.reduce((s, x) => s + x.p, 0);
+    dayCost += g.one * g.n; hasFrom = hasFrom || g.from;
+    g.el.querySelector(".pc-one").textContent = (g.from ? "от " : "") + rub(g.one);
+    g.el.querySelector(".pc-month").textContent = (g.from ? "от " : "") + rub(g.one * g.n * 30);
+  });
+  const pre = hasFrom ? "от " : "";
+  document.getElementById("perOrder").textContent = total ? pre + rub(Math.round(dayCost / total)) : "—";
+  document.getElementById("perMonth").textContent = total ? pre + rub(dayCost * 30) : "—";
+  document.getElementById("cbOne").textContent = total ? pre + rub(Math.round(dayCost / total)) : "—";
+  document.getElementById("cbMonth").textContent = total ? "· " + pre + rub(dayCost * 30) + " в мес." : "";
+  document.getElementById("totN").textContent = total;
+  document.getElementById("totW").textContent = word(total);
+  const t = total > 50 ? 3 : total > 30 ? 2 : total > 10 ? 1 : 0;
+  [...document.querySelectorAll("#tbTrack span")].forEach((el, i) => el.classList.toggle("on", i === t));
+  const next = [11, 31, 51][t];
+  document.getElementById("tbHint").textContent = next ? `Ещё ${next - total} в день, и сборка будет ${tier(next)} ₽` : "Самая низкая цена сборки";
+  document.getElementById("bd").innerHTML =
+    `<li class="bd-h"><span>Сборка заказа</span><span>${proc} ₽</span></li>` +
+    goods.map(g => `<li><span>${esc(g.name)} · ${g.n} в день</span><span>${g.from ? "от " : ""}${rub(g.one)}</span></li>`).join("");
+  calcSummary = goods.map(g => `${g.name}: ${g.n} ${word(g.n)} в день, ${SIZES[g.size][0]}` + (PREP.filter((x, i) => g.prep[i]).length ? ", " + PREP.filter((x, i) => g.prep[i]).map(x => x.n.toLowerCase()).join(", ") : "")).join("\n") +
+    `\nИтого: ${total} ${word(total)} в день, ${pre}${rub(dayCost * 30)} в месяц`;
+}
+pcs.addEventListener("input", calc);
+pcs.addEventListener("change", e => {
+  const i = e.target.closest(".pc-n"); if (i) i.value = Math.max(0, Math.min(5000, parseInt(i.value, 10) || 0));
+  calc();
+});
+pcs.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const card = b.closest(".pc");
+  if (b.dataset.d) { const i = card.querySelector(".pc-n"); i.value = Math.max(0, Math.min(5000, (parseInt(i.value, 10) || 0) + +b.dataset.d)); calc(); }
+  if (b.classList.contains("pc-del") && pcs.children.length > 1) { card.remove(); renumber(); calc(); }
+});
+pcAdd.addEventListener("click", () => {
+  const last = pcs.lastElementChild ? readGood(pcs.lastElementChild) : null;
+  const el = addGood(last && {size: last.size, prep: last.prep, n: 10});
+  el.querySelector(".pc-name").focus({preventScroll: true});
+  el.scrollIntoView({behavior: "smooth", block: "nearest"});
+});
+// «Получить точный расчёт»: переносим расчёт в заявку, чтобы не вводить заново
+document.getElementById("calcSend").addEventListener("click", () => {
+  const goods = [...pcs.children].map(readGood), total = goods.reduce((s, g) => s + g.n, 0);
+  const named = goods.map(g => g.el.querySelector(".pc-name").value.trim()).filter(Boolean);
+  const gi = document.getElementById("goods"); if (named.length && !gi.value.trim()) gi.value = named.join(", ");
+  const v = total > 50 ? "v4" : total > 30 ? "v3" : total > 10 ? "v2" : "v1"; document.getElementById(v).checked = true;
+});
+addGood();
+// Плашка с итогом на телефоне: видна, пока на экране карточки товаров, и прячется у блока итога
+if ("IntersectionObserver" in window){
+  const bar = document.getElementById("calcBar"); let inForm = false, inRes = false;
+  const upd = () => bar.classList.toggle("show", inForm && !inRes);
+  new IntersectionObserver(e => { inForm = e[0].isIntersecting; upd(); }).observe(document.getElementById("calcForm"));
+  new IntersectionObserver(e => { inRes = e[0].isIntersecting; upd(); }, {threshold: .2}).observe(document.getElementById("calcResult"));
+}
 
 
 // ===== Переход в FBO из первого экрана: раскрываем главные блоки прайса =====
@@ -1162,7 +1302,7 @@ document.getElementById("leadForm").addEventListener("submit", async e => {
   const vol = (document.querySelector('input[name="vol"]:checked') || {}).value;
   if (!c) return say("Укажите телефон или Telegram, чтобы мы могли ответить.");
   if (!document.getElementById("agree").checked) return say("Отметьте согласие на обработку данных.");
-  const text = "Заявка с сайта IZIPACK\nИмя: " + (name || "—") + "\nКонтакт: " + c + "\nТовар: " + (goodsTxt || "—") + "\nЗаказов в день: " + vol;
+  const text = "Заявка с сайта IZIPACK\nИмя: " + (name || "—") + "\nКонтакт: " + c + "\nТовар: " + (goodsTxt || "—") + "\nЗаказов в день: " + vol + (calcSummary ? "\n\nРасчёт с калькулятора:\n" + calcSummary : "");
   if (SITE.formEndpoint) {
     try {
       const r = await fetch(SITE.formEndpoint, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({name, contact: c, goods: goodsTxt, volume: vol, text})});
