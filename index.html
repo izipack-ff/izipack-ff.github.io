@@ -521,6 +521,7 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 /* забор груза */
 .pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .pick .pt td:nth-child(2){color:var(--ink)}
+@media (max-width:520px){.pick .pt td{padding:12px 14px}.pick .pt td:first-child{white-space:nowrap}.pick .pt td:last-child{white-space:normal}.pick .nw{display:inline-block;white-space:nowrap}}
 .truck{display:flex;align-items:center;gap:10px}
 .truck svg{flex:none}
 
@@ -604,7 +605,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h1 aria-label="Фулфилмент для Wildberries от 25 ₽ за заказ"><span>Фулфилмент</span><span class="h1-row">для <a class="ptag" href="#calc" aria-hidden="true" tabindex="-1"><span class="ptag-bg"></span><i class="ptag-hole"></i><span class="ptag-t"><small>от</small><b>25 ₽</b><small>за заказ</small></span></a></span><span>Wildberries</span></h1>
       <div class="modes" role="group" aria-label="Схема работы">
         <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><i class="mode-go" aria-hidden="true">→</i></a>
-        <a class="mode m-fbo" href="#fbo" data-open-fbo><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><i class="mode-go" aria-hidden="true">→</i></a>
+        <a class="mode m-fbo" href="#fbo"><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><i class="mode-go" aria-hidden="true">→</i></a>
       </div>
       <p class="hero-sub">Работаем по обеим схемам. <b>Собственная WMS с полной интеграцией с Wildberries</b>: все заказы FBS и остатки видим онлайн.</p>
       <ul class="badges">
@@ -925,14 +926,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <p class="lead">Принимаем, проверяем, маркируем и упаковываем товар, формируем короба и везём на склады маркетплейсов. Эти же услуги нужны при приёмке товара для FBS.</p>
     </div>
     <div class="more">
-      <details>
+      <details name="fbo">
         <summary>Приёмка товара на склад</summary>
         <div class="inner"><table>
           <tr><td>Приём грузоместа без утилизации мусора</td><td>100 ₽</td></tr>
           <tr><td>Приём грузоместа с утилизацией мусора</td><td>150 ₽</td></tr>
         </table></div>
       </details>
-      <details>
+      <details name="fbo">
         <summary>Обработка товара</summary>
         <div class="inner"><table>
           <tr><td>Визуальная внешняя проверка на брак</td><td>от 2 ₽</td></tr>
@@ -959,7 +960,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <tr><td>Утилизация старой упаковки</td><td>3 ₽</td></tr>
         </table><p class="cap">* Цена зависит от габаритов товара.</p></div>
       </details>
-      <details>
+      <details name="fbo">
         <summary>Всё для одежды</summary>
         <div class="inner"><table>
           <tr><th>Услуга, ₽ за единицу</th><th>1 слой</th><th>2 слоя</th><th>3 слоя</th></tr>
@@ -971,7 +972,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <tr><td>Биркование (наша бирка)</td><td>от 6</td><td>от 6</td><td>от 6</td></tr>
         </table></div>
       </details>
-      <details>
+      <details name="fbo">
         <summary>Доставка FBO и хранение</summary>
         <div class="inner"><table>
           <tr><td>Доставка до склада WB, 1 коробка до 60×40×40 см</td><td>от 300 ₽</td></tr>
@@ -980,7 +981,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <tr><td>Хранение короба 60×40×40 см свыше 3 суток, в сутки</td><td>10 ₽</td></tr>
         </table><p class="cap">Если хранение затянулось по вашей инициативе, после 3 суток оно платное.</p></div>
       </details>
-      <details>
+      <details name="fbo">
         <summary>Прочие услуги</summary>
         <div class="inner"><table>
           <tr><td>Сфотографировать товар по просьбе клиента</td><td>100 ₽</td></tr>
@@ -1004,11 +1005,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>С ОРК: Южные ворота, ТЯК Москва, Садовод</h3>
         <table>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td>водитель 2 000 ₽ + заезд 1 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td><span class="nw">водитель 2&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 1&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td>водитель 3 000 ₽ + заезд 2 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td><span class="nw">водитель 3&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 2&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td>водитель 4 000 ₽ + заезд 4 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td><span class="nw">водитель 4&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 4&nbsp;000&nbsp;₽</span></td></tr>
         </table>
         <p class="cap">Плюс грузчики: 300 ₽ за одно место.</p>
       </div>
@@ -1016,11 +1017,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>С другого оптового комплекса</h3>
         <table>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td>водитель 3 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td><span class="nw">водитель 3&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td>водитель 4 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td><span class="nw">водитель 4&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td>водитель 5 000 ₽</td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td><span class="nw">водитель 5&nbsp;000&nbsp;₽</span></td></tr>
         </table>
         <p class="cap">Плюс расходы на месте.</p>
       </div>
@@ -1137,7 +1138,7 @@ function addGood(copy){
       <div class="pc-f"><span class="pc-l">Размер в упаковке (сумма трёх сторон)</span><div class="seg">${SIZES.map((z, i) => `<label><input type="radio" name="sz${k}" value="${i}"${i === prev.size ? " checked" : ""}><span>${z[0].replace("до ", "≤")}<small>${z[1]} ₽</small></span></label>`).join("")}</div></div>
     </div>
     <div class="pc-f"><span class="pc-l">Товар приходит к нам</span><div class="seg seg2"><label><input type="radio" name="pk${k}" value="0"${prev.raw ? "" : " checked"}><span>Упакованным<small>приём и пересчёт&nbsp;${PACKED}&nbsp;₽</small></span></label><label><input type="radio" name="pk${k}" value="1"${prev.raw ? " checked" : ""}><span>Без упаковки<small>подготовка по&nbsp;прайсу FBO</small></span></label></div></div>
-    <p class="pc-fbo">Приёмку, маркировку и упаковку такого товара считаем по <a href="#fbo" data-open-fbo>прайсу FBO →</a> Ниже только сборка и доставка заказа.</p>
+    <p class="pc-fbo">Приёмку, маркировку и упаковку такого товара считаем по <a href="#fbo">прайсу FBO →</a> Ниже только сборка и доставка заказа.</p>
     <div class="pc-sum"><span>За заказ <b class="pc-one"></b></span><span>В месяц <b class="pc-month"></b></span></div>`;
   pcs.appendChild(el);
   renumber(); calc();
@@ -1222,12 +1223,7 @@ if ("IntersectionObserver" in window){
 }
 
 
-// ===== Переход в FBO из первого экрана: раскрываем главные блоки прайса =====
-document.addEventListener("click",e=>{
-  if(!e.target.closest("[data-open-fbo], a[href='#fbo']")) return;
-  const d=[...document.querySelectorAll("#fbo details")];
-  [0,3].forEach(k=>d[k]&&(d[k].open=true));
-});
+
 
 // ===== Анимация шагов «Как работает» =====
 (function(){
