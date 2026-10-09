@@ -1302,10 +1302,11 @@ document.getElementById("leadForm").addEventListener("submit", async e => {
     const btn = e.target.querySelector("button[type=submit]"); btn.disabled = true; say("Отправляем…");
     try {
       const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 10000);
-      const r = await fetch(SITE.formEndpoint, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, signal: ctl.signal,
+      // Google отвечает через переадресацию, и браузер не всегда даёт прочитать ответ. Поэтому ответ не читаем:
+      // если запрос ушёл, заявка доставлена; если сеть не пустила, ниже откроется Telegram.
+      await fetch(SITE.formEndpoint, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain;charset=utf-8"}, signal: ctl.signal,
         body: JSON.stringify({name, contact: c, goods: goodsTxt, volume: vol, text, website: document.getElementById("website").value})});
       clearTimeout(t);
-      if (!r.ok || !(await r.json()).ok) throw 0;
       btn.disabled = false; e.target.reset();
       return say("Спасибо! Заявка отправлена, менеджер скоро свяжется с вами.");
     } catch (_) { btn.disabled = false; }
