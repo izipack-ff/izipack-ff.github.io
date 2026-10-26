@@ -478,6 +478,14 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .seg.seg2{grid-template-columns:1fr 1fr}
 .seg.seg2 span{padding:8px 6px;font-size:14px;text-align:center}
 .seg.seg2 span small{font-size:11.5px;text-wrap:balance}
+.dims{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dims input{width:58px;border:1.5px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center;font:700 16px var(--body);-moz-appearance:textfield}
+.dims input::-webkit-outer-spin-button,.dims input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.dims input:focus{outline:0;border-color:var(--orange)}
+.dims i{font-style:normal;color:var(--muted);font-weight:600}
+.dims .pc-vol{margin-left:4px;font-size:13px;font-weight:600;color:var(--muted)}
+.dims .pc-vol b{color:var(--ink)}
+.pc-sw{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
 .pc-fbo{display:none;margin:0;padding:9px 12px;border-radius:10px;background:var(--soft);font-size:13px;line-height:1.4;color:var(--ink)}
 .pc-fbo a{color:var(--orange-dark);font-weight:700;white-space:nowrap}
 .pc.raw .pc-fbo{display:block}
@@ -491,7 +499,7 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .bd li.bd-h{color:#fff;font-weight:600;border-bottom-style:solid}
 .bd li span:last-child{white-space:nowrap}
 @media (max-width:520px){
-  .pc-grid{grid-template-columns:1fr}
+  .pc-grid,.pc-sw{grid-template-columns:1fr}
   .tb-track em{font-size:11px}.tb-track b{font-size:15px}
   .panel{padding:16px}
   .pc{padding:12px}
@@ -523,6 +531,9 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .pt tr:nth-child(even) td{background:#FAFAFA}
 .pt td:last-child{text-align:right;font-weight:700;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums}
 .pt .cap{font-size:13px;color:var(--muted);padding:10px 18px 14px;border-top:1px solid var(--line)}
+.pt th{padding:8px 18px;border-top:1px solid var(--line);text-align:right;font:600 12px var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.pt th:first-child{text-align:left}
+.pt td.r{text-align:right;font-weight:700;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums}
 .price-foot{margin-top:18px;font-size:14px;color:var(--muted)}
 
 /* FBO и прочее */
@@ -875,9 +886,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="tierbar">
           <div class="tb-head"><b>Всего <span id="totN">0</span> <span id="totW">заказов</span> в день</b><span class="tb-hint" id="tbHint"></span></div>
           <div class="tb-track" id="tbTrack">
-            <span><em>до 10</em><b>20 ₽</b></span><span><em>11–30</em><b>15 ₽</b></span><span><em>31–50</em><b>10 ₽</b></span><span><em>51+</em><b>5 ₽</b></span>
+            <span><em>до 50</em><b>20 ₽</b></span><span><em>51–100</em><b>15 ₽</b></span><span><em>101–200</em><b>10 ₽</b></span><span><em>201+</em><b>5 ₽</b></span>
           </div>
-          <p class="tb-cap">Цена сборки считается по сумме заказов всех ваших товаров.</p>
+          <p class="tb-cap">Цена сборки считается по сумме заказов всех ваших товаров. Товар с КИЗ (Честный знак) +5 ₽.</p>
         </div>
         <div class="pcs" id="pcs"></div>
         <button type="button" class="pc-add" id="pcAdd"><span>+</span> Добавить товар</button>
@@ -906,39 +917,41 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="pt">
         <h3>Обработка и сборка заказа через систему интеграции, 1 ед.</h3>
         <table>
-          <tr><td>до 10 заказов в день</td><td>20 ₽</td></tr>
-          <tr><td>от 11 до 30 заказов в день</td><td>15 ₽</td></tr>
-          <tr><td>от 31 до 50 заказов в день</td><td>10 ₽</td></tr>
-          <tr><td>свыше 50 заказов в день</td><td>5 ₽</td></tr>
+          <tr><th>Заказов в день</th><th>без КИЗ</th><th>с КИЗ</th></tr>
+          <tr><td>от 1 до 50</td><td class="r">20 ₽</td><td>25 ₽</td></tr>
+          <tr><td>от 51 до 100</td><td class="r">15 ₽</td><td>20 ₽</td></tr>
+          <tr><td>от 101 до 200</td><td class="r">10 ₽</td><td>15 ₽</td></tr>
+          <tr><td>от 201</td><td class="r">5 ₽</td><td>10 ₽</td></tr>
         </table>
         <p class="cap">Упаковочные услуги в стоимость обработки не входят.</p>
       </div>
       <div class="pt">
-        <h3>Доставка до склада маркетплейса (поштучно)</h3>
+        <h3>Доставка до склада маркетплейса</h3>
         <table>
-          <tr><td>Сумма сторон товара в упаковке до 30 см</td><td>20 ₽</td></tr>
-          <tr><td>Сумма сторон товара в упаковке до 60 см</td><td>30 ₽</td></tr>
-          <tr><td>Сумма сторон товара в упаковке до 90 см</td><td>50 ₽</td></tr>
-          <tr><td>Сумма сторон товара в упаковке до 120 см</td><td>100 ₽</td></tr>
+          <tr><td>Первый литр объёма товара в упаковке</td><td>15 ₽</td></tr>
+          <tr><td>Каждый следующий литр</td><td>+5 ₽</td></tr>
         </table>
+        <p class="cap">Объём в литрах: длина × ширина × высота в сантиметрах, делённое на 1000. Например, 20×15×10 см = 3 л = 25 ₽.</p>
       </div>
       <div class="pt">
         <h3>Хранение товара</h3>
         <table>
           <tr><td>Хранение, 1 короб / сутки</td><td>10 ₽</td></tr>
-          <tr><td>Хранение, 1 паллета / сутки</td><td>150 ₽</td></tr>
+          <tr><td>Хранение, 1–3 паллеты / сутки</td><td>150 ₽</td></tr>
+          <tr><td>Хранение, 4–9 паллет / сутки</td><td>125 ₽</td></tr>
+          <tr><td>Хранение, от 10 паллет / сутки</td><td>100 ₽</td></tr>
         </table>
+        <p class="cap">Цена за 1 паллету в сутки. Тариф зависит от количества паллет на хранении.</p>
       </div>
       <div class="pt">
-        <h3>Транспортировка до региональных складов</h3>
+        <h3>Доставка в регионы</h3>
         <table>
-          <tr><td>Формирование короба (вкл. расклейка поставок + сам короб)</td><td>120 ₽</td></tr>
-          <tr><td>Казань — короб</td><td>600 ₽</td></tr>
-          <tr><td>Казань — паллета (с паллетированием)</td><td>7 000 ₽</td></tr>
-          <tr><td>Краснодар — короб</td><td>800 ₽</td></tr>
-          <tr><td>Краснодар — паллета (с паллетированием)</td><td>9 000 ₽</td></tr>
+          <tr><th>Город</th><th>короб</th><th>паллета</th></tr>
+          <tr><td>Казань</td><td class="r">600 ₽</td><td>7 000 ₽</td></tr>
+          <tr><td>Краснодар</td><td class="r">800 ₽</td><td>9 000 ₽</td></tr>
+          <tr><td>Формирование короба на отгрузку</td><td class="r">100 ₽</td><td></td></tr>
         </table>
-        <p class="cap">Расценки соответствуют стандартным тарифам транспортировки по FBO.</p>
+        <p class="cap">Все отгрузки на склады идут в коробах 60×40×40 см. Другие габариты тарифицируются отдельно.</p>
       </div>
     </div>
   </div>
@@ -1028,16 +1041,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="pick">
       <div class="pt">
-        <h3>С ОРК: Южные ворота, ТЯК Москва, Садовод</h3>
+        <h3>Москва: Южные Ворота, Садовод, склад ТК</h3>
         <table>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td><span class="nw">водитель 2&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 1&nbsp;000&nbsp;₽</span></td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1 м³</span></td><td><span class="nw">3&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td><span class="nw">водитель 3&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 2&nbsp;000&nbsp;₽</span></td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 3 м³</span></td><td><span class="nw">4&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td><span class="nw">водитель 4&nbsp;000&nbsp;₽</span> <span class="nw">+ заезд 4&nbsp;000&nbsp;₽</span></td></tr>
+            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 5 м³</span></td><td><span class="nw">5&nbsp;000&nbsp;₽</span></td></tr>
         </table>
-        <p class="cap">Плюс грузчики: 300 ₽ за одно место.</p>
+        <p class="cap">Без учёта работы грузчиков и заезда.</p>
       </div>
       <div class="pt">
         <h3>С другого оптового комплекса</h3>
@@ -1106,10 +1119,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <fieldset>
           <legend>Заказов в день сейчас</legend>
           <div class="chips">
-            <label class="chip"><input type="radio" name="vol" id="v1" value="до 10" checked><span>до 10</span></label>
-            <label class="chip"><input type="radio" name="vol" id="v2" value="11–30"><span>11–30</span></label>
-            <label class="chip"><input type="radio" name="vol" id="v3" value="31–50"><span>31–50</span></label>
-            <label class="chip"><input type="radio" name="vol" id="v4" value="больше 50"><span>больше 50</span></label>
+            <label class="chip"><input type="radio" name="vol" id="v1" value="до 50" checked><span>до 50</span></label>
+            <label class="chip"><input type="radio" name="vol" id="v2" value="51–100"><span>51–100</span></label>
+            <label class="chip"><input type="radio" name="vol" id="v3" value="101–200"><span>101–200</span></label>
+            <label class="chip"><input type="radio" name="vol" id="v4" value="больше 200"><span>больше 200</span></label>
             <label class="chip"><input type="radio" name="vol" id="v5" value="только начинаю"><span>только начинаю</span></label>
           </div>
         </fieldset>
@@ -1141,30 +1154,37 @@ const SITE = {
 };
 
 // ===== Тарифы FBS (из прайса IZIPACK) =====
-const tier = n => n > 50 ? 5 : n > 30 ? 10 : n > 10 ? 15 : 20;
+const tier = n => n > 200 ? 5 : n > 100 ? 10 : n > 50 ? 15 : 20;
+const KIZ = 5; // товар с КИЗ (Честный знак): сборка на 5 ₽ дороже на любом объёме
 const rub = n => n.toLocaleString("ru-RU") + " ₽";
 
-const SIZES = [["до 30 см", 20], ["до 60 см", 30], ["до 90 см", 50], ["до 120 см", 100]];
-// Упакованный товар: приём и пересчёт 5 ₽. Неупакованный: подготовка по прайсу FBO, считается отдельно.
-const PACKED = 5;
+// Доставка до склада маркетплейса: первый литр объёма в упаковке 15 ₽, каждый следующий +5 ₽ (неполный литр считаем за полный)
+const liters = d => Math.max(1, Math.ceil(d[0] * d[1] * d[2] / 1000 - 1e-9));
+const delivery = l => 15 + 5 * (l - 1);
+const DIM_MAX = 200;
+// Упакованный товар: приём и пересчёт 3 ₽. Неупакованный: подготовка по прайсу FBO, считается отдельно.
+const PACKED = 3;
 const MAX_GOODS = 12;
 const pcs = document.getElementById("pcs"), pcAdd = document.getElementById("pcAdd");
 const esc = t => t.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const word = n => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? "заказ" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "заказа" : "заказов"; };
 let uid = 0;
 
-// Карточка товара. Новый товар копирует размер и вид поступления предыдущего, чтобы не нажимать заново.
+// Карточка товара. Новый товар копирует размеры, КИЗ и вид поступления предыдущего, чтобы не вводить заново.
 function addGood(copy){
-  const k = ++uid, prev = copy || {size: 1, raw: false, n: 25};
+  const k = ++uid, prev = copy || {d: [20, 15, 5], kiz: false, raw: false, n: 25};
   const el = document.createElement("div");
   el.className = "pc"; el.dataset.k = k;
   el.innerHTML = `
     <div class="pc-top"><span class="pc-num"></span><input class="pc-name" type="text" maxlength="40" aria-label="Название товара"><button type="button" class="pc-del" aria-label="Удалить товар">×</button></div>
     <div class="pc-grid">
       <div class="pc-f"><span class="pc-l">Заказов в день</span><div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><input type="number" class="pc-n" min="0" max="5000" inputmode="numeric" value="${prev.n}" aria-label="Заказов в день"><button type="button" data-d="1" aria-label="Больше">+</button></div></div>
-      <div class="pc-f"><span class="pc-l">Размер в упаковке (сумма трёх сторон)</span><div class="seg">${SIZES.map((z, i) => `<label><input type="radio" name="sz${k}" value="${i}"${i === prev.size ? " checked" : ""}><span>${z[0].replace("до ", "≤")}<small>${z[1]} ₽</small></span></label>`).join("")}</div></div>
+      <div class="pc-f"><span class="pc-l">Размер в упаковке, см (длина × ширина × высота)</span><div class="dims">${["Длина", "Ширина", "Высота"].map((t, i) => `${i ? "<i>×</i>" : ""}<input type="number" class="pc-d" min="1" max="${DIM_MAX}" inputmode="numeric" value="${prev.d[i]}" aria-label="${t}, см">`).join("")}<span class="pc-vol"></span></div></div>
     </div>
-    <div class="pc-f"><span class="pc-l">Товар приходит к нам</span><div class="seg seg2"><label><input type="radio" name="pk${k}" value="0"${prev.raw ? "" : " checked"}><span>Упакованным<small>приём и пересчёт&nbsp;${PACKED}&nbsp;₽</small></span></label><label><input type="radio" name="pk${k}" value="1"${prev.raw ? " checked" : ""}><span>Без упаковки<small>подготовка по&nbsp;прайсу FBO</small></span></label></div></div>
+    <div class="pc-sw">
+      <div class="pc-f"><span class="pc-l">Честный знак</span><div class="seg seg2"><label><input type="radio" name="kz${k}" value="0"${prev.kiz ? "" : " checked"}><span>Без КИЗ</span></label><label><input type="radio" name="kz${k}" value="1"${prev.kiz ? " checked" : ""}><span>С КИЗ<small>сборка +${KIZ}&nbsp;₽</small></span></label></div></div>
+      <div class="pc-f"><span class="pc-l">Товар приходит к нам</span><div class="seg seg2"><label><input type="radio" name="pk${k}" value="0"${prev.raw ? "" : " checked"}><span>Упакованным<small>приём и пересчёт&nbsp;${PACKED}&nbsp;₽</small></span></label><label><input type="radio" name="pk${k}" value="1"${prev.raw ? " checked" : ""}><span>Без упаковки<small>подготовка по&nbsp;прайсу FBO</small></span></label></div></div>
+    </div>
     <p class="pc-fbo">Приёмку, маркировку и упаковку такого товара считаем по <a href="#fbo">прайсу FBO →</a> Ниже только сборка и доставка заказа.</p>
     <div class="pc-sum"><span>За заказ <b class="pc-one"></b></span><span>В месяц <b class="pc-month"></b></span></div>`;
   pcs.appendChild(el);
@@ -1175,7 +1195,8 @@ function readGood(el){
   return {
     el, name: el.querySelector(".pc-name").value.trim() || el.querySelector(".pc-name").placeholder,
     n: Math.max(0, Math.min(5000, parseInt(el.querySelector(".pc-n").value, 10) || 0)),
-    size: +el.querySelector("input[name^=sz]:checked").value,
+    d: [...el.querySelectorAll(".pc-d")].map(i => Math.max(1, Math.min(DIM_MAX, parseFloat(String(i.value).replace(",", ".")) || 1))),
+    kiz: el.querySelector("input[name^=kz]:checked").value === "1",
     raw: el.querySelector("input[name^=pk]:checked").value === "1"
   };
 }
@@ -1191,7 +1212,9 @@ function calc(){
   const proc = tier(Math.max(1, total));
   let dayCost = 0, hasRaw = false;
   goods.forEach(g => {
-    g.one = proc + SIZES[g.size][1] + (g.raw ? 0 : PACKED);
+    g.l = liters(g.d); g.dlv = delivery(g.l);
+    g.one = proc + (g.kiz ? KIZ : 0) + g.dlv + (g.raw ? 0 : PACKED);
+    g.el.querySelector(".pc-vol").innerHTML = `= <b>${g.l}&nbsp;л</b> · доставка ${g.dlv}&nbsp;₽`;
     dayCost += g.one * g.n; hasRaw = hasRaw || (g.raw && g.n > 0);
     g.el.classList.toggle("raw", g.raw);
     const plus = g.raw ? " <em>+ FBO</em>" : "";
@@ -1206,19 +1229,20 @@ function calc(){
   document.getElementById("cbMonth").textContent = total ? "· " + pre + rub(dayCost * 30) + " в мес." : "";
   document.getElementById("totN").textContent = total;
   document.getElementById("totW").textContent = word(total);
-  const t = total > 50 ? 3 : total > 30 ? 2 : total > 10 ? 1 : 0;
+  const t = total > 200 ? 3 : total > 100 ? 2 : total > 50 ? 1 : 0;
   [...document.querySelectorAll("#tbTrack span")].forEach((el, i) => el.classList.toggle("on", i === t));
-  const next = [11, 31, 51][t];
+  const next = [51, 101, 201][t];
   document.getElementById("tbHint").textContent = next ? `Ещё ${next - total} в день, и сборка будет ${tier(next)} ₽` : "Самая низкая цена сборки";
   document.getElementById("bd").innerHTML =
-    `<li class="bd-h"><span>Сборка заказа</span><span>${proc} ₽</span></li>` +
+    `<li class="bd-h"><span>Сборка заказа</span><span>${proc} ₽${goods.some(g => g.kiz && g.n) ? `, с КИЗ ${proc + KIZ} ₽` : ""}</span></li>` +
     goods.map(g => `<li><span>${esc(g.name)} · ${g.n} в день</span><span>${rub(g.one)}${g.raw ? " + FBO" : ""}</span></li>`).join("");
-  calcSummary = goods.map(g => `${g.name}: ${g.n} ${word(g.n)} в день, ${SIZES[g.size][0]}, ` + (g.raw ? "без упаковки (подготовка по FBO)" : "упакован")).join("\n") +
+  calcSummary = goods.map(g => `${g.name}: ${g.n} ${word(g.n)} в день, ${g.d.join("×")} см (${g.l} л), ${g.kiz ? "с КИЗ" : "без КИЗ"}, ` + (g.raw ? "без упаковки (подготовка по FBO)" : "упакован")).join("\n") +
     `\nИтого: ${total} ${word(total)} в день, ${pre}${rub(dayCost * 30)} в месяц`;
 }
 pcs.addEventListener("input", calc);
 pcs.addEventListener("change", e => {
   const i = e.target.closest(".pc-n"); if (i) i.value = Math.max(0, Math.min(5000, parseInt(i.value, 10) || 0));
+  const d = e.target.closest(".pc-d"); if (d) d.value = Math.max(1, Math.min(DIM_MAX, parseFloat(String(d.value).replace(",", ".")) || 1));
   calc();
 });
 pcs.addEventListener("click", e => {
@@ -1229,7 +1253,7 @@ pcs.addEventListener("click", e => {
 });
 pcAdd.addEventListener("click", () => {
   const last = pcs.lastElementChild ? readGood(pcs.lastElementChild) : null;
-  const el = addGood(last && {size: last.size, raw: last.raw, n: 10});
+  const el = addGood(last && {d: last.d, kiz: last.kiz, raw: last.raw, n: 10});
   el.querySelector(".pc-name").focus({preventScroll: true});
   el.scrollIntoView({behavior: "smooth", block: "nearest"});
 });
@@ -1238,7 +1262,7 @@ document.getElementById("calcSend").addEventListener("click", () => {
   const goods = [...pcs.children].map(readGood), total = goods.reduce((s, g) => s + g.n, 0);
   const named = goods.map(g => g.el.querySelector(".pc-name").value.trim()).filter(Boolean);
   const gi = document.getElementById("goods"); if (named.length && !gi.value.trim()) gi.value = named.join(", ");
-  const v = total > 50 ? "v4" : total > 30 ? "v3" : total > 10 ? "v2" : "v1"; document.getElementById(v).checked = true;
+  const v = total > 200 ? "v4" : total > 100 ? "v3" : total > 50 ? "v2" : "v1"; document.getElementById(v).checked = true;
 });
 addGood();
 // Плашка с итогом на телефоне: видна, пока на экране карточки товаров, и прячется у блока итога
