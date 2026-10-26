@@ -99,9 +99,12 @@ section{padding-block:84px}
 .m-fbs .mode-tag{color:#fff}.m-fbo .mode-tag{color:var(--orange)}
 .mode-txt{font-size:13px;line-height:1.35;opacity:.9}
 .mode-txt b{display:block;font-size:15px;opacity:1;margin-bottom:2px}
-.mode-go{position:absolute;right:14px;top:12px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;background:rgba(255,255,255,.18);transition:transform .3s}
-.m-fbo .mode-go{background:var(--orange)}
-.mode:hover .mode-go{transform:translateX(3px)}
+/* объёмная иконка схемы: коробка для FBS, грузовик для FBO */
+.mode-ic{position:absolute;right:10px;top:8px;width:60px;height:60px;filter:drop-shadow(0 10px 10px rgba(0,0,0,.28));animation:icBob 4s ease-in-out infinite;pointer-events:none}
+.m-fbo .mode-ic{animation-delay:-2s}
+@keyframes icBob{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+.mode-txt b::after{content:"\00a0→";display:inline-block;transition:transform .3s}
+.mode:hover .mode-txt b::after{transform:translateX(4px)}
 .mode::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:modeShine 6s ease-in-out infinite}
 .m-fbo::after{animation-delay:.6s}
 @keyframes modeShine{0%,70%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
@@ -110,6 +113,8 @@ section{padding-block:84px}
   .modes{gap:10px}
   .mode{padding:14px}
   .mode-tag{font-size:36px}
+  .mode-ic{width:46px;height:46px;right:6px;top:6px}
+  .mode-txt b::after{display:none}
   .mode-txt{font-size:12px}.mode-txt b{font-size:14px}
 }
 section[id]{scroll-margin-top:76px}
@@ -121,7 +126,7 @@ section[id]{scroll-margin-top:76px}
 .promo b{color:var(--orange)}
 
 /* WMS-макет */
-.wms{background:var(--ink);color:#EDEDED;border-radius:20px;padding:18px;box-shadow:0 40px 80px -40px rgba(0,0,0,.5);font-size:14px;min-width:0}
+.wms{background:linear-gradient(170deg,#1A1A1A,#101010) padding-box,linear-gradient(140deg,rgba(255,106,19,.95),rgba(255,255,255,.08) 34%,rgba(255,255,255,.05) 68%,rgba(123,47,242,.8)) border-box;border:1px solid transparent;color:#EDEDED;border-radius:22px;padding:18px;box-shadow:0 44px 90px -44px rgba(255,90,0,.6),0 30px 60px -34px rgba(0,0,0,.6);font-size:14px;min-width:0}
 .wms-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #2C2C2C}
 .wms-title{font:700 15px var(--display);letter-spacing:.08em}
 .wms-title span{color:var(--orange)}
@@ -129,45 +134,55 @@ section[id]{scroll-margin-top:76px}
 .live i{width:8px;height:8px;border-radius:50%;background:#3DDC84;box-shadow:0 0 0 0 rgba(61,220,132,.6);animation:pulse 1.8s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
 .wms-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-block:14px}
-.wms-stats div{background:#1C1C1C;border-radius:12px;padding:10px 12px}
-.wms-stats small{display:block;color:#9A9A9A;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-.wms-stats b{font:700 22px var(--display);color:#fff;font-variant-numeric:tabular-nums}
+.wms-stats div{background:linear-gradient(180deg,#222,#1A1A1A);border:1px solid #2A2A2A;border-radius:14px;padding:10px 12px}
+.wms-stats .c-new{--c:#FF7A1A}.wms-stats .c-pick{--c:#5AA9FF}.wms-stats .c-ship{--c:#3DDC84}
+.wms-stats small{display:flex;align-items:center;gap:6px;color:#9A9A9A;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.wms-stats small::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.wms-stats b{display:inline-block;font:700 26px/1.2 var(--display);color:#fff;font-variant-numeric:tabular-nums}
 .orders{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.orders li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:#1C1C1C;border-radius:12px;padding:10px 12px;animation:slidein .5s ease}
+.orders li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;background:#1C1C1C;border:1px solid #242424;border-radius:14px;padding:8px 12px 8px 8px;animation:slidein .5s ease}
+.orders li.fresh{animation:slidein .5s ease,fresh 2.4s ease}
+@keyframes fresh{0%,30%{background:#2B1D13;border-color:rgba(255,106,19,.55)}100%{background:#1C1C1C;border-color:#242424}}
+.orders .th{width:40px;height:40px;border-radius:11px;background:radial-gradient(circle at 50% 35%,#3A3A3A,#232323);display:grid;place-items:center}
+.orders .th img{width:30px;height:30px;filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
 @keyframes slidein{from{transform:translateY(-8px);opacity:.3}to{transform:none;opacity:1}}
-.orders .wb{font:700 11px var(--body);background:#CB11AB;color:#fff;border-radius:6px;padding:4px 6px}
+.orders .wbm{font:800 9px var(--body);color:#fff;background:linear-gradient(135deg,#CB11AB,#7B2FF2);border-radius:4px;padding:1px 4px;margin-right:5px;letter-spacing:.02em}
 .orders .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .orders .nm small{display:block;color:#8E8E8E;font-size:11px}
 .st{font-size:11px;font-weight:700;border-radius:99px;padding:4px 10px;white-space:nowrap}
-.st.new{background:#3A2A1F;color:#FF9A5C}.st.pick{background:#1F2F3A;color:#7CC4FF}.st.ship{background:#1F3A2A;color:#6FE3A1}
+.st.new{background:rgba(255,106,19,.16);color:#FF9A5C;box-shadow:inset 0 0 0 1px rgba(255,106,19,.3)}.st.pick{background:rgba(90,169,255,.14);color:#8CC4FF;box-shadow:inset 0 0 0 1px rgba(90,169,255,.28)}.st.ship{background:rgba(61,220,132,.13);color:#6FE3A1;box-shadow:inset 0 0 0 1px rgba(61,220,132,.28)}
 .wms-note{margin-top:12px;font-size:11px;color:#7D7D7D}
 
 /* шаги */
 .rail{position:relative;height:6px;background:var(--line);border-radius:99px;margin:0 0 22px;overflow:hidden}
 .rail i{position:absolute;inset:0 auto 0 0;width:20%;background:var(--orange);border-radius:99px;transition:width .6s ease}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
-.steps li{background:var(--card);border-radius:18px;padding:20px 18px 22px;display:grid;gap:10px;align-content:start;position:relative;cursor:pointer;transition:background .4s,transform .4s,box-shadow .4s}
-.steps li.on{background:#fff;transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(255,90,0,.55),inset 0 0 0 2px var(--orange)}
+.steps li{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px 22px;display:grid;gap:10px;align-content:start;position:relative;cursor:pointer;transition:background .4s,transform .4s,box-shadow .4s}
+.steps li.on{background:#fff;border-color:transparent;transform:translateY(-6px);box-shadow:0 26px 44px -24px rgba(255,90,0,.6),inset 0 0 0 2px var(--orange)}
 .steps .num{font:700 15px var(--display);color:var(--muted);letter-spacing:.08em}
 .steps li.on .num{color:var(--orange)}
-.steps .art{height:120px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
-.steps li.on .art{background:var(--soft)}
+.steps .art{position:relative;height:150px;border-radius:14px;background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.14) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFF7F2,#FFEBDF);display:grid;place-items:center;transition:background .4s}
+.steps li.on .art{background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.2) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFEFE4,#FFD8BF)}
+/* объёмная наклейка шага в углу картинки */
+.st3d{position:absolute;right:-6px;top:-40px;width:46px;height:46px;transform:rotate(10deg);filter:drop-shadow(0 8px 8px rgba(120,50,0,.28));z-index:2}
+.steps li.on .st3d{animation:st3dPop .7s cubic-bezier(.2,.8,.3,1.5) both}
+@keyframes st3dPop{0%{opacity:0;transform:scale(.3) rotate(-30deg)}100%{opacity:1;transform:rotate(10deg)}}
 .steps .art svg{width:100%;height:100%}
 .steps h3{font-size:18px}
 .steps p{font-size:14px;color:var(--muted)}
 /* 1: мини-экран подключения к WB. Без .on показан итог; с .on проигрывается заново */
-.steps .art-ui{height:120px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:7px;padding:8px;place-items:initial}
-.mini{position:relative;background:#fff;border-radius:10px;padding:8px 9px;display:grid;gap:6px;box-shadow:0 6px 18px -10px rgba(0,0,0,.35),0 0 0 1px var(--line)}
-.mini-head{display:flex;align-items:center;gap:6px;font:600 10px var(--body);color:var(--ink);white-space:nowrap;overflow:hidden}
-.mini-head .wb{background:linear-gradient(135deg,#CB11AB,#7B2FF2);color:#fff;font:800 9px var(--body);border-radius:5px;padding:2px 5px;letter-spacing:.02em}
-.mini-field{position:relative;height:20px;border:1px solid #D9D9D9;border-radius:6px;padding:0 7px;display:flex;align-items:center;font:600 10px var(--body);overflow:hidden}
+.steps .art-ui{height:150px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:8px;padding:12px 10px;place-items:initial}
+.mini{position:relative;background:#fff;border-radius:12px;padding:10px 11px;display:grid;gap:8px;box-shadow:0 16px 30px -18px rgba(90,35,0,.5),0 0 0 1px rgba(17,17,17,.06)}
+.mini-head{display:flex;align-items:center;gap:6px;font:700 10px var(--body);color:var(--ink);white-space:nowrap;overflow:hidden}
+.mini-head .wb{background:linear-gradient(135deg,#CB11AB,#7B2FF2);color:#fff;font:800 9.5px var(--body);border-radius:5px;padding:2px 5px;letter-spacing:.02em}
+.mini-field{position:relative;height:22px;border:1px solid #D9D9D9;border-radius:7px;padding:0 8px;display:flex;align-items:center;font:600 10.5px var(--body);overflow:hidden;background:#FAFAFA}
 .mini-field .ph{position:absolute;left:7px;color:#A0A0A0;opacity:0}
 .mini-field .tok{display:inline-block;overflow:hidden;white-space:nowrap;letter-spacing:1px;color:#333;max-width:100%}
 .mini-field .caret{width:1px;height:12px;background:var(--orange);margin-left:1px;opacity:0}
-.mini-btn{position:relative;height:20px;border-radius:6px;background:#2DBE60;color:#fff;font:700 10px var(--body);display:grid;place-items:center;overflow:hidden}
+.mini-btn{position:relative;height:22px;border-radius:7px;background:linear-gradient(180deg,#36CC6B,#25AE55);color:#fff;font:700 10.5px var(--body);display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 10px -4px rgba(37,174,85,.7)}
 .mini-btn span{grid-area:1/1}.mini-btn .b1{opacity:0}
-.steps .art .mini .cursor{position:absolute;width:11px;height:15px;left:50%;top:62px;opacity:0;pointer-events:none}
-.mini-toast{display:flex;align-items:center;gap:6px;background:var(--ink);color:#BDBDBD;border-radius:8px;padding:5px 9px;font:500 10px var(--body);white-space:nowrap;overflow:hidden}
+.steps .art .mini .cursor{position:absolute;width:11px;height:15px;left:50%;top:67px;opacity:0;pointer-events:none}
+.mini-toast{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1E1E1E,#0F0F0F);color:#C9C9C9;border-radius:9px;padding:6px 10px;font:600 10.5px var(--body);white-space:nowrap;overflow:hidden;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
 .mini-toast b{color:#fff;font-weight:700}
 .mini-toast i{width:7px;height:7px;border-radius:50%;background:#3DDC84;flex:none;box-shadow:0 0 0 0 rgba(61,220,132,.6)}
 .steps li.on .mini-field .ph{animation:uiPh 5.2s linear both}
@@ -177,7 +192,7 @@ section[id]{scroll-margin-top:76px}
 .steps li.on .mini-field .caret{animation:uiCaret 5.2s linear both}
 @keyframes uiCaret{0%,9%{opacity:0}10%,14%{opacity:1}16%,19%{opacity:0}21%,26%{opacity:1}28%,31%{opacity:0}33%,100%{opacity:0}}
 .steps li.on .art .mini .cursor{animation:uiCur 5.2s ease-in-out both}
-@keyframes uiCur{0%,30%{left:88%;top:31px;opacity:0;transform:scale(1)}34%{opacity:1}44%{left:50%;top:62px;transform:scale(1)}47%{transform:scale(.8)}50%{transform:scale(1)}60%{opacity:1;left:50%;top:62px}66%,100%{opacity:0;left:50%;top:62px}}
+@keyframes uiCur{0%,30%{left:88%;top:37px;opacity:0;transform:scale(1)}34%{opacity:1}44%{left:50%;top:67px;transform:scale(1)}47%{transform:scale(.8)}50%{transform:scale(1)}60%{opacity:1;left:50%;top:67px}66%,100%{opacity:0;left:50%;top:67px}}
 .steps li.on .mini-btn{animation:uiBtn 5.2s linear both}
 @keyframes uiBtn{0%,47%{background:var(--orange);transform:scale(1)}48%{transform:scale(.96)}50%{background:#2DBE60;transform:scale(1)}100%{background:#2DBE60}}
 .steps li.on .mini-btn .b1{animation:uiB1 5.2s linear both}
@@ -191,13 +206,13 @@ section[id]{scroll-margin-top:76px}
 /* 2–5: мини-экраны WMS. Без .on показан итог, с .on сценка проигрывается заново */
 @property --n{syntax:"<integer>";inherits:false;initial-value:0}
 .cnt{counter-reset:n var(--n)}.cnt::after{content:counter(n)}
-.mini .tag{background:var(--ink);color:var(--orange);font:800 9px var(--body);border-radius:5px;padding:2px 5px}
-.mini-row{display:flex;justify-content:space-between;align-items:center;font:600 10px var(--body);color:var(--muted)}
-.mini-row b{color:var(--ink);font-size:12px}
+.mini .tag{background:var(--ink);color:var(--orange);font:800 9.5px var(--body);border-radius:5px;padding:2px 5px}
+.mini-row{display:flex;justify-content:space-between;align-items:center;font:600 11px var(--body);color:var(--muted)}
+.mini-row b{color:var(--ink);font:700 17px/1 var(--display);letter-spacing:.02em}
 @keyframes uiToastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .steps li.on .s2 .mini-toast,.steps li.on .s3 .mini-toast,.steps li.on .s4 .mini-toast,.steps li.on .s5 .mini-toast{animation:uiToastIn .5s cubic-bezier(.2,.8,.2,1) 3.1s both}
 /* 2: сканер штрихкода */
-.scan{position:relative;width:118px;max-width:100%;justify-self:center;height:22px;border:1px solid #D9D9D9;border-radius:6px;padding:3px 6px;transition:border-color .3s}
+.scan{position:relative;width:130px;max-width:100%;justify-self:center;height:24px;background:#fff;border:1px solid #D9D9D9;border-radius:6px;padding:3px 6px;transition:border-color .3s}
 .steps .art .scan .bc{display:block;width:100%;height:100%}
 .scan .beam{position:absolute;left:3px;right:3px;top:50%;height:2px;border-radius:2px;background:#FF3B30;box-shadow:0 0 6px 1px rgba(255,59,48,.7);opacity:0}
 .s2 .cnt{--n:120}
@@ -209,9 +224,9 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiScanOk{from{border-color:#D9D9D9}to{border-color:#2DBE60}}
 /* 3: чек-лист подготовки */
 .chk{display:grid;grid-template-columns:auto auto;justify-content:space-between;gap:5px 6px}
-.chk span{display:flex;align-items:center;gap:4px;font:600 9px var(--body);color:var(--ink);white-space:nowrap}
-.chk i{position:relative;flex:none;width:12px;height:12px;border-radius:3px;background:var(--orange);border:1.5px solid var(--orange)}
-.chk i::after{content:"";position:absolute;left:3px;top:0;width:3px;height:6px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg)}
+.chk span{display:flex;align-items:center;gap:4px;font:600 9.5px var(--body);color:var(--ink);white-space:nowrap}
+.chk i{position:relative;flex:none;width:13px;height:13px;border-radius:4px;background:var(--orange);border:1.5px solid var(--orange)}
+.chk i::after{content:"";position:absolute;left:3.5px;top:.5px;width:3px;height:6px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg)}
 .steps li.on .chk i{animation:uiChk .4s ease both}
 .steps li.on .chk span{animation:uiChkTxt .4s ease both}
 .steps li.on .chk span:nth-child(1),.steps li.on .chk span:nth-child(1) i{animation-delay:.5s}
@@ -221,10 +236,10 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiChk{0%{background:#fff;border-color:#CFCFCF;transform:scale(1)}50%{transform:scale(1.25)}100%{background:var(--orange);border-color:var(--orange);transform:scale(1)}}
 @keyframes uiChkTxt{from{color:#A0A0A0}to{color:var(--ink)}}
 /* 4: остатки перетекают по складам */
-.stock{display:grid;grid-template-columns:auto 1fr 20px;align-items:center;gap:4px 6px;font:600 9px var(--body);color:var(--ink)}
-.stock .bar{height:7px;border-radius:4px;background:#EEE;overflow:hidden}
-.stock .bar i{display:block;height:100%;border-radius:4px;background:var(--orange)}
-.stock em{font:700 9.5px var(--body);font-style:normal;text-align:right}
+.stock{display:grid;grid-template-columns:auto 1fr 22px;align-items:center;gap:5px 7px;font:600 10px var(--body);color:var(--ink)}
+.stock .bar{height:8px;border-radius:4px;background:#F0F0F0;overflow:hidden}
+.stock .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#FF5A00,#FFA24D)}
+.stock em{font:700 12px/1 var(--display);font-style:normal;text-align:right}
 .w-msk{width:60%}.w-kzn,.w-krd{width:20%}
 .n-msk{--n:72}.n-kzn,.n-krd{--n:24}
 .steps li.on .w-msk{animation:uiWmsk 1.8s ease-in-out .6s both}
@@ -239,10 +254,10 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiN24{from{--n:0}to{--n:24}}
 /* 5: статусы заказа */
 .track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);padding-top:2px}
-.track .ln{position:absolute;left:16.6%;right:16.6%;top:7px;height:2px;background:#E3E3E3}
-.track .ln i{display:block;height:100%;width:100%;background:var(--orange)}
-.track span{position:relative;display:grid;justify-items:center;gap:4px;font:600 8.5px var(--body);color:var(--ink)}
-.track span i{width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px #fff}
+.track .ln{position:absolute;left:16.6%;right:16.6%;top:8px;height:3px;border-radius:2px;background:#E3E3E3}
+.track .ln i{display:block;height:100%;width:100%;border-radius:2px;background:linear-gradient(90deg,#FF5A00,#2DBE60)}
+.track span{position:relative;display:grid;justify-items:center;gap:5px;font:600 9px var(--body);color:var(--ink)}
+.track span i{width:14px;height:14px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px #fff}
 .track .p3 i{background:#2DBE60}
 .steps li.on .track .ln i{animation:uiTrack 2.2s linear .7s both}
 @keyframes uiTrack{from{width:0}to{width:100%}}
@@ -256,15 +271,19 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiPtOk{0%{background:#D9D9D9;transform:scale(1)}50%{transform:scale(1.35)}100%{background:#2DBE60;transform:scale(1)}}
 .need{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--soft);border-radius:16px;padding:18px 22px}
 .need b{font:700 18px var(--display);text-transform:uppercase;color:var(--ink)}
-.need span{background:#fff;border-radius:99px;padding:6px 14px;font-weight:600;font-size:14px}
+.need span{display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:99px;padding:6px 14px 6px 8px;font-weight:600;font-size:14px;box-shadow:0 6px 14px -10px rgba(120,50,0,.4)}
+.need img{width:24px;height:24px}
 
 /* WMS-блок */
 .wmsblock{background:var(--ink);color:#EDEDED}
 .wmsblock h2{color:#fff}
 .wmsblock .lead{color:#B5B5B5}
 .feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.feat div{background:#1C1C1C;border-radius:18px;padding:24px;display:grid;gap:12px;align-content:start}
-.feat svg{width:44px;height:44px}
+.feat div{background:linear-gradient(180deg,#1F1F1F,#171717);border:1px solid #2A2A2A;border-radius:18px;padding:24px;display:grid;gap:12px;align-content:start;transition:transform .3s,border-color .3s,box-shadow .3s}
+.feat div:hover{transform:translateY(-4px);border-color:rgba(255,106,19,.45);box-shadow:0 24px 50px -30px rgba(255,90,0,.6)}
+.fic{width:66px;height:66px;border-radius:18px;display:grid;place-items:center;background:radial-gradient(circle at 50% 38%,rgba(255,106,19,.32),rgba(255,106,19,.05) 72%);border:1px solid rgba(255,106,19,.28)}
+.fic img{width:46px;height:46px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5));transition:transform .4s}
+.feat div:hover .fic img{transform:scale(1.08) rotate(-6deg)}
 .feat h3{color:#fff;font-size:20px}
 .feat p{color:#B5B5B5;font-size:15px}
 
@@ -277,8 +296,8 @@ section[id]{scroll-margin-top:76px}
 .wf-steps li>b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 16px var(--display);background:#222;color:#9A9A9A;transition:background .3s,color .3s}
 .wf-steps h4{margin:5px 0 0;font:700 17px var(--display);letter-spacing:.06em;text-transform:uppercase;color:#BDBDBD}
 .wf-steps p{margin:4px 0 0;font-size:14px;color:#9A9A9A;display:none}
-.wf-steps li.on{background:#1C1C1C}
-.wf-steps li.on>b{background:var(--orange);color:#fff}
+.wf-steps li.on{background:linear-gradient(90deg,#222,#1A1A1A)}
+.wf-steps li.on>b{background:linear-gradient(135deg,#FF8A1F,#FF4D00);color:#fff;box-shadow:0 8px 18px -6px rgba(255,90,0,.75)}
 .wf-steps li.on h4{color:#fff}
 .wf-steps li.on p{display:block}
 .wf-steps .pg{position:absolute;left:0;right:0;bottom:0;height:3px;background:transparent}
@@ -286,14 +305,14 @@ section[id]{scroll-margin-top:76px}
 .wf-steps li.on .pg i{animation:wfPg var(--wf-dur,4.2s) linear both}
 @keyframes wfPg{from{width:0}to{width:100%}}
 .wf-cap{display:none;margin:0;font-size:15px;color:#D6D6D6;text-align:center;min-height:48px}
-.wf-screen{background:#161616;border:1px solid #2A2A2A;border-radius:22px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.wf-screen{background:linear-gradient(#161616,#161616) padding-box,linear-gradient(140deg,rgba(255,106,19,.8),#2A2A2A 30%,#2A2A2A 70%,rgba(123,47,242,.6)) border-box;border:1px solid transparent;border-radius:22px;overflow:hidden;box-shadow:0 44px 90px -44px rgba(255,90,0,.45),0 40px 80px -40px rgba(0,0,0,.8)}
 .wf-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #262626}
-.wf-dots{display:flex;gap:6px}.wf-dots i{width:9px;height:9px;border-radius:50%;background:#333}
+.wf-dots{display:flex;gap:6px}.wf-dots i{width:10px;height:10px;border-radius:50%;background:#FF5F57}.wf-dots i+i{background:#FEBC2E}.wf-dots i+i+i{background:#28C840}
 .wf-title{font:700 14px var(--display);letter-spacing:.08em;color:#fff}.wf-title em{font-style:normal;color:var(--orange)}
 .wf-live{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:#9A9A9A}
 .wf-live i{width:7px;height:7px;border-radius:50%;background:#3DDC84;animation:wfLive 2s ease-out infinite}
 @keyframes wfLive{0%{box-shadow:0 0 0 0 rgba(61,220,132,.6)}100%{box-shadow:0 0 0 8px rgba(61,220,132,0)}}
-.wf-stage{position:relative;height:300px}
+.wf-stage{position:relative;height:300px;background:radial-gradient(55% 65% at 50% 52%,rgba(255,106,19,.17),transparent 72%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/26px 26px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/26px 26px}
 .sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
 .sc.on{opacity:1;visibility:visible}
 .sc .okchip{display:inline-flex;align-items:center;gap:8px;background:#1F2E24;color:#7BE3A4;border-radius:99px;padding:7px 14px;font:600 13px var(--body)}
@@ -301,12 +320,12 @@ section[id]{scroll-margin-top:76px}
 .sc.on .okchip{animation:wfIn .5s cubic-bezier(.2,.8,.2,1) 2.6s both}
 @keyframes wfIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 /* 1: покупка на WB */
-.app{width:100%;max-width:290px;background:#fff;border-radius:16px;padding:14px;display:grid;gap:12px;color:var(--ink)}
+.app{width:100%;max-width:290px;background:#fff;border-radius:18px;padding:14px;display:grid;gap:12px;color:var(--ink);box-shadow:0 30px 50px -24px rgba(0,0,0,.8)}
 .app-top{display:flex;align-items:center;gap:8px;font:700 14px var(--body)}
 .app-top .wb,.sc .wb{background:linear-gradient(135deg,#CB11AB,#7B2FF2);color:#fff;font:800 11px var(--body);border-radius:6px;padding:3px 6px}
 .prod{display:flex;gap:12px;align-items:center}
-.prod-img{width:58px;height:58px;border-radius:12px;background:var(--soft);display:grid;place-items:center;flex:none}
-.prod-img svg{width:38px;height:38px}
+.prod-img{width:62px;height:62px;border-radius:14px;background:radial-gradient(circle at 50% 35%,#FFF4EC,#FFE0CC);display:grid;place-items:center;flex:none}
+.prod-img img{width:46px;height:46px;filter:drop-shadow(0 6px 6px rgba(120,50,0,.25))}
 .prod b{display:block;font-size:14px}.prod small{display:block;font-size:12px;color:var(--muted)}.prod strong{display:block;font:700 18px var(--body);margin-top:2px}
 .buy{position:relative;height:40px;border-radius:10px;background:#2DBE60;color:#fff;font:700 14px var(--body);display:grid;place-items:center;overflow:hidden}
 .buy span{grid-area:1/1}.buy .b1{opacity:0}
@@ -343,8 +362,8 @@ section[id]{scroll-margin-top:76px}
 @keyframes wfFlash{0%,44%{color:#fff}48%{color:var(--orange)}100%{color:#fff}}
 /* 4: сборка из ячейки и стикер */
 .rack{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;max-width:300px}
-.rack i{height:30px;border-radius:6px;background:#222;border:1px solid #2C2C2C;display:grid;place-items:center;font:700 10px var(--body);font-style:normal;color:#fff}
-.rack .hit{background:var(--orange);border-color:var(--orange)}
+.rack i{height:30px;border-radius:7px;background:linear-gradient(180deg,#262626,#1E1E1E);border:1px solid #2F2F2F;display:grid;place-items:center;font:700 10px var(--body);font-style:normal;color:#fff}
+.rack .hit{background:linear-gradient(180deg,#FF7A1A,#FF5A00);border-color:var(--orange)}
 .sc4.on .rack .hit{animation:wfHit 4s ease both}
 @keyframes wfHit{0%,15%{background:#222;border-color:#2C2C2C;box-shadow:0 0 0 0 rgba(255,90,0,.6)}22%{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 0 rgba(255,90,0,.6)}35%{box-shadow:0 0 0 10px rgba(255,90,0,0)}100%{background:var(--orange);border-color:var(--orange);box-shadow:none}}
 .sticker{width:180px;background:#fff;border-radius:8px;padding:8px 10px;display:grid;grid-template-columns:auto 1fr;gap:4px 8px;align-items:center;color:var(--ink);box-shadow:0 14px 30px -12px rgba(0,0,0,.8);transform:rotate(-3deg)}
@@ -356,12 +375,13 @@ section[id]{scroll-margin-top:76px}
 /* 5: доставка на СЦ / ПВЗ */
 .route{position:relative;width:100%;max-width:320px;height:86px}
 .rt-line{position:absolute;left:12%;right:12%;top:34px;height:4px;border-radius:2px;background:#2C2C2C}
-.rt-line i{display:block;height:100%;width:100%;border-radius:2px;background:var(--orange)}
+.rt-line i{display:block;height:100%;width:100%;border-radius:2px;background:linear-gradient(90deg,#FF5A00,#FFB13D,#2DBE60)}
 .rt{position:absolute;top:24px;width:80px;margin-left:-40px;display:grid;justify-items:center;gap:8px;font:600 13px var(--body);color:#fff}
 .rt i{width:24px;height:24px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 5px #161616}
 .rt1{left:12%}.rt2{left:50%}.rt3{left:88%}
 .rt3 i{background:#2DBE60}
-.pkg{position:absolute;top:0;left:88%;transform:translateX(-50%);background:#fff;color:var(--ink);font:700 11px var(--body);border-radius:99px;padding:3px 9px;white-space:nowrap}
+.pkg{position:absolute;top:-6px;left:88%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:#fff;color:var(--ink);font:700 11px var(--body);border-radius:99px;padding:3px 10px 3px 4px;white-space:nowrap;box-shadow:0 8px 16px -8px rgba(0,0,0,.7)}
+.pkg img{width:24px;height:24px}
 .sc5.on .rt-line i{animation:wfRoute 2.4s ease-in-out .3s both}
 @keyframes wfRoute{from{width:0}to{width:100%}}
 .sc5.on .pkg{animation:wfPkg 2.4s ease-in-out .3s both}
@@ -373,7 +393,7 @@ section[id]{scroll-margin-top:76px}
 .sc5 .okchip{background:#2A1D14;color:#FFB07A}
 /* 6: остатки совпадают */
 .sync{display:flex;align-items:center;gap:12px;width:100%;max-width:320px}
-.sp{flex:1;background:#1E1E1E;border:1px solid #2C2C2C;border-radius:14px;padding:14px 10px;display:grid;justify-items:center;gap:2px}
+.sp{flex:1;background:linear-gradient(180deg,#222,#1A1A1A);border:1px solid #2C2C2C;border-radius:14px;padding:14px 10px;display:grid;justify-items:center;gap:2px}
 .sp small{font:600 11px var(--body);color:#8F8F8F;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .sp b{font:700 38px/1.1 var(--display);color:#fff}
 .sp span{font-size:12px;color:#8F8F8F}
@@ -401,16 +421,31 @@ section[id]{scroll-margin-top:76px}
 
 /* сеть складов */
 .net{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:center}
-.map{background:var(--card);border-radius:24px;padding:12px;min-width:0}
+.map{background:linear-gradient(180deg,#fff,#FFF7F1);border:1px solid var(--line);border-radius:24px;padding:6px;min-width:0;box-shadow:0 34px 60px -44px rgba(255,90,0,.45)}
+.m-land{fill:none;stroke:#CACACA;stroke-width:3.6;stroke-linecap:round}
+.m-hot{fill:none;stroke:#FF8A3D;stroke-width:3.6;stroke-linecap:round;opacity:.9}
+.m-sea{font:italic 600 11px var(--body);fill:#93AAC0;letter-spacing:.04em}
+.m-rt{fill:none;stroke:rgba(255,90,0,.2);stroke-width:6;stroke-linecap:round}
+.m-flow{fill:none;stroke:url(#mRt);stroke-width:3;stroke-linecap:round;stroke-dasharray:1 10;animation:mFlow .9s linear infinite}
+@keyframes mFlow{to{stroke-dashoffset:-11}}
+.m-pulse{fill:#FF5A00;opacity:0;transform-box:fill-box;transform-origin:center;animation:mPulse 2.6s ease-out infinite}
+.m-p2{animation-delay:1.3s}
+@keyframes mPulse{0%{opacity:.4;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+.m-t{font:700 19px var(--display);fill:#111;letter-spacing:.03em}
+.m-s{font:600 11px var(--body);fill:#6B6B6B}
+.m-s.m-hub{fill:var(--orange);font-weight:700}
+.m-short{display:none}
+@media (max-width:520px){.m-full{display:none}.m-short{display:inline}.m-short .m-t{font-size:25px}.m-sea{font-size:17px}}
 .map svg{display:block;width:100%;height:auto}
 .wh{display:grid;gap:12px}
-.wh div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.wh div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff;transition:border-color .3s,box-shadow .3s}
+.wh div:hover{border-color:#FFD2B8;box-shadow:0 18px 34px -26px rgba(255,90,0,.6)}
 .wh h3{font-size:22px}
 .wh p{grid-column:1/-1;font-size:14px;color:var(--muted)}
-.wh-media{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:16px;background:var(--ink);color:#fff;text-decoration:none;transition:transform .2s}
+.wh-media{display:flex;align-items:center;gap:14px;padding:12px 18px 12px 14px;border-radius:16px;background:linear-gradient(120deg,#1C1C1C,#111 60%,#2A160A);color:#fff;text-decoration:none;transition:transform .2s}
 .wh-media:hover{transform:translateY(-2px)}
-.wh-play{flex:none;width:40px;height:40px;border-radius:50%;background:var(--orange);position:relative}
-.wh-play::after{content:"";position:absolute;left:16px;top:12px;border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.wh-media img{flex:none;width:46px;height:46px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45));transition:transform .3s}
+.wh-media:hover img{transform:rotate(-8deg) scale(1.06)}
 .wh-media b{display:block;font-size:16px}
 .wh-media small{display:block;font-size:13px;color:#A8A8A8}
 .wh-media i{margin-left:auto;font-style:normal;font-size:20px;color:var(--orange)}
@@ -558,13 +593,15 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .pick .pt td:nth-child(2){color:var(--ink)}
 @media (max-width:520px){.pick .pt td{padding:12px 14px}.pick .pt td:first-child{white-space:nowrap}.pick .pt td:last-child{white-space:normal}.pick .nw{display:inline-block;white-space:nowrap}}
 .truck{display:flex;align-items:center;gap:10px}
-.truck svg{flex:none}
+.truck img{flex:none;width:38px;height:38px;filter:drop-shadow(0 5px 5px rgba(0,0,0,.18))}
 
 /* почему мы */
 .why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.why div{background:var(--card);border-radius:18px;padding:26px 22px;display:grid;gap:12px;align-content:start}
-.why .ic{width:54px;height:54px;border-radius:50%;background:var(--orange);display:grid;place-items:center}
-.why .ic svg{width:28px;height:28px}
+.why div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 22px;display:grid;gap:12px;align-content:start;transition:transform .3s,box-shadow .3s,border-color .3s}
+.why div:hover{transform:translateY(-4px);border-color:#FFD2B8;box-shadow:0 26px 44px -30px rgba(255,90,0,.6)}
+.why .ic{width:70px;height:70px;border-radius:20px;background:linear-gradient(150deg,#FFF4EC,#FFDCC5);display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,90,0,.12)}
+.why .ic img{width:50px;height:50px;filter:drop-shadow(0 7px 8px rgba(120,50,0,.28));transition:transform .4s}
+.why div:hover .ic img{transform:scale(1.1) rotate(-7deg)}
 .why h3{font-size:20px}
 .why p{font-size:14px;color:var(--muted)}
 .why p a{color:var(--orange);font-weight:600;text-decoration:none}
@@ -582,6 +619,8 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 /* заявка */
 .order{background:var(--orange);color:#fff;border-radius:28px;padding:clamp(26px,5vw,56px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;position:relative;overflow:hidden}
 .order h2{color:#fff}
+.order h2 .rocket{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;filter:drop-shadow(0 10px 10px rgba(90,30,0,.35));animation:rocket 3s ease-in-out infinite}
+@keyframes rocket{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(4px,-6px) rotate(4deg)}}
 .order .lead{color:#FFE3D3;margin-top:14px}
 .contacts{display:grid;gap:16px;margin-top:28px}
 .contacts a{font:700 22px var(--display);letter-spacing:.02em;text-decoration:none}
@@ -611,10 +650,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .steps,.feat,.why{grid-template-columns:minmax(0,1fr)}
   .phone{display:none}
   .logo img{height:46px}
-  .wms-stats b{font-size:18px}
+  .wms-stats b{font-size:20px}
+  .wms-stats div{padding:9px 8px}
+  .wms-stats small{font-size:9.5px;letter-spacing:.03em;gap:4px}
+  .wms-stats small::before{width:6px;height:6px}
+  .steps .art{height:auto}
+  .steps .art-ui{zoom:1.14}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
+  .map image{display:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -640,8 +685,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div>
       <h1 aria-label="Фулфилмент для Wildberries от 25 ₽ за заказ"><span>Фулфилмент</span><span class="h1-row">для <a class="ptag" href="#calc" aria-hidden="true" tabindex="-1"><span class="ptag-bg"></span><i class="ptag-hole"></i><span class="ptag-t"><small>от</small><b>25 ₽</b><small>за заказ</small></span></a></span><span>Wildberries</span></h1>
       <div class="modes" role="group" aria-label="Схема работы">
-        <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><i class="mode-go" aria-hidden="true">→</i></a>
-        <a class="mode m-fbo" href="#fbo"><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><i class="mode-go" aria-hidden="true">→</i></a>
+        <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><img class="mode-ic" src="img/3d/box.webp" alt="" width="60" height="60"></a>
+        <a class="mode m-fbo" href="#fbo"><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><img class="mode-ic" src="img/3d/truck.webp" alt="" width="60" height="60"></a>
       </div>
       <p class="hero-sub">Работаем по обеим схемам. <b>Собственная WMS с полной интеграцией с Wildberries</b>: все заказы FBS и остатки видим онлайн.</p>
       <ul class="badges">
@@ -662,9 +707,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <span class="live"><i></i>синхронизация с WB</span>
       </div>
       <div class="wms-stats">
-        <div><small>Новые</small><b id="sNew">3</b></div>
-        <div><small>Собираем</small><b id="sPick">2</b></div>
-        <div><small>Отгружено</small><b id="sShip">14</b></div>
+        <div class="c-new"><small>Новые</small><b id="sNew">3</b></div>
+        <div class="c-pick"><small>Собираем</small><b id="sPick">2</b></div>
+        <div class="c-ship"><small>Отгружено</small><b id="sShip">14</b></div>
       </div>
       <ul class="orders" id="orders"></ul>
       <p class="wms-note">Пример интерфейса: так мы видим поток заказов FBS в реальном времени.</p>
@@ -684,6 +729,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li class="on">
         <span class="num">ШАГ 1</span>
         <div class="art art-ui" aria-hidden="true">
+          <img class="st3d" src="img/3d/key.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="wb">WB</span>Личный кабинет</div>
             <div class="mini-field"><span class="ph">API-токен</span><span class="tok">••••••••••••••••••</span><i class="caret"></i></div>
@@ -697,6 +743,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 2</span>
         <div class="art art-ui s2" aria-hidden="true">
+          <img class="st3d" src="img/3d/box.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Приёмка товара</div>
             <div class="scan"><svg class="bc" viewBox="0 0 100 20"><path d="M2 0v20M5 0v20M6.5 0v20M10 0v20M13 0v20M14.5 0v20M18 0v20M20 0v20M24 0v20M26.5 0v20M28 0v20M32 0v20M35 0v20M37 0v20M40 0v20M41.5 0v20M45 0v20M48 0v20M50 0v20M53 0v20M56 0v20M57.5 0v20M61 0v20M64 0v20M66 0v20M69 0v20M72 0v20M73.5 0v20M77 0v20M80 0v20M82 0v20M85 0v20M88 0v20M89.5 0v20M93 0v20M96 0v20M98 0v20" stroke="#111" stroke-width="1.3"/></svg><i class="beam"></i></div>
@@ -709,6 +756,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 3</span>
         <div class="art art-ui s3" aria-hidden="true">
+          <img class="st3d" src="img/3d/tag.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Задание №1042</div>
             <div class="chk"><span><i></i>Пересчёт</span><span><i></i>Брак</span><span><i></i>Маркировка</span><span><i></i>Упаковка</span></div>
@@ -720,6 +768,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 4</span>
         <div class="art art-ui s4" aria-hidden="true">
+          <img class="st3d" src="img/3d/map.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Остатки</div>
             <div class="stock">
@@ -735,6 +784,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 5</span>
         <div class="art art-ui s5" aria-hidden="true">
+          <img class="st3d" src="img/3d/truck.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="wb">WB</span>Заказ №48919</div>
             <div class="track"><b class="ln"><i></i></b><span class="p1"><i></i>Новый</span><span class="p2"><i></i>Собран</span><span class="p3"><i></i>Отгружен</span></div>
@@ -744,7 +794,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Собираем и отгружаем</h3><p>Каждый новый заказ видим сразу, собираем, клеим стикер и везём на СЦ или ПВЗ.</p>
       </li>
     </ol>
-    <div class="need"><b>Что нужно от вас:</b><span>Доступ к ЛК Wildberries</span><span>API-токен</span><span>Техническое задание</span></div>
+    <div class="need"><b>Что нужно от вас:</b><span><img src="img/3d/lock.webp" alt="" width="24" height="24" loading="lazy">Доступ к ЛК Wildberries</span><span><img src="img/3d/key.webp" alt="" width="24" height="24" loading="lazy">API-токен</span><span><img src="img/3d/clipboard.webp" alt="" width="24" height="24" loading="lazy">Техническое задание</span></div>
   </div>
 </section>
 
@@ -770,7 +820,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div class="sc sc1 on">
             <div class="app">
               <div class="app-top"><span class="wb">WB</span>Wildberries</div>
-              <div class="prod"><span class="prod-img"><svg viewBox="0 0 40 40"><path d="M13 7l-9 5 4 8 4-2v15h16V18l4 2 4-8-9-5c-1 3-3.5 5-7 5s-6-2-7-5z" fill="#FF5A00"/></svg></span><span><b>Футболка оверсайз</b><small>Размер M</small><strong>1 290 ₽</strong></span></div>
+              <div class="prod"><span class="prod-img"><img src="img/3d/tshirt.webp" alt="" width="46" height="46"></span><span><b>Футболка оверсайз</b><small>Размер M</small><strong>1 290 ₽</strong></span></div>
               <div class="buy"><span class="b1">Купить</span><span class="b2">✓ Заказ оформлен</span><i class="ripple"></i></div>
             </div>
           </div>
@@ -798,7 +848,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <div class="route">
               <div class="rt-line"><i></i></div>
               <span class="rt rt1"><i></i>Склад</span><span class="rt rt2"><i></i>СЦ WB</span><span class="rt rt3"><i></i>ПВЗ</span>
-              <span class="pkg">№48919</span>
+              <span class="pkg"><img src="img/3d/truck.webp" alt="" width="24" height="24" loading="lazy">№48919</span>
             </div>
             <div class="okchip">Передан в доставку</div>
           </div>
@@ -816,17 +866,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="feat">
       <div>
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="4" y="8" width="40" height="30" rx="5" stroke="#FF5A00" stroke-width="3"/><path d="M11 30l7-8 6 5 9-11" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="12" r="5" fill="#3DDC84"/></svg>
+        <span class="fic"><img src="img/3d/chart.webp" alt="" width="46" height="46" loading="lazy"></span>
         <h3>Заказы онлайн</h3>
         <p>Каждый новый заказ FBS появляется в системе сразу. Ничего не теряется и не ждёт ручной выгрузки.</p>
       </div>
       <div>
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 16l16-8 16 8v16l-16 8-16-8z" stroke="#FF5A00" stroke-width="3" stroke-linejoin="round"/><path d="M8 16l16 8 16-8M24 24v16" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
+        <span class="fic"><img src="img/3d/box.webp" alt="" width="46" height="46" loading="lazy"></span>
         <h3>Точные остатки</h3>
         <p>Остатки списываются автоматически при сборке. Данные в WMS и в кабинете WB совпадают.</p>
       </div>
       <div>
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="12" cy="24" r="6" stroke="#FF5A00" stroke-width="3"/><circle cx="36" cy="12" r="5" stroke="#fff" stroke-width="3"/><circle cx="36" cy="36" r="5" stroke="#fff" stroke-width="3"/><path d="M17 21l14-7M17 27l14 7" stroke="#fff" stroke-width="3"/></svg>
+        <span class="fic"><img src="img/3d/globe.webp" alt="" width="46" height="46" loading="lazy"></span>
         <h3>Единая система</h3>
         <p>Москва, Казань и Краснодар работают в одной WMS. Качество одинаковое, на каком бы складе ни лежал товар.</p>
       </div>
@@ -843,32 +893,43 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
     <div class="net">
       <div class="map">
-        <svg viewBox="0 0 560 400" role="img" aria-label="Схема: из московского хаба товар уходит на склады в Казани и Краснодаре">
+        <svg viewBox="0 0 560 420" role="img" aria-label="Карта: из московского хаба товар едет на склады в Казани и Краснодаре">
           <defs>
-            <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#D9D9D9"/></pattern>
+            <path id="mLand" d="M52 4h0M60 4h0M84 4h0M92 4h0M100 4h0M108 4h0M116 4h0M124 4h0M132 4h0M140 4h0M148 4h0M156 4h0M164 4h0M172 4h0M180 4h0M188 4h0M196 4h0M204 4h0M212 4h0M220 4h0M228 4h0M236 4h0M244 4h0M252 4h0M260 4h0M268 4h0M276 4h0M284 4h0M292 4h0M300 4h0M308 4h0M316 4h0M324 4h0M332 4h0M340 4h0M348 4h0M356 4h0M364 4h0M372 4h0M380 4h0M388 4h0M396 4h0M404 4h0M412 4h0M420 4h0M428 4h0M436 4h0M444 4h0M452 4h0M460 4h0M468 4h0M476 4h0M484 4h0M492 4h0M500 4h0M508 4h0M516 4h0M524 4h0M532 4h0M540 4h0M548 4h0M556 4h0M52 12h0M60 12h0M84 12h0M92 12h0M100 12h0M108 12h0M116 12h0M124 12h0M132 12h0M140 12h0M148 12h0M156 12h0M164 12h0M172 12h0M180 12h0M188 12h0M196 12h0M204 12h0M212 12h0M220 12h0M228 12h0M236 12h0M244 12h0M252 12h0M260 12h0M268 12h0M276 12h0M284 12h0M292 12h0M300 12h0M308 12h0M316 12h0M324 12h0M332 12h0M340 12h0M348 12h0M356 12h0M364 12h0M372 12h0M380 12h0M388 12h0M396 12h0M404 12h0M412 12h0M420 12h0M428 12h0M436 12h0M444 12h0M452 12h0M460 12h0M468 12h0M476 12h0M484 12h0M492 12h0M500 12h0M508 12h0M516 12h0M524 12h0M532 12h0M540 12h0M548 12h0M556 12h0M44 20h0M52 20h0M60 20h0M68 20h0M84 20h0M92 20h0M100 20h0M108 20h0M116 20h0M124 20h0M132 20h0M140 20h0M148 20h0M156 20h0M164 20h0M172 20h0M180 20h0M188 20h0M196 20h0M204 20h0M212 20h0M220 20h0M228 20h0M236 20h0M244 20h0M252 20h0M260 20h0M268 20h0M276 20h0M284 20h0M292 20h0M300 20h0M308 20h0M316 20h0M324 20h0M332 20h0M340 20h0M348 20h0M356 20h0M364 20h0M372 20h0M380 20h0M388 20h0M396 20h0M404 20h0M412 20h0M420 20h0M428 20h0M436 20h0M444 20h0M452 20h0M460 20h0M468 20h0M476 20h0M484 20h0M492 20h0M500 20h0M508 20h0M516 20h0M524 20h0M532 20h0M540 20h0M548 20h0M556 20h0M36 28h0M44 28h0M52 28h0M60 28h0M68 28h0M76 28h0M84 28h0M92 28h0M100 28h0M108 28h0M116 28h0M124 28h0M132 28h0M140 28h0M148 28h0M156 28h0M164 28h0M172 28h0M180 28h0M188 28h0M196 28h0M204 28h0M212 28h0M220 28h0M228 28h0M236 28h0M244 28h0M252 28h0M260 28h0M268 28h0M276 28h0M284 28h0M292 28h0M300 28h0M308 28h0M316 28h0M324 28h0M332 28h0M340 28h0M348 28h0M356 28h0M364 28h0M372 28h0M380 28h0M388 28h0M396 28h0M404 28h0M412 28h0M420 28h0M428 28h0M436 28h0M444 28h0M452 28h0M460 28h0M468 28h0M476 28h0M484 28h0M492 28h0M500 28h0M508 28h0M516 28h0M524 28h0M532 28h0M540 28h0M548 28h0M556 28h0M36 36h0M44 36h0M52 36h0M60 36h0M68 36h0M76 36h0M84 36h0M92 36h0M100 36h0M108 36h0M116 36h0M124 36h0M132 36h0M140 36h0M148 36h0M156 36h0M164 36h0M172 36h0M180 36h0M188 36h0M196 36h0M204 36h0M212 36h0M220 36h0M228 36h0M236 36h0M244 36h0M252 36h0M260 36h0M268 36h0M276 36h0M284 36h0M292 36h0M300 36h0M308 36h0M316 36h0M324 36h0M332 36h0M340 36h0M348 36h0M356 36h0M364 36h0M372 36h0M380 36h0M388 36h0M396 36h0M404 36h0M412 36h0M420 36h0M428 36h0M436 36h0M444 36h0M452 36h0M460 36h0M468 36h0M476 36h0M484 36h0M492 36h0M500 36h0M508 36h0M516 36h0M524 36h0M532 36h0M540 36h0M548 36h0M556 36h0M36 44h0M44 44h0M52 44h0M60 44h0M68 44h0M76 44h0M84 44h0M92 44h0M100 44h0M108 44h0M116 44h0M124 44h0M132 44h0M140 44h0M148 44h0M156 44h0M164 44h0M172 44h0M180 44h0M188 44h0M196 44h0M204 44h0M212 44h0M220 44h0M228 44h0M236 44h0M244 44h0M252 44h0M260 44h0M268 44h0M276 44h0M284 44h0M292 44h0M300 44h0M308 44h0M316 44h0M324 44h0M332 44h0M340 44h0M348 44h0M356 44h0M364 44h0M372 44h0M380 44h0M388 44h0M396 44h0M404 44h0M412 44h0M420 44h0M428 44h0M436 44h0M444 44h0M452 44h0M460 44h0M468 44h0M476 44h0M484 44h0M492 44h0M500 44h0M508 44h0M516 44h0M524 44h0M532 44h0M540 44h0M548 44h0M556 44h0M36 52h0M44 52h0M52 52h0M60 52h0M68 52h0M76 52h0M84 52h0M92 52h0M100 52h0M108 52h0M116 52h0M124 52h0M132 52h0M140 52h0M148 52h0M156 52h0M164 52h0M172 52h0M180 52h0M188 52h0M196 52h0M204 52h0M212 52h0M220 52h0M228 52h0M236 52h0M244 52h0M252 52h0M260 52h0M268 52h0M276 52h0M284 52h0M292 52h0M300 52h0M308 52h0M316 52h0M324 52h0M332 52h0M340 52h0M348 52h0M356 52h0M364 52h0M372 52h0M380 52h0M388 52h0M396 52h0M404 52h0M412 52h0M420 52h0M428 52h0M436 52h0M444 52h0M452 52h0M460 52h0M468 52h0M476 52h0M484 52h0M492 52h0M500 52h0M508 52h0M516 52h0M524 52h0M532 52h0M540 52h0M548 52h0M556 52h0M12 60h0M20 60h0M28 60h0M36 60h0M44 60h0M52 60h0M60 60h0M68 60h0M76 60h0M84 60h0M92 60h0M100 60h0M108 60h0M116 60h0M124 60h0M132 60h0M140 60h0M148 60h0M156 60h0M164 60h0M172 60h0M180 60h0M188 60h0M196 60h0M204 60h0M212 60h0M220 60h0M228 60h0M236 60h0M244 60h0M252 60h0M260 60h0M268 60h0M276 60h0M284 60h0M292 60h0M300 60h0M308 60h0M316 60h0M324 60h0M332 60h0M340 60h0M348 60h0M356 60h0M364 60h0M372 60h0M380 60h0M388 60h0M396 60h0M404 60h0M412 60h0M420 60h0M428 60h0M436 60h0M444 60h0M452 60h0M460 60h0M468 60h0M476 60h0M484 60h0M492 60h0M500 60h0M508 60h0M516 60h0M524 60h0M532 60h0M540 60h0M548 60h0M556 60h0M4 68h0M12 68h0M20 68h0M28 68h0M36 68h0M44 68h0M52 68h0M60 68h0M68 68h0M76 68h0M84 68h0M92 68h0M100 68h0M108 68h0M116 68h0M124 68h0M132 68h0M140 68h0M148 68h0M156 68h0M164 68h0M172 68h0M180 68h0M188 68h0M196 68h0M204 68h0M212 68h0M220 68h0M228 68h0M236 68h0M244 68h0M252 68h0M260 68h0M268 68h0M276 68h0M284 68h0M292 68h0M300 68h0M308 68h0M316 68h0M324 68h0M332 68h0M340 68h0M348 68h0M356 68h0M364 68h0M372 68h0M380 68h0M388 68h0M396 68h0M404 68h0M412 68h0M420 68h0M428 68h0M436 68h0M444 68h0M452 68h0M460 68h0M468 68h0M476 68h0M484 68h0M492 68h0M500 68h0M508 68h0M516 68h0M524 68h0M532 68h0M540 68h0M548 68h0M556 68h0M4 76h0M12 76h0M20 76h0M28 76h0M36 76h0M44 76h0M52 76h0M60 76h0M68 76h0M76 76h0M84 76h0M92 76h0M100 76h0M108 76h0M116 76h0M124 76h0M132 76h0M140 76h0M148 76h0M156 76h0M164 76h0M172 76h0M180 76h0M188 76h0M196 76h0M204 76h0M212 76h0M220 76h0M228 76h0M236 76h0M244 76h0M252 76h0M260 76h0M268 76h0M276 76h0M284 76h0M292 76h0M300 76h0M308 76h0M316 76h0M324 76h0M332 76h0M340 76h0M348 76h0M356 76h0M364 76h0M372 76h0M380 76h0M388 76h0M396 76h0M404 76h0M412 76h0M420 76h0M428 76h0M436 76h0M444 76h0M452 76h0M460 76h0M468 76h0M476 76h0M484 76h0M492 76h0M500 76h0M508 76h0M516 76h0M524 76h0M532 76h0M540 76h0M548 76h0M556 76h0M4 84h0M12 84h0M20 84h0M28 84h0M36 84h0M44 84h0M52 84h0M60 84h0M68 84h0M76 84h0M84 84h0M92 84h0M100 84h0M108 84h0M116 84h0M124 84h0M132 84h0M140 84h0M148 84h0M156 84h0M164 84h0M172 84h0M180 84h0M188 84h0M196 84h0M204 84h0M212 84h0M220 84h0M228 84h0M236 84h0M244 84h0M252 84h0M260 84h0M268 84h0M276 84h0M284 84h0M292 84h0M300 84h0M308 84h0M316 84h0M324 84h0M332 84h0M340 84h0M348 84h0M356 84h0M364 84h0M372 84h0M380 84h0M388 84h0M396 84h0M404 84h0M412 84h0M420 84h0M428 84h0M436 84h0M444 84h0M452 84h0M460 84h0M468 84h0M476 84h0M484 84h0M492 84h0M500 84h0M508 84h0M516 84h0M524 84h0M532 84h0M540 84h0M548 84h0M556 84h0M4 92h0M12 92h0M20 92h0M28 92h0M36 92h0M44 92h0M52 92h0M60 92h0M68 92h0M76 92h0M84 92h0M92 92h0M100 92h0M108 92h0M116 92h0M124 92h0M132 92h0M140 92h0M148 92h0M156 92h0M164 92h0M172 92h0M180 92h0M188 92h0M196 92h0M204 92h0M212 92h0M220 92h0M228 92h0M236 92h0M244 92h0M252 92h0M260 92h0M268 92h0M276 92h0M284 92h0M292 92h0M300 92h0M308 92h0M316 92h0M324 92h0M332 92h0M340 92h0M348 92h0M356 92h0M364 92h0M372 92h0M380 92h0M388 92h0M396 92h0M404 92h0M412 92h0M420 92h0M428 92h0M436 92h0M444 92h0M452 92h0M460 92h0M468 92h0M476 92h0M484 92h0M492 92h0M500 92h0M508 92h0M516 92h0M524 92h0M532 92h0M540 92h0M548 92h0M556 92h0M4 100h0M12 100h0M20 100h0M28 100h0M36 100h0M44 100h0M52 100h0M60 100h0M68 100h0M76 100h0M84 100h0M92 100h0M100 100h0M108 100h0M116 100h0M124 100h0M132 100h0M140 100h0M148 100h0M156 100h0M164 100h0M172 100h0M180 100h0M188 100h0M196 100h0M204 100h0M212 100h0M220 100h0M228 100h0M236 100h0M244 100h0M252 100h0M260 100h0M268 100h0M276 100h0M284 100h0M292 100h0M300 100h0M308 100h0M316 100h0M324 100h0M332 100h0M340 100h0M348 100h0M356 100h0M364 100h0M372 100h0M380 100h0M388 100h0M396 100h0M404 100h0M412 100h0M420 100h0M428 100h0M436 100h0M444 100h0M452 100h0M460 100h0M468 100h0M476 100h0M484 100h0M492 100h0M500 100h0M508 100h0M516 100h0M524 100h0M532 100h0M540 100h0M548 100h0M556 100h0M4 108h0M12 108h0M20 108h0M28 108h0M36 108h0M44 108h0M52 108h0M60 108h0M68 108h0M76 108h0M84 108h0M92 108h0M100 108h0M108 108h0M116 108h0M124 108h0M132 108h0M140 108h0M148 108h0M156 108h0M164 108h0M172 108h0M180 108h0M188 108h0M196 108h0M204 108h0M212 108h0M220 108h0M228 108h0M236 108h0M244 108h0M252 108h0M260 108h0M268 108h0M276 108h0M284 108h0M292 108h0M300 108h0M308 108h0M316 108h0M324 108h0M332 108h0M340 108h0M348 108h0M356 108h0M364 108h0M372 108h0M380 108h0M388 108h0M396 108h0M404 108h0M412 108h0M420 108h0M428 108h0M436 108h0M444 108h0M452 108h0M460 108h0M468 108h0M476 108h0M484 108h0M492 108h0M500 108h0M508 108h0M516 108h0M524 108h0M532 108h0M540 108h0M548 108h0M556 108h0M4 116h0M12 116h0M20 116h0M28 116h0M36 116h0M44 116h0M52 116h0M60 116h0M68 116h0M76 116h0M84 116h0M92 116h0M100 116h0M108 116h0M116 116h0M124 116h0M132 116h0M140 116h0M148 116h0M156 116h0M164 116h0M172 116h0M180 116h0M188 116h0M196 116h0M204 116h0M212 116h0M220 116h0M228 116h0M236 116h0M244 116h0M252 116h0M260 116h0M268 116h0M276 116h0M284 116h0M292 116h0M300 116h0M308 116h0M316 116h0M324 116h0M332 116h0M340 116h0M348 116h0M356 116h0M364 116h0M372 116h0M380 116h0M388 116h0M396 116h0M404 116h0M412 116h0M420 116h0M428 116h0M436 116h0M444 116h0M452 116h0M460 116h0M468 116h0M476 116h0M484 116h0M492 116h0M500 116h0M508 116h0M516 116h0M524 116h0M532 116h0M540 116h0M548 116h0M556 116h0M4 124h0M12 124h0M20 124h0M28 124h0M36 124h0M44 124h0M52 124h0M60 124h0M68 124h0M76 124h0M84 124h0M92 124h0M100 124h0M108 124h0M116 124h0M124 124h0M132 124h0M140 124h0M148 124h0M156 124h0M164 124h0M172 124h0M180 124h0M188 124h0M196 124h0M204 124h0M212 124h0M220 124h0M228 124h0M236 124h0M244 124h0M252 124h0M260 124h0M268 124h0M276 124h0M284 124h0M292 124h0M300 124h0M308 124h0M316 124h0M324 124h0M332 124h0M340 124h0M348 124h0M356 124h0M364 124h0M372 124h0M380 124h0M388 124h0M396 124h0M404 124h0M412 124h0M420 124h0M428 124h0M436 124h0M444 124h0M452 124h0M460 124h0M468 124h0M476 124h0M484 124h0M492 124h0M500 124h0M508 124h0M516 124h0M524 124h0M532 124h0M540 124h0M548 124h0M556 124h0M4 132h0M12 132h0M20 132h0M28 132h0M36 132h0M44 132h0M52 132h0M60 132h0M68 132h0M76 132h0M84 132h0M92 132h0M100 132h0M108 132h0M116 132h0M124 132h0M132 132h0M140 132h0M148 132h0M156 132h0M164 132h0M172 132h0M180 132h0M188 132h0M196 132h0M204 132h0M212 132h0M220 132h0M228 132h0M236 132h0M244 132h0M252 132h0M260 132h0M268 132h0M276 132h0M284 132h0M292 132h0M300 132h0M308 132h0M316 132h0M324 132h0M332 132h0M340 132h0M348 132h0M356 132h0M364 132h0M372 132h0M380 132h0M388 132h0M396 132h0M404 132h0M412 132h0M420 132h0M428 132h0M436 132h0M444 132h0M452 132h0M460 132h0M468 132h0M476 132h0M484 132h0M492 132h0M500 132h0M508 132h0M516 132h0M524 132h0M532 132h0M540 132h0M548 132h0M556 132h0M4 140h0M12 140h0M20 140h0M28 140h0M36 140h0M44 140h0M52 140h0M60 140h0M68 140h0M76 140h0M84 140h0M92 140h0M100 140h0M108 140h0M116 140h0M124 140h0M132 140h0M140 140h0M148 140h0M156 140h0M164 140h0M172 140h0M180 140h0M188 140h0M196 140h0M204 140h0M212 140h0M220 140h0M228 140h0M236 140h0M244 140h0M252 140h0M260 140h0M268 140h0M276 140h0M284 140h0M292 140h0M300 140h0M308 140h0M316 140h0M324 140h0M332 140h0M340 140h0M348 140h0M356 140h0M364 140h0M372 140h0M380 140h0M388 140h0M396 140h0M404 140h0M412 140h0M420 140h0M428 140h0M436 140h0M444 140h0M452 140h0M460 140h0M468 140h0M476 140h0M484 140h0M492 140h0M500 140h0M508 140h0M516 140h0M524 140h0M532 140h0M540 140h0M548 140h0M556 140h0M4 148h0M12 148h0M20 148h0M28 148h0M36 148h0M44 148h0M52 148h0M60 148h0M68 148h0M76 148h0M84 148h0M92 148h0M100 148h0M108 148h0M116 148h0M124 148h0M132 148h0M140 148h0M148 148h0M156 148h0M164 148h0M172 148h0M180 148h0M188 148h0M196 148h0M204 148h0M212 148h0M220 148h0M228 148h0M236 148h0M244 148h0M252 148h0M260 148h0M268 148h0M276 148h0M284 148h0M292 148h0M300 148h0M308 148h0M316 148h0M324 148h0M332 148h0M340 148h0M348 148h0M356 148h0M364 148h0M372 148h0M380 148h0M388 148h0M396 148h0M404 148h0M412 148h0M420 148h0M428 148h0M436 148h0M444 148h0M452 148h0M460 148h0M468 148h0M476 148h0M484 148h0M492 148h0M500 148h0M508 148h0M516 148h0M524 148h0M532 148h0M540 148h0M548 148h0M556 148h0M4 156h0M12 156h0M20 156h0M28 156h0M36 156h0M44 156h0M52 156h0M60 156h0M68 156h0M76 156h0M84 156h0M92 156h0M100 156h0M108 156h0M116 156h0M124 156h0M132 156h0M140 156h0M148 156h0M156 156h0M164 156h0M172 156h0M180 156h0M188 156h0M196 156h0M204 156h0M212 156h0M220 156h0M228 156h0M236 156h0M244 156h0M252 156h0M260 156h0M268 156h0M276 156h0M284 156h0M292 156h0M300 156h0M308 156h0M316 156h0M324 156h0M332 156h0M340 156h0M348 156h0M356 156h0M364 156h0M372 156h0M380 156h0M388 156h0M396 156h0M404 156h0M412 156h0M420 156h0M428 156h0M436 156h0M444 156h0M452 156h0M460 156h0M468 156h0M476 156h0M484 156h0M492 156h0M500 156h0M508 156h0M516 156h0M524 156h0M532 156h0M540 156h0M548 156h0M556 156h0M4 164h0M12 164h0M20 164h0M28 164h0M36 164h0M44 164h0M52 164h0M60 164h0M68 164h0M76 164h0M84 164h0M92 164h0M100 164h0M108 164h0M116 164h0M124 164h0M132 164h0M140 164h0M148 164h0M156 164h0M164 164h0M172 164h0M180 164h0M188 164h0M196 164h0M204 164h0M212 164h0M220 164h0M228 164h0M236 164h0M244 164h0M252 164h0M260 164h0M268 164h0M276 164h0M284 164h0M292 164h0M300 164h0M308 164h0M316 164h0M324 164h0M332 164h0M340 164h0M348 164h0M356 164h0M364 164h0M372 164h0M380 164h0M388 164h0M396 164h0M404 164h0M412 164h0M420 164h0M428 164h0M436 164h0M444 164h0M452 164h0M460 164h0M468 164h0M476 164h0M484 164h0M492 164h0M500 164h0M508 164h0M516 164h0M524 164h0M532 164h0M540 164h0M548 164h0M556 164h0M4 172h0M12 172h0M20 172h0M28 172h0M36 172h0M44 172h0M52 172h0M60 172h0M68 172h0M76 172h0M84 172h0M92 172h0M100 172h0M108 172h0M116 172h0M124 172h0M132 172h0M140 172h0M148 172h0M156 172h0M164 172h0M172 172h0M180 172h0M188 172h0M196 172h0M204 172h0M212 172h0M220 172h0M228 172h0M236 172h0M244 172h0M252 172h0M260 172h0M268 172h0M276 172h0M284 172h0M292 172h0M300 172h0M308 172h0M316 172h0M324 172h0M332 172h0M340 172h0M348 172h0M356 172h0M364 172h0M372 172h0M380 172h0M388 172h0M396 172h0M404 172h0M412 172h0M420 172h0M428 172h0M436 172h0M444 172h0M452 172h0M460 172h0M468 172h0M476 172h0M484 172h0M492 172h0M500 172h0M508 172h0M516 172h0M524 172h0M532 172h0M540 172h0M548 172h0M556 172h0M4 180h0M12 180h0M20 180h0M28 180h0M36 180h0M44 180h0M52 180h0M60 180h0M68 180h0M76 180h0M84 180h0M92 180h0M100 180h0M108 180h0M116 180h0M124 180h0M132 180h0M140 180h0M148 180h0M156 180h0M164 180h0M172 180h0M180 180h0M188 180h0M196 180h0M204 180h0M212 180h0M220 180h0M228 180h0M236 180h0M244 180h0M252 180h0M260 180h0M268 180h0M276 180h0M284 180h0M292 180h0M300 180h0M308 180h0M316 180h0M324 180h0M332 180h0M340 180h0M348 180h0M356 180h0M364 180h0M372 180h0M380 180h0M388 180h0M396 180h0M404 180h0M412 180h0M420 180h0M428 180h0M436 180h0M444 180h0M452 180h0M460 180h0M468 180h0M476 180h0M484 180h0M492 180h0M500 180h0M508 180h0M516 180h0M524 180h0M532 180h0M540 180h0M548 180h0M556 180h0M4 188h0M12 188h0M20 188h0M28 188h0M36 188h0M44 188h0M52 188h0M60 188h0M68 188h0M76 188h0M84 188h0M92 188h0M100 188h0M108 188h0M116 188h0M124 188h0M132 188h0M140 188h0M148 188h0M156 188h0M164 188h0M172 188h0M180 188h0M188 188h0M196 188h0M204 188h0M212 188h0M220 188h0M228 188h0M236 188h0M244 188h0M252 188h0M260 188h0M268 188h0M276 188h0M284 188h0M292 188h0M300 188h0M308 188h0M316 188h0M324 188h0M332 188h0M340 188h0M348 188h0M356 188h0M364 188h0M372 188h0M380 188h0M388 188h0M396 188h0M404 188h0M412 188h0M420 188h0M428 188h0M436 188h0M444 188h0M452 188h0M460 188h0M468 188h0M476 188h0M484 188h0M492 188h0M500 188h0M508 188h0M516 188h0M524 188h0M532 188h0M540 188h0M548 188h0M556 188h0M4 196h0M12 196h0M20 196h0M28 196h0M36 196h0M44 196h0M52 196h0M60 196h0M68 196h0M76 196h0M84 196h0M92 196h0M100 196h0M108 196h0M116 196h0M124 196h0M132 196h0M140 196h0M148 196h0M156 196h0M164 196h0M172 196h0M180 196h0M188 196h0M196 196h0M204 196h0M212 196h0M220 196h0M228 196h0M236 196h0M244 196h0M252 196h0M260 196h0M268 196h0M276 196h0M284 196h0M292 196h0M300 196h0M308 196h0M316 196h0M324 196h0M332 196h0M340 196h0M348 196h0M356 196h0M364 196h0M372 196h0M380 196h0M388 196h0M396 196h0M404 196h0M412 196h0M420 196h0M428 196h0M436 196h0M444 196h0M452 196h0M460 196h0M468 196h0M476 196h0M484 196h0M492 196h0M500 196h0M508 196h0M516 196h0M524 196h0M532 196h0M540 196h0M548 196h0M556 196h0M4 204h0M12 204h0M20 204h0M28 204h0M36 204h0M44 204h0M52 204h0M60 204h0M68 204h0M76 204h0M84 204h0M92 204h0M100 204h0M108 204h0M116 204h0M124 204h0M132 204h0M140 204h0M148 204h0M156 204h0M164 204h0M172 204h0M180 204h0M188 204h0M196 204h0M204 204h0M212 204h0M220 204h0M228 204h0M236 204h0M244 204h0M252 204h0M260 204h0M268 204h0M276 204h0M284 204h0M292 204h0M300 204h0M308 204h0M316 204h0M324 204h0M332 204h0M340 204h0M348 204h0M356 204h0M364 204h0M372 204h0M380 204h0M388 204h0M396 204h0M404 204h0M412 204h0M420 204h0M428 204h0M436 204h0M444 204h0M452 204h0M460 204h0M468 204h0M476 204h0M484 204h0M492 204h0M500 204h0M508 204h0M516 204h0M524 204h0M532 204h0M540 204h0M548 204h0M556 204h0M4 212h0M12 212h0M20 212h0M28 212h0M36 212h0M44 212h0M52 212h0M60 212h0M68 212h0M76 212h0M84 212h0M92 212h0M100 212h0M108 212h0M116 212h0M124 212h0M132 212h0M140 212h0M148 212h0M156 212h0M164 212h0M172 212h0M180 212h0M188 212h0M196 212h0M204 212h0M212 212h0M220 212h0M228 212h0M236 212h0M244 212h0M252 212h0M260 212h0M268 212h0M276 212h0M284 212h0M292 212h0M300 212h0M308 212h0M316 212h0M324 212h0M332 212h0M340 212h0M348 212h0M356 212h0M364 212h0M372 212h0M380 212h0M388 212h0M396 212h0M404 212h0M412 212h0M420 212h0M428 212h0M436 212h0M444 212h0M452 212h0M460 212h0M468 212h0M476 212h0M484 212h0M492 212h0M500 212h0M508 212h0M516 212h0M524 212h0M532 212h0M540 212h0M548 212h0M556 212h0M4 220h0M12 220h0M20 220h0M28 220h0M36 220h0M44 220h0M52 220h0M60 220h0M68 220h0M76 220h0M84 220h0M92 220h0M100 220h0M108 220h0M116 220h0M124 220h0M132 220h0M140 220h0M148 220h0M156 220h0M164 220h0M172 220h0M180 220h0M188 220h0M196 220h0M204 220h0M212 220h0M220 220h0M228 220h0M236 220h0M244 220h0M252 220h0M260 220h0M268 220h0M276 220h0M284 220h0M292 220h0M300 220h0M308 220h0M316 220h0M324 220h0M332 220h0M340 220h0M348 220h0M356 220h0M364 220h0M372 220h0M380 220h0M388 220h0M396 220h0M404 220h0M412 220h0M420 220h0M428 220h0M436 220h0M444 220h0M452 220h0M460 220h0M468 220h0M476 220h0M484 220h0M492 220h0M500 220h0M508 220h0M516 220h0M524 220h0M532 220h0M540 220h0M548 220h0M556 220h0M4 228h0M12 228h0M20 228h0M28 228h0M36 228h0M44 228h0M52 228h0M60 228h0M68 228h0M76 228h0M84 228h0M92 228h0M100 228h0M108 228h0M116 228h0M124 228h0M132 228h0M140 228h0M148 228h0M156 228h0M164 228h0M172 228h0M180 228h0M188 228h0M196 228h0M204 228h0M212 228h0M220 228h0M228 228h0M236 228h0M244 228h0M252 228h0M260 228h0M268 228h0M276 228h0M284 228h0M292 228h0M300 228h0M308 228h0M316 228h0M324 228h0M332 228h0M340 228h0M348 228h0M356 228h0M364 228h0M372 228h0M380 228h0M388 228h0M396 228h0M404 228h0M412 228h0M420 228h0M428 228h0M436 228h0M444 228h0M452 228h0M460 228h0M468 228h0M476 228h0M484 228h0M492 228h0M500 228h0M508 228h0M516 228h0M524 228h0M532 228h0M540 228h0M548 228h0M556 228h0M4 236h0M12 236h0M20 236h0M28 236h0M36 236h0M44 236h0M52 236h0M60 236h0M68 236h0M76 236h0M84 236h0M92 236h0M100 236h0M108 236h0M116 236h0M124 236h0M132 236h0M140 236h0M148 236h0M156 236h0M164 236h0M172 236h0M180 236h0M188 236h0M196 236h0M204 236h0M212 236h0M220 236h0M228 236h0M236 236h0M244 236h0M252 236h0M260 236h0M268 236h0M276 236h0M284 236h0M292 236h0M300 236h0M308 236h0M316 236h0M324 236h0M332 236h0M340 236h0M348 236h0M356 236h0M364 236h0M372 236h0M380 236h0M388 236h0M396 236h0M404 236h0M412 236h0M420 236h0M428 236h0M436 236h0M444 236h0M452 236h0M460 236h0M468 236h0M476 236h0M484 236h0M492 236h0M500 236h0M508 236h0M516 236h0M524 236h0M532 236h0M540 236h0M548 236h0M556 236h0M4 244h0M12 244h0M20 244h0M28 244h0M36 244h0M44 244h0M52 244h0M60 244h0M68 244h0M76 244h0M84 244h0M92 244h0M100 244h0M108 244h0M116 244h0M124 244h0M132 244h0M140 244h0M148 244h0M156 244h0M164 244h0M172 244h0M180 244h0M188 244h0M196 244h0M204 244h0M212 244h0M220 244h0M228 244h0M236 244h0M244 244h0M252 244h0M260 244h0M268 244h0M276 244h0M284 244h0M292 244h0M300 244h0M308 244h0M316 244h0M324 244h0M332 244h0M340 244h0M348 244h0M356 244h0M364 244h0M372 244h0M380 244h0M388 244h0M396 244h0M404 244h0M412 244h0M420 244h0M428 244h0M436 244h0M444 244h0M452 244h0M460 244h0M468 244h0M476 244h0M484 244h0M492 244h0M500 244h0M508 244h0M516 244h0M524 244h0M532 244h0M540 244h0M548 244h0M556 244h0M4 252h0M12 252h0M20 252h0M28 252h0M36 252h0M44 252h0M52 252h0M60 252h0M68 252h0M76 252h0M84 252h0M92 252h0M100 252h0M108 252h0M116 252h0M124 252h0M132 252h0M140 252h0M148 252h0M156 252h0M164 252h0M172 252h0M180 252h0M188 252h0M196 252h0M204 252h0M212 252h0M220 252h0M228 252h0M236 252h0M244 252h0M252 252h0M260 252h0M268 252h0M276 252h0M284 252h0M292 252h0M300 252h0M308 252h0M316 252h0M324 252h0M332 252h0M340 252h0M348 252h0M356 252h0M364 252h0M372 252h0M380 252h0M388 252h0M396 252h0M404 252h0M412 252h0M420 252h0M428 252h0M436 252h0M444 252h0M452 252h0M460 252h0M468 252h0M476 252h0M484 252h0M492 252h0M500 252h0M508 252h0M516 252h0M524 252h0M532 252h0M540 252h0M548 252h0M556 252h0M4 260h0M12 260h0M20 260h0M28 260h0M36 260h0M44 260h0M52 260h0M60 260h0M68 260h0M76 260h0M84 260h0M92 260h0M100 260h0M108 260h0M116 260h0M124 260h0M132 260h0M140 260h0M148 260h0M156 260h0M164 260h0M172 260h0M180 260h0M188 260h0M196 260h0M204 260h0M212 260h0M220 260h0M228 260h0M236 260h0M244 260h0M252 260h0M260 260h0M268 260h0M276 260h0M284 260h0M292 260h0M300 260h0M308 260h0M316 260h0M324 260h0M332 260h0M340 260h0M348 260h0M356 260h0M364 260h0M372 260h0M380 260h0M388 260h0M396 260h0M404 260h0M412 260h0M420 260h0M460 260h0M468 260h0M476 260h0M484 260h0M492 260h0M500 260h0M508 260h0M516 260h0M524 260h0M532 260h0M540 260h0M548 260h0M556 260h0M4 268h0M12 268h0M20 268h0M28 268h0M36 268h0M44 268h0M52 268h0M60 268h0M68 268h0M76 268h0M84 268h0M92 268h0M100 268h0M108 268h0M116 268h0M148 268h0M156 268h0M164 268h0M172 268h0M180 268h0M188 268h0M196 268h0M204 268h0M212 268h0M244 268h0M252 268h0M260 268h0M268 268h0M276 268h0M284 268h0M292 268h0M300 268h0M308 268h0M316 268h0M324 268h0M332 268h0M340 268h0M348 268h0M356 268h0M364 268h0M372 268h0M380 268h0M388 268h0M396 268h0M404 268h0M460 268h0M468 268h0M476 268h0M484 268h0M492 268h0M500 268h0M508 268h0M516 268h0M524 268h0M532 268h0M540 268h0M548 268h0M556 268h0M4 276h0M12 276h0M20 276h0M28 276h0M36 276h0M44 276h0M52 276h0M60 276h0M68 276h0M76 276h0M84 276h0M92 276h0M100 276h0M108 276h0M140 276h0M148 276h0M156 276h0M164 276h0M172 276h0M180 276h0M188 276h0M228 276h0M236 276h0M244 276h0M252 276h0M260 276h0M268 276h0M276 276h0M284 276h0M292 276h0M300 276h0M308 276h0M316 276h0M324 276h0M332 276h0M340 276h0M348 276h0M356 276h0M364 276h0M372 276h0M380 276h0M388 276h0M396 276h0M460 276h0M468 276h0M476 276h0M484 276h0M492 276h0M500 276h0M508 276h0M516 276h0M524 276h0M532 276h0M540 276h0M548 276h0M556 276h0M4 284h0M12 284h0M20 284h0M28 284h0M36 284h0M44 284h0M52 284h0M60 284h0M68 284h0M76 284h0M84 284h0M92 284h0M164 284h0M172 284h0M236 284h0M244 284h0M252 284h0M260 284h0M268 284h0M276 284h0M284 284h0M292 284h0M300 284h0M308 284h0M316 284h0M324 284h0M332 284h0M340 284h0M348 284h0M356 284h0M364 284h0M372 284h0M380 284h0M388 284h0M460 284h0M468 284h0M476 284h0M484 284h0M492 284h0M500 284h0M508 284h0M516 284h0M524 284h0M532 284h0M540 284h0M548 284h0M556 284h0M4 292h0M12 292h0M20 292h0M28 292h0M36 292h0M44 292h0M52 292h0M60 292h0M68 292h0M76 292h0M84 292h0M92 292h0M148 292h0M156 292h0M164 292h0M172 292h0M180 292h0M228 292h0M236 292h0M244 292h0M252 292h0M260 292h0M268 292h0M276 292h0M284 292h0M292 292h0M300 292h0M308 292h0M316 292h0M324 292h0M332 292h0M340 292h0M348 292h0M356 292h0M364 292h0M372 292h0M380 292h0M452 292h0M460 292h0M468 292h0M476 292h0M484 292h0M492 292h0M500 292h0M508 292h0M516 292h0M524 292h0M532 292h0M540 292h0M548 292h0M556 292h0M4 300h0M12 300h0M20 300h0M28 300h0M36 300h0M44 300h0M52 300h0M60 300h0M68 300h0M76 300h0M156 300h0M164 300h0M172 300h0M180 300h0M196 300h0M204 300h0M228 300h0M236 300h0M244 300h0M252 300h0M260 300h0M268 300h0M276 300h0M284 300h0M292 300h0M300 300h0M308 300h0M316 300h0M324 300h0M332 300h0M340 300h0M348 300h0M356 300h0M364 300h0M372 300h0M436 300h0M444 300h0M452 300h0M460 300h0M468 300h0M476 300h0M484 300h0M492 300h0M500 300h0M508 300h0M516 300h0M524 300h0M532 300h0M540 300h0M548 300h0M556 300h0M4 308h0M12 308h0M20 308h0M28 308h0M36 308h0M44 308h0M52 308h0M60 308h0M68 308h0M76 308h0M164 308h0M172 308h0M180 308h0M212 308h0M220 308h0M228 308h0M236 308h0M244 308h0M252 308h0M260 308h0M268 308h0M276 308h0M284 308h0M292 308h0M300 308h0M308 308h0M316 308h0M324 308h0M332 308h0M340 308h0M348 308h0M356 308h0M364 308h0M436 308h0M444 308h0M452 308h0M460 308h0M468 308h0M476 308h0M484 308h0M492 308h0M500 308h0M508 308h0M516 308h0M524 308h0M532 308h0M540 308h0M548 308h0M556 308h0M4 316h0M12 316h0M20 316h0M28 316h0M36 316h0M44 316h0M52 316h0M60 316h0M68 316h0M76 316h0M164 316h0M220 316h0M228 316h0M236 316h0M244 316h0M252 316h0M260 316h0M268 316h0M276 316h0M284 316h0M292 316h0M300 316h0M308 316h0M316 316h0M324 316h0M332 316h0M340 316h0M348 316h0M356 316h0M364 316h0M420 316h0M428 316h0M436 316h0M444 316h0M452 316h0M460 316h0M468 316h0M476 316h0M484 316h0M492 316h0M500 316h0M508 316h0M516 316h0M524 316h0M532 316h0M540 316h0M548 316h0M556 316h0M4 324h0M12 324h0M20 324h0M28 324h0M36 324h0M44 324h0M52 324h0M60 324h0M68 324h0M236 324h0M244 324h0M252 324h0M260 324h0M268 324h0M276 324h0M284 324h0M292 324h0M300 324h0M308 324h0M316 324h0M324 324h0M332 324h0M340 324h0M348 324h0M356 324h0M364 324h0M436 324h0M444 324h0M452 324h0M460 324h0M468 324h0M476 324h0M484 324h0M492 324h0M500 324h0M508 324h0M516 324h0M524 324h0M532 324h0M540 324h0M548 324h0M556 324h0M4 332h0M12 332h0M20 332h0M28 332h0M36 332h0M44 332h0M52 332h0M60 332h0M244 332h0M252 332h0M260 332h0M268 332h0M276 332h0M284 332h0M292 332h0M300 332h0M308 332h0M316 332h0M324 332h0M332 332h0M340 332h0M348 332h0M356 332h0M364 332h0M372 332h0M436 332h0M444 332h0M452 332h0M460 332h0M468 332h0M476 332h0M484 332h0M492 332h0M500 332h0M508 332h0M516 332h0M524 332h0M532 332h0M540 332h0M548 332h0M556 332h0M4 340h0M12 340h0M20 340h0M28 340h0M36 340h0M44 340h0M52 340h0M252 340h0M260 340h0M268 340h0M276 340h0M284 340h0M292 340h0M300 340h0M308 340h0M316 340h0M324 340h0M332 340h0M340 340h0M348 340h0M356 340h0M364 340h0M372 340h0M444 340h0M452 340h0M460 340h0M468 340h0M476 340h0M484 340h0M492 340h0M500 340h0M508 340h0M516 340h0M524 340h0M532 340h0M540 340h0M548 340h0M556 340h0M4 348h0M12 348h0M20 348h0M28 348h0M36 348h0M44 348h0M52 348h0M260 348h0M268 348h0M276 348h0M284 348h0M292 348h0M300 348h0M308 348h0M316 348h0M324 348h0M332 348h0M340 348h0M348 348h0M356 348h0M364 348h0M372 348h0M460 348h0M468 348h0M476 348h0M484 348h0M492 348h0M500 348h0M508 348h0M516 348h0M524 348h0M532 348h0M540 348h0M548 348h0M556 348h0M4 356h0M12 356h0M20 356h0M28 356h0M36 356h0M44 356h0M52 356h0M276 356h0M284 356h0M292 356h0M300 356h0M308 356h0M316 356h0M324 356h0M332 356h0M340 356h0M348 356h0M356 356h0M364 356h0M372 356h0M380 356h0M468 356h0M476 356h0M484 356h0M492 356h0M500 356h0M508 356h0M516 356h0M524 356h0M532 356h0M540 356h0M548 356h0M556 356h0M4 364h0M12 364h0M20 364h0M28 364h0M36 364h0M44 364h0M52 364h0M284 364h0M292 364h0M300 364h0M308 364h0M316 364h0M324 364h0M332 364h0M340 364h0M348 364h0M356 364h0M364 364h0M372 364h0M380 364h0M468 364h0M492 364h0M500 364h0M508 364h0M516 364h0M524 364h0M532 364h0M540 364h0M548 364h0M556 364h0M20 372h0M28 372h0M36 372h0M44 372h0M52 372h0M60 372h0M140 372h0M148 372h0M156 372h0M172 372h0M284 372h0M292 372h0M300 372h0M308 372h0M316 372h0M324 372h0M332 372h0M340 372h0M348 372h0M356 372h0M364 372h0M372 372h0M380 372h0M388 372h0M492 372h0M500 372h0M508 372h0M516 372h0M524 372h0M532 372h0M540 372h0M548 372h0M556 372h0M28 380h0M36 380h0M44 380h0M68 380h0M76 380h0M84 380h0M116 380h0M124 380h0M132 380h0M140 380h0M148 380h0M156 380h0M164 380h0M172 380h0M292 380h0M300 380h0M308 380h0M316 380h0M324 380h0M332 380h0M340 380h0M348 380h0M356 380h0M364 380h0M372 380h0M380 380h0M388 380h0M396 380h0M468 380h0M508 380h0M516 380h0M524 380h0M532 380h0M540 380h0M548 380h0M556 380h0M36 388h0M84 388h0M92 388h0M100 388h0M108 388h0M116 388h0M124 388h0M132 388h0M140 388h0M148 388h0M156 388h0M164 388h0M172 388h0M180 388h0M188 388h0M284 388h0M292 388h0M300 388h0M308 388h0M316 388h0M324 388h0M332 388h0M340 388h0M348 388h0M356 388h0M364 388h0M372 388h0M380 388h0M388 388h0M396 388h0M404 388h0M500 388h0M508 388h0M516 388h0M524 388h0M532 388h0M540 388h0M548 388h0M556 388h0M20 396h0M28 396h0M36 396h0M44 396h0M52 396h0M60 396h0M68 396h0M76 396h0M84 396h0M92 396h0M100 396h0M108 396h0M116 396h0M124 396h0M132 396h0M140 396h0M148 396h0M156 396h0M164 396h0M172 396h0M180 396h0M188 396h0M196 396h0M204 396h0M212 396h0M276 396h0M284 396h0M292 396h0M300 396h0M308 396h0M316 396h0M324 396h0M332 396h0M340 396h0M348 396h0M356 396h0M364 396h0M372 396h0M380 396h0M388 396h0M396 396h0M404 396h0M476 396h0M484 396h0M492 396h0M500 396h0M508 396h0M516 396h0M524 396h0M532 396h0M540 396h0M548 396h0M556 396h0M20 404h0M28 404h0M36 404h0M44 404h0M52 404h0M60 404h0M68 404h0M76 404h0M84 404h0M92 404h0M100 404h0M108 404h0M116 404h0M124 404h0M132 404h0M140 404h0M148 404h0M156 404h0M164 404h0M172 404h0M180 404h0M188 404h0M196 404h0M204 404h0M212 404h0M220 404h0M228 404h0M236 404h0M244 404h0M252 404h0M260 404h0M268 404h0M276 404h0M284 404h0M292 404h0M300 404h0M308 404h0M316 404h0M324 404h0M332 404h0M340 404h0M348 404h0M356 404h0M364 404h0M372 404h0M380 404h0M388 404h0M396 404h0M404 404h0M412 404h0M420 404h0M476 404h0M484 404h0M492 404h0M500 404h0M508 404h0M516 404h0M524 404h0M532 404h0M540 404h0M548 404h0M556 404h0M20 412h0M28 412h0M36 412h0M44 412h0M52 412h0M60 412h0M68 412h0M76 412h0M84 412h0M92 412h0M100 412h0M108 412h0M116 412h0M124 412h0M132 412h0M140 412h0M148 412h0M156 412h0M164 412h0M172 412h0M180 412h0M188 412h0M196 412h0M204 412h0M212 412h0M220 412h0M228 412h0M236 412h0M244 412h0M252 412h0M260 412h0M268 412h0M276 412h0M284 412h0M292 412h0M300 412h0M308 412h0M316 412h0M324 412h0M332 412h0M340 412h0M348 412h0M356 412h0M364 412h0M372 412h0M380 412h0M388 412h0M396 412h0M404 412h0M412 412h0M476 412h0M492 412h0M500 412h0M508 412h0M516 412h0M524 412h0M532 412h0M540 412h0M548 412h0M556 412h0"/>
+            <radialGradient id="mFade" cx="50%" cy="60%" r="74%"><stop offset=".68" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+            <mask id="mMask"><rect width="560" height="420" fill="url(#mFade)"/></mask>
+            <radialGradient id="mGl"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+            <mask id="mHot"><circle cx="234.4" cy="74.4" r="95" fill="url(#mGl)"/><circle cx="376.3" cy="70.9" r="70" fill="url(#mGl)"/><circle cx="241.5" cy="310.1" r="70" fill="url(#mGl)"/></mask>
+            <linearGradient id="mRt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5A00"/><stop offset="1" stop-color="#FFB13D"/></linearGradient>
+            <filter id="mSh" x="-25%" y="-40%" width="150%" height="190%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#3A1A00" flood-opacity=".16"/></filter>
+            <path id="mR1" d="M234.4 74.4Q305.4 16.4 376.3 70.9"/><path id="mR2" d="M234.4 74.4Q156.4 196.3 241.5 310.1"/>
           </defs>
-          <rect width="560" height="400" rx="18" fill="url(#dots)"/>
-          <path id="r1" d="M200 130 C 300 90, 380 110, 430 150" fill="none" stroke="#FF5A00" stroke-width="3" stroke-dasharray="8 8"/>
-          <path id="r2" d="M200 130 C 190 220, 170 280, 150 320" fill="none" stroke="#FF5A00" stroke-width="3" stroke-dasharray="8 8"/>
-          <circle r="7" fill="#111"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#r1"/></animateMotion></circle>
-          <circle r="7" fill="#111"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#r2"/></animateMotion></circle>
-          <circle cx="200" cy="130" r="34" fill="#FF5A00" opacity=".18"/>
-          <circle cx="200" cy="130" r="18" fill="#FF5A00"/>
-          <text x="200" y="82" text-anchor="middle" font-family="Oswald,Arial Narrow,sans-serif" font-weight="700" font-size="26" fill="#111">МОСКВА</text>
-          <text x="200" y="186" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="600" font-size="13" fill="#FF5A00">основной хаб</text>
-          <circle cx="430" cy="150" r="13" fill="#111"/>
-          <text x="430" y="122" text-anchor="middle" font-family="Oswald,Arial Narrow,sans-serif" font-weight="700" font-size="24" fill="#111">КАЗАНЬ</text>
-          <text x="430" y="186" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="600" font-size="12" fill="#6B6B6B">короб 600 ₽ · паллета 7 000 ₽</text>
-          <circle cx="150" cy="320" r="13" fill="#111"/>
-          <text x="150" y="292" text-anchor="middle" font-family="Oswald,Arial Narrow,sans-serif" font-weight="700" font-size="24" fill="#111" dx="70">КРАСНОДАР</text>
-          <text x="150" y="356" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="600" font-size="12" fill="#6B6B6B" dx="40">короб 800 ₽ · паллета 9 000 ₽</text>
+          <use href="#mLand" class="m-land" mask="url(#mMask)"/>
+          <use href="#mLand" class="m-hot" mask="url(#mHot)"/>
+          <text x="141.7" y="351.5" class="m-sea">Чёрное море</text>
+          <text x="398.5" y="372.7" class="m-sea">Каспийское</text><text x="398.5" y="386.7" class="m-sea">море</text>
+          <use href="#mR1" class="m-rt"/><use href="#mR2" class="m-rt"/>
+          <use href="#mR1" class="m-flow"/><use href="#mR2" class="m-flow"/>
+          <image href="img/3d/box.webp" x="-15" y="-15" width="30" height="30"><animateMotion dur="4.2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 0 .55 1"><mpath href="#mR1"/></animateMotion></image>
+          <image href="img/3d/box.webp" x="-15" y="-15" width="30" height="30"><animateMotion dur="4.8s" begin="1.4s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 0 .55 1"><mpath href="#mR2"/></animateMotion></image>
+          <circle cx="234.4" cy="74.4" r="15" class="m-pulse"/><circle cx="234.4" cy="74.4" r="15" class="m-pulse m-p2"/>
+          <circle cx="376.3" cy="70.9" r="10" class="m-pulse m-sm"/><circle cx="241.5" cy="310.1" r="10" class="m-pulse m-sm m-p2"/>
+          <circle cx="234.4" cy="74.4" r="12" fill="#FF5A00" stroke="#fff" stroke-width="4" filter="url(#mSh)"/>
+          <circle cx="376.3" cy="70.9" r="8.5" fill="#111" stroke="#fff" stroke-width="3.5" filter="url(#mSh)"/>
+          <circle cx="241.5" cy="310.1" r="8.5" fill="#111" stroke="#fff" stroke-width="3.5" filter="url(#mSh)"/>
+          <g class="m-full" filter="url(#mSh)"><rect x="76.4" y="48.400000000000006" width="138" height="52" rx="14" fill="#fff"/><text x="90.4" y="72.4" class="m-t">МОСКВА</text><text x="90.4" y="89.4" class="m-s m-hub">основной хаб</text></g>
+          <g class="m-full" filter="url(#mSh)"><rect x="278.3" y="92.9" width="230" height="52" rx="14" fill="#fff"/><text x="292.3" y="116.9" class="m-t">КАЗАНЬ</text><text x="292.3" y="133.9" class="m-s ">короб 600 ₽ · паллета 7 000 ₽</text></g>
+          <g class="m-full" filter="url(#mSh)"><rect x="263.5" y="284.1" width="230" height="52" rx="14" fill="#fff"/><text x="277.5" y="308.1" class="m-t">КРАСНОДАР</text><text x="277.5" y="325.1" class="m-s ">короб 800 ₽ · паллета 9 000 ₽</text></g>
+          <g class="m-short" filter="url(#mSh)"><rect x="94.4" y="53.400000000000006" width="120" height="42" rx="13" fill="#fff"/><text x="108.4" y="84.4" class="m-t">МОСКВА</text></g>
+          <g class="m-short" filter="url(#mSh)"><rect x="318.3" y="88.9" width="116" height="42" rx="13" fill="#fff"/><text x="332.3" y="119.9" class="m-t">КАЗАНЬ</text></g>
+          <g class="m-short" filter="url(#mSh)"><rect x="261.5" y="289.1" width="160" height="42" rx="13" fill="#fff"/><text x="275.5" y="320.1" class="m-t">КРАСНОДАР</text></g>
         </svg>
       </div>
       <div class="wh">
         <div><h3>Москва</h3><span class="ok hub">основной хаб</span><p>Приёмка, все упаковочные услуги, заведение остатков в WMS и отгрузка заказов.</p></div>
         <div><h3>Казань</h3><span class="ok">работает</span><p>Хранение и отгрузка заказов FBS на сортировочные центры и ПВЗ региона.</p></div>
         <div><h3>Краснодар</h3><span class="ok">работает</span><p>Хранение и отгрузка заказов FBS на сортировочные центры и ПВЗ юга.</p></div>
-        <a class="wh-media" href="https://t.me/izipack" target="_blank" rel="noopener"><span class="wh-play" aria-hidden="true"></span><span><b>Фото и видео складов</b><small>смотреть в нашем Telegram</small></span><i aria-hidden="true">→</i></a>
+        <a class="wh-media" href="https://t.me/izipack" target="_blank" rel="noopener"><img src="img/3d/camera.webp" alt="" width="46" height="46" loading="lazy"><span><b>Фото и видео складов</b><small>смотреть в нашем Telegram</small></span><i aria-hidden="true">→</i></a>
       </div>
     </div>
   </div>
@@ -1050,11 +1111,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>Москва: Южные Ворота, Садовод, склад ТК</h3>
         <table>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1 м³</span></td><td><span class="nw">3&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/pickup.webp" alt="" width="38" height="38" loading="lazy">до 1 м³</span></td><td><span class="nw">3&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 3 м³</span></td><td><span class="nw">4&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/truck.webp" alt="" width="38" height="38" loading="lazy">до 3 м³</span></td><td><span class="nw">4&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 5 м³</span></td><td><span class="nw">5&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/lorry.webp" alt="" width="38" height="38" loading="lazy">до 5 м³</span></td><td><span class="nw">5&nbsp;000&nbsp;₽</span></td></tr>
         </table>
         <p class="cap">Без учёта работы грузчиков и заезда.</p>
       </div>
@@ -1062,11 +1123,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <h3>С другого оптового комплекса</h3>
         <table>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>до 1,8 м³</span></td><td><span class="nw">водитель 3&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/pickup.webp" alt="" width="38" height="38" loading="lazy">до 1,8 м³</span></td><td><span class="nw">водитель 3&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>1,8–5,8 м³</span></td><td><span class="nw">водитель 4&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/truck.webp" alt="" width="38" height="38" loading="lazy">1,8–5,8 м³</span></td><td><span class="nw">водитель 4&nbsp;000&nbsp;₽</span></td></tr>
           <tr><td><span class="truck">
-            <svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="3" width="17" height="11" rx="2" fill="#FF5A00"/><path d="M18 7h6l4 4v3H18z" fill="#111"/><circle cx="7" cy="16" r="3" fill="#111"/><circle cx="23" cy="16" r="3" fill="#111"/></svg>5,8–10 м³</span></td><td><span class="nw">водитель 5&nbsp;000&nbsp;₽</span></td></tr>
+            <img src="img/3d/lorry.webp" alt="" width="38" height="38" loading="lazy">5,8–10 м³</span></td><td><span class="nw">водитель 5&nbsp;000&nbsp;₽</span></td></tr>
         </table>
         <p class="cap">Плюс расходы на месте.</p>
       </div>
@@ -1081,12 +1142,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>Почему <span class="tape">IZIPACK</span></h2>
     </div>
     <div class="why">
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="8" cy="8" r="2.4" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="2.4" stroke="#fff" stroke-width="2"/></svg></span><h3>Скидка 15%</h3><p>На первую упаковку.</p></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="7" width="12" height="8" rx="1" fill="#fff"/><path d="M14 10h4l3 3v2h-7z" fill="#fff"/><circle cx="7" cy="17" r="2" fill="#fff" stroke="#FF5A00" stroke-width="1.5"/><circle cx="17" cy="17" r="2" fill="#fff" stroke="#FF5A00" stroke-width="1.5"/></svg></span><h3>Ежедневные отгрузки</h3><p>На маркетплейсы каждый день, заказы FBS 2 раза в день.</p></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="9" r="4" fill="#fff"/><path d="M4 20c1.5-4 4.5-5.5 8-5.5s6.5 1.5 8 5.5" fill="#fff"/></svg></span><h3>Индивидуальный подход</h3><p>Поможем запустить продажи по FBS и проведём инструктаж.</p></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" fill="#fff"/><rect x="2" y="6" width="20" height="4" rx="1" fill="#fff"/><path d="M12 6v15" stroke="#FF5A00" stroke-width="2"/><path d="M12 6C10 2 7 3 8 6M12 6c2-4 5-3 4 0" stroke="#fff" stroke-width="2"/></svg></span><h3>Бонусы и акции</h3><p>Еженедельные акции, следите за каналом <a href="https://t.me/izipack" target="_blank" rel="noopener">t.me/izipack</a>.</p></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" fill="#fff"/><path d="M9 11h7M9 15h5" stroke="#FF5A00" stroke-width="2" stroke-linecap="round"/></svg></span><h3>Работа по договору</h3><p>Все условия фиксируем на бумаге.</p></div>
-      <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 20V4h5a4 4 0 010 8H7M7 16h8" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3>Постоплата</h3><p>Для постоянных клиентов.</p></div>
+      <div><span class="ic"><img src="img/3d/tag.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Скидка 15%</h3><p>На первую упаковку.</p></div>
+      <div><span class="ic"><img src="img/3d/truck.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Ежедневные отгрузки</h3><p>На маркетплейсы каждый день, заказы FBS 2 раза в день.</p></div>
+      <div><span class="ic"><img src="img/3d/handshake.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Индивидуальный подход</h3><p>Поможем запустить продажи по FBS и проведём инструктаж.</p></div>
+      <div><span class="ic"><img src="img/3d/gift.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Бонусы и акции</h3><p>Еженедельные акции, следите за каналом <a href="https://t.me/izipack" target="_blank" rel="noopener">t.me/izipack</a>.</p></div>
+      <div><span class="ic"><img src="img/3d/contract.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Работа по договору</h3><p>Все условия фиксируем на бумаге.</p></div>
+      <div><span class="ic"><img src="img/3d/card.webp" alt="" width="50" height="50" loading="lazy"></span><h3>Постоплата</h3><p>Для постоянных клиентов.</p></div>
     </div>
   </div>
 </section>
@@ -1112,7 +1173,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div class="order">
       <div>
-        <h2>Запустим ваш FBS</h2>
+        <h2>Запустим ваш FBS <img class="rocket" src="img/3d/rocket.webp" alt="" width="64" height="64" loading="lazy"></h2>
         <p class="lead">Оставьте заявку или напишите напрямую. Менеджер рассчитает стоимость и пришлёт форму технического задания.</p>
         <div class="contacts">
           <div><small>Telegram</small><a href="https://t.me/izipack" target="_blank" rel="noopener">@izipack</a></div>
@@ -1314,19 +1375,27 @@ if ("IntersectionObserver" in window){
 })();
 
 // ===== Демо-лента заказов в макете WMS =====
-const goods = ["Блендер погружной", "Футболка оверсайз, M", "Крем для рук 50 мл", "Чехол для iPhone", "Набор кистей", "Термокружка 450 мл", "Лампа настольная", "Носки, 5 пар", "Органайзер для косметики", "Зарядка USB-C"];
+// товар и его картинка из img/3d
+const goods = [["Кроссовки беговые", "sneaker"], ["Футболка оверсайз, M", "tshirt"], ["Крем для рук 50 мл", "lotion"], ["Чехол для смартфона", "phone"], ["Набор кистей", "brush"], ["Термокружка 450 мл", "mug"], ["Лампа настольная", "lamp"], ["Носки, 5 пар", "socks"], ["Помада матовая", "lipstick"], ["Зарядка USB-C", "plug"]];
 const cities = ["Москва", "Казань", "Краснодар"];
 const ol = document.getElementById("orders");
 const cnt = {n: 3, p: 2, s: 14};
 const statusTxt = {new: "Новый", pick: "Собираем", ship: "Отгружен"};
 let k = 0;
 function row(st){
-  const g = goods[k % goods.length], c = cities[k % 3], art = 41000 + ((k * 7919) % 9000); k++;
+  const [g, ic] = goods[k % goods.length], c = cities[k % 3], art = 41000 + ((k * 7919) % 9000); k++;
   const li = document.createElement("li");
-  li.innerHTML = `<span class="wb">WB</span><span class="nm">${g}<small>Арт. ${art} · склад ${c}</small></span><span class="st ${st}">${statusTxt[st]}</span>`;
+  li.innerHTML = `<span class="th"><img src="img/3d/${ic}.webp" alt="" width="30" height="30"></span><span class="nm">${g}<small><b class="wbm">WB</b>Арт. ${art} · ${c}</small></span><span class="st ${st}">${statusTxt[st]}</span>`;
   return li;
 }
 ["new", "pick", "pick", "ship"].forEach(s => ol.appendChild(row(s)));
+// цифра в плитке подпрыгивает, когда меняется
+function setStat(id, v){
+  const el = document.getElementById(id);
+  if (el.textContent === String(v)) return;
+  el.textContent = v;
+  el.animate && el.animate([{transform: "translateY(-4px) scale(1.18)", color: getComputedStyle(el.parentNode).getPropertyValue("--c")}, {transform: "none", color: "#fff"}], {duration: 600, easing: "cubic-bezier(.2,.8,.2,1)"});
+}
 function tick(){
   const items = [...ol.children];
   items.forEach(li => {
@@ -1334,11 +1403,10 @@ function tick(){
     if (s.classList.contains("pick") && Math.random() < .5) { s.className = "st ship"; s.textContent = statusTxt.ship; cnt.p--; cnt.s++; }
     else if (s.classList.contains("new") && Math.random() < .6) { s.className = "st pick"; s.textContent = statusTxt.pick; cnt.n--; cnt.p++; }
   });
-  ol.insertBefore(row("new"), ol.firstChild); cnt.n++;
+  const fresh = row("new"); fresh.classList.add("fresh");
+  ol.insertBefore(fresh, ol.firstChild); cnt.n++;
   while (ol.children.length > 4) ol.removeChild(ol.lastChild);
-  document.getElementById("sNew").textContent = Math.max(0, cnt.n);
-  document.getElementById("sPick").textContent = Math.max(0, cnt.p);
-  document.getElementById("sShip").textContent = cnt.s;
+  setStat("sNew", Math.max(0, cnt.n)); setStat("sPick", Math.max(0, cnt.p)); setStat("sShip", cnt.s);
 }
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(tick, 2600);
 
