@@ -99,12 +99,9 @@ section{padding-block:84px}
 .m-fbs .mode-tag{color:#fff}.m-fbo .mode-tag{color:var(--orange)}
 .mode-txt{font-size:13px;line-height:1.35;opacity:.9}
 .mode-txt b{display:block;font-size:15px;opacity:1;margin-bottom:2px}
-/* объёмная иконка схемы: коробка для FBS, грузовик для FBO */
-.mode-ic{position:absolute;right:10px;top:8px;width:60px;height:60px;filter:drop-shadow(0 10px 10px rgba(0,0,0,.28));animation:icBob 4s ease-in-out infinite;pointer-events:none}
-.m-fbo .mode-ic{animation-delay:-2s}
-@keyframes icBob{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-6px) rotate(4deg)}}
-.mode-txt b::after{content:"\00a0→";display:inline-block;transition:transform .3s}
-.mode:hover .mode-txt b::after{transform:translateX(4px)}
+.mode-go{position:absolute;right:14px;top:12px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;background:rgba(255,255,255,.18);transition:transform .3s}
+.m-fbo .mode-go{background:var(--orange)}
+.mode:hover .mode-go{transform:translateX(3px)}
 .mode::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:modeShine 6s ease-in-out infinite}
 .m-fbo::after{animation-delay:.6s}
 @keyframes modeShine{0%,70%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
@@ -113,8 +110,6 @@ section{padding-block:84px}
   .modes{gap:10px}
   .mode{padding:14px}
   .mode-tag{font-size:36px}
-  .mode-ic{width:46px;height:46px;right:6px;top:6px}
-  .mode-txt b::after{display:none}
   .mode-txt{font-size:12px}.mode-txt b{font-size:14px}
 }
 section[id]{scroll-margin-top:76px}
@@ -163,10 +158,6 @@ section[id]{scroll-margin-top:76px}
 .steps li.on .num{color:var(--orange)}
 .steps .art{position:relative;height:150px;border-radius:14px;background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.14) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFF7F2,#FFEBDF);display:grid;place-items:center;transition:background .4s}
 .steps li.on .art{background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.2) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFEFE4,#FFD8BF)}
-/* объёмная наклейка шага в углу картинки */
-.st3d{position:absolute;right:-6px;top:-40px;width:46px;height:46px;transform:rotate(10deg);filter:drop-shadow(0 8px 8px rgba(120,50,0,.28));z-index:2}
-.steps li.on .st3d{animation:st3dPop .7s cubic-bezier(.2,.8,.3,1.5) both}
-@keyframes st3dPop{0%{opacity:0;transform:scale(.3) rotate(-30deg)}100%{opacity:1;transform:rotate(10deg)}}
 .steps .art svg{width:100%;height:100%}
 .steps h3{font-size:18px}
 .steps p{font-size:14px;color:var(--muted)}
@@ -685,8 +676,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div>
       <h1 aria-label="Фулфилмент для Wildberries от 25 ₽ за заказ"><span>Фулфилмент</span><span class="h1-row">для <a class="ptag" href="#calc" aria-hidden="true" tabindex="-1"><span class="ptag-bg"></span><i class="ptag-hole"></i><span class="ptag-t"><small>от</small><b>25 ₽</b><small>за заказ</small></span></a></span><span>Wildberries</span></h1>
       <div class="modes" role="group" aria-label="Схема работы">
-        <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><img class="mode-ic" src="img/3d/box.webp" alt="" width="60" height="60"></a>
-        <a class="mode m-fbo" href="#fbo"><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><img class="mode-ic" src="img/3d/truck.webp" alt="" width="60" height="60"></a>
+        <a class="mode m-fbs" href="#how"><span class="mode-tag">FBS</span><span class="mode-txt"><b>Со своего склада</b>Храним товар и собираем каждый заказ</span><i class="mode-go" aria-hidden="true">→</i></a>
+        <a class="mode m-fbo" href="#fbo"><span class="mode-tag">FBO</span><span class="mode-txt"><b>На склады WB и Ozon</b>Готовим поставки и везём на склады</span><i class="mode-go" aria-hidden="true">→</i></a>
       </div>
       <p class="hero-sub">Работаем по обеим схемам. <b>Собственная WMS с полной интеграцией с Wildberries</b>: все заказы FBS и остатки видим онлайн.</p>
       <ul class="badges">
@@ -729,7 +720,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li class="on">
         <span class="num">ШАГ 1</span>
         <div class="art art-ui" aria-hidden="true">
-          <img class="st3d" src="img/3d/key.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="wb">WB</span>Личный кабинет</div>
             <div class="mini-field"><span class="ph">API-токен</span><span class="tok">••••••••••••••••••</span><i class="caret"></i></div>
@@ -743,7 +733,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 2</span>
         <div class="art art-ui s2" aria-hidden="true">
-          <img class="st3d" src="img/3d/box.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Приёмка товара</div>
             <div class="scan"><svg class="bc" viewBox="0 0 100 20"><path d="M2 0v20M5 0v20M6.5 0v20M10 0v20M13 0v20M14.5 0v20M18 0v20M20 0v20M24 0v20M26.5 0v20M28 0v20M32 0v20M35 0v20M37 0v20M40 0v20M41.5 0v20M45 0v20M48 0v20M50 0v20M53 0v20M56 0v20M57.5 0v20M61 0v20M64 0v20M66 0v20M69 0v20M72 0v20M73.5 0v20M77 0v20M80 0v20M82 0v20M85 0v20M88 0v20M89.5 0v20M93 0v20M96 0v20M98 0v20" stroke="#111" stroke-width="1.3"/></svg><i class="beam"></i></div>
@@ -756,7 +745,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 3</span>
         <div class="art art-ui s3" aria-hidden="true">
-          <img class="st3d" src="img/3d/tag.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Задание №1042</div>
             <div class="chk"><span><i></i>Пересчёт</span><span><i></i>Брак</span><span><i></i>Маркировка</span><span><i></i>Упаковка</span></div>
@@ -768,7 +756,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 4</span>
         <div class="art art-ui s4" aria-hidden="true">
-          <img class="st3d" src="img/3d/map.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="tag">WMS</span>Остатки</div>
             <div class="stock">
@@ -784,7 +771,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li>
         <span class="num">ШАГ 5</span>
         <div class="art art-ui s5" aria-hidden="true">
-          <img class="st3d" src="img/3d/truck.webp" alt="" width="48" height="48" loading="lazy">
           <div class="mini">
             <div class="mini-head"><span class="wb">WB</span>Заказ №48919</div>
             <div class="track"><b class="ln"><i></i></b><span class="p1"><i></i>Новый</span><span class="p2"><i></i>Собран</span><span class="p3"><i></i>Отгружен</span></div>
