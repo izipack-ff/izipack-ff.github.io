@@ -152,18 +152,18 @@ section[id]{scroll-margin-top:76px}
 .rail{position:relative;height:6px;background:var(--line);border-radius:99px;margin:0 0 22px;overflow:hidden}
 .rail i{position:absolute;inset:0 auto 0 0;width:20%;background:var(--orange);border-radius:99px;transition:width .6s ease}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
-.steps li{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px 22px;display:grid;gap:10px;align-content:start;position:relative;cursor:pointer;transition:background .4s,transform .4s,box-shadow .4s}
+.steps li{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px 22px;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;align-content:start;position:relative;cursor:pointer;transition:background .4s,transform .4s,box-shadow .4s}
 .steps li.on{background:#fff;border-color:transparent;transform:translateY(-6px);box-shadow:0 26px 44px -24px rgba(255,90,0,.6),inset 0 0 0 2px var(--orange)}
 .steps .num{font:700 15px var(--display);color:var(--muted);letter-spacing:.08em}
 .steps li.on .num{color:var(--orange)}
-.steps .art{position:relative;height:150px;border-radius:14px;background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.14) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFF7F2,#FFEBDF);display:grid;place-items:center;transition:background .4s}
+.steps .art{position:relative;height:168px;border-radius:14px;background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.14) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFF7F2,#FFEBDF);display:grid;place-items:center;transition:background .4s}
 .steps li.on .art{background:radial-gradient(circle at 1px 1px,rgba(255,90,0,.2) 1px,transparent 1.6px) 0 0/12px 12px,linear-gradient(160deg,#FFEFE4,#FFD8BF)}
 .steps .art svg{width:100%;height:100%}
 .steps h3{font-size:18px}
 .steps p{font-size:14px;color:var(--muted)}
 /* 1: мини-экран подключения к WB. Без .on показан итог; с .on проигрывается заново */
-.steps .art-ui{height:150px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:8px;padding:12px 10px;place-items:initial}
-.mini{position:relative;background:#fff;border-radius:12px;padding:10px 11px;display:grid;gap:8px;box-shadow:0 16px 30px -18px rgba(90,35,0,.5),0 0 0 1px rgba(17,17,17,.06)}
+.steps .art-ui{height:168px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:8px;padding:12px 8px;place-items:initial;min-width:0}
+.mini{position:relative;min-width:0;background:#fff;border-radius:12px;padding:10px 11px;display:grid;gap:8px;box-shadow:0 16px 30px -18px rgba(90,35,0,.5),0 0 0 1px rgba(17,17,17,.06)}
 .mini-head{display:flex;align-items:center;gap:6px;font:700 10px var(--body);color:var(--ink);white-space:nowrap;overflow:hidden}
 .mini-head .wb{background:linear-gradient(135deg,#CB11AB,#7B2FF2);color:#fff;font:800 9.5px var(--body);border-radius:5px;padding:2px 5px;letter-spacing:.02em}
 .mini-field{position:relative;height:22px;border:1px solid #D9D9D9;border-radius:7px;padding:0 8px;display:flex;align-items:center;font:600 10.5px var(--body);overflow:hidden;background:#FAFAFA}
@@ -173,7 +173,7 @@ section[id]{scroll-margin-top:76px}
 .mini-btn{position:relative;height:22px;border-radius:7px;background:linear-gradient(180deg,#36CC6B,#25AE55);color:#fff;font:700 10.5px var(--body);display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 10px -4px rgba(37,174,85,.7)}
 .mini-btn span{grid-area:1/1}.mini-btn .b1{opacity:0}
 .steps .art .mini .cursor{position:absolute;width:11px;height:15px;left:50%;top:67px;opacity:0;pointer-events:none}
-.mini-toast{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1E1E1E,#0F0F0F);color:#C9C9C9;border-radius:9px;padding:6px 10px;font:600 10.5px var(--body);white-space:nowrap;overflow:hidden;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
+.mini-toast{flex:none;display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1E1E1E,#0F0F0F);color:#C9C9C9;border-radius:9px;padding:6px 10px;font:600 10.5px var(--body);white-space:nowrap;overflow:hidden;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
 .mini-toast b{color:#fff;font-weight:700}
 .mini-toast i{width:7px;height:7px;border-radius:50%;background:#3DDC84;flex:none;box-shadow:0 0 0 0 rgba(61,220,132,.6)}
 .steps li.on .mini-field .ph{animation:uiPh 5.2s linear both}
@@ -214,8 +214,8 @@ section[id]{scroll-margin-top:76px}
 .steps li.on .s2 .scan{animation:uiScanOk .6s ease 2.8s both}
 @keyframes uiScanOk{from{border-color:#D9D9D9}to{border-color:#2DBE60}}
 /* 3: чек-лист подготовки */
-.chk{display:grid;grid-template-columns:auto auto;justify-content:space-between;gap:5px 6px}
-.chk span{display:flex;align-items:center;gap:4px;font:600 9.5px var(--body);color:var(--ink);white-space:nowrap}
+.chk{display:grid;grid-template-columns:minmax(0,1fr);gap:3px}
+.chk span{display:flex;align-items:center;gap:6px;font:600 10.5px var(--body);color:var(--ink);white-space:nowrap}
 .chk i{position:relative;flex:none;width:13px;height:13px;border-radius:4px;background:var(--orange);border:1.5px solid var(--orange)}
 .chk i::after{content:"";position:absolute;left:3.5px;top:.5px;width:3px;height:6px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:rotate(45deg)}
 .steps li.on .chk i{animation:uiChk .4s ease both}
@@ -227,7 +227,7 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiChk{0%{background:#fff;border-color:#CFCFCF;transform:scale(1)}50%{transform:scale(1.25)}100%{background:var(--orange);border-color:var(--orange);transform:scale(1)}}
 @keyframes uiChkTxt{from{color:#A0A0A0}to{color:var(--ink)}}
 /* 4: остатки перетекают по складам */
-.stock{display:grid;grid-template-columns:auto 1fr 22px;align-items:center;gap:5px 7px;font:600 10px var(--body);color:var(--ink)}
+.stock{display:grid;grid-template-columns:auto minmax(0,1fr) 22px;align-items:center;gap:5px 7px;font:600 10px var(--body);color:var(--ink)}
 .stock .bar{height:8px;border-radius:4px;background:#F0F0F0;overflow:hidden}
 .stock .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#FF5A00,#FFA24D)}
 .stock em{font:700 12px/1 var(--display);font-style:normal;text-align:right}
@@ -244,10 +244,10 @@ section[id]{scroll-margin-top:76px}
 @keyframes uiN72{from{--n:120}to{--n:72}}
 @keyframes uiN24{from{--n:0}to{--n:24}}
 /* 5: статусы заказа */
-.track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);padding-top:2px}
+.track{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-top:2px}
 .track .ln{position:absolute;left:16.6%;right:16.6%;top:8px;height:3px;border-radius:2px;background:#E3E3E3}
 .track .ln i{display:block;height:100%;width:100%;border-radius:2px;background:linear-gradient(90deg,#FF5A00,#2DBE60)}
-.track span{position:relative;display:grid;justify-items:center;gap:5px;font:600 9px var(--body);color:var(--ink)}
+.track span{position:relative;display:grid;justify-items:center;gap:5px;font:600 8.5px var(--body);color:var(--ink)}
 .track span i{width:14px;height:14px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px #fff}
 .track .p3 i{background:#2DBE60}
 .steps li.on .track .ln i{animation:uiTrack 2.2s linear .7s both}
@@ -627,6 +627,9 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 footer{padding-block:36px;font-size:14px;color:var(--muted)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
+@media (max-width:1180px){
+  .steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 @media (max-width:980px){
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .feat,.why{grid-template-columns:repeat(2,minmax(0,1fr))}
