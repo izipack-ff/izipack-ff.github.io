@@ -493,9 +493,9 @@ input[type=number],input[type=text],input[type=tel],textarea{font:500 16px var(-
 .pc .step input{width:64px;border:0;border-radius:0;padding:8px 4px;text-align:center;font:700 17px var(--body);-moz-appearance:textfield}
 .step input::-webkit-outer-spin-button,.step input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .seg{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
-.seg label{position:relative;cursor:pointer}
+.seg label{position:relative;cursor:pointer;display:grid}
 .seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.seg span{display:grid;justify-items:center;padding:5px 2px;font-size:13px;font-weight:700;color:var(--ink);border-left:1px solid var(--line);transition:background .2s}
+.seg span{display:grid;justify-items:center;align-content:center;height:100%;padding:5px 2px;font-size:13px;font-weight:700;color:var(--ink);border-left:1px solid var(--line);transition:background .2s}
 .seg label:first-child span{border-left:0}
 .seg span small{font-size:10.5px;font-weight:600;color:var(--muted)}
 .seg input:checked+span{background:var(--orange);color:#fff}
